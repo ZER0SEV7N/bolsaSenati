@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 const menuItems = [
   { title: "Dashboard", url: "/Estudiante/dashboard" },
   { title: "Perfil", url: "/Estudiante/perfil" },
+  { title: "Bolsa de Trabajo", url: "/Estudiante/bolsa" },
 ];
 
 export default function DashboardLayout({
