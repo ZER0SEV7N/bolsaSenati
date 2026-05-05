@@ -20,13 +20,21 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useAuth } from "@/context/context";
 
 interface MenuItem {
   title: string;
   url: string;
 }
 
+const onCerrarSesion = () => {
+  redirect("/");
+};
+
 export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
+  const { user } = useAuth();
   return (
     <Sidebar>
       {/* Cabecera del sidebar */}
@@ -57,12 +65,12 @@ export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
                     tooltip={item.title}
                     className="hover:bg-accent hover:text-accent-foreground transition-all duration-200"
                   >
-                    <a
+                    <Link
                       href={item.url}
                       className="flex items-center gap-3 px-4 py-2"
                     >
                       <span className="font-medium">{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -81,7 +89,7 @@ export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
                   <div className="flex items-center gap-2">
                     <User className="size-4" />
                     {/* Nombre del Usuario */}
-                    <span>Usuario</span>
+                    <span>{user?.nombre || "Usuario"}</span>
                   </div>
                   <ChevronUp className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -93,7 +101,9 @@ export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
                 <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
                   <LogOut className="mr-2 size-4" />
                   {/* Agregar la logica para cerrar sesión */}
-                  <Button variant="ghost">Cerrar Sesión</Button>
+                  <Button variant="ghost" onClick={onCerrarSesion}>
+                    Cerrar Sesión
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

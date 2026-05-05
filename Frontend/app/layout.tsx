@@ -44,11 +44,9 @@ export default function RootLayout({
         dmSansHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
+      <AuthProvider>
+        <body className="min-h-full flex flex-col">{children}</body>
+      </AuthProvider>
     </html>
   );
 }
