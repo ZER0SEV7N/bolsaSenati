@@ -2,33 +2,29 @@
 //Hook personalizado para manejar la lógica de autenticación en el formulario de inicio de sesión.
 import { useState } from "react"
 import { User } from "../types/user"
+import { useAuth } from "@/context/context"
 
-export function useAuth() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [user, setUser] = useState<User | null>(null)
+export const useLogin = () => {
+    const { login } = useAuth(); //Obtener la función de login del contexto de autenticación
+    const [error, setError] = useState<string | null>(null); //Estado para manejar errores de autenticación
 
-    const login = (username: string, password: string) => {
-        //Aquí iría la lógica real de autenticación, como una llamada a una API
-        //Por ahora, utilizaremos un user.json de ejemplo para simular la autenticación
-        import("../data/user.json").then((data) => {
-            const foundUser = (data as any[]).find(
-                (u: any) => u.nombre === username && u.apellido === password
-            ) as User | undefined
-            if (foundUser) {
-                setIsAuthenticated(true)
-                setUser(foundUser)
-            } else {
-                setIsAuthenticated(false)
-                setUser(null)
-            }
-        })
+    //Función para manejar el envío del formulario de inicio de sesión
+    const handleLogin = (userData: User) => {
+        const email = userData.email?.trim();
+        const password = userData.contraseña?.trim();
+
+        if (!email || !password) {
+            setError("Debes ingresar email y contraseña");
+            return;
+        }
+
+        const isValid = login(email, password);
+        setError(isValid ? null : "Credenciales incorrectas");
     }
 
-    //Función para cerrar sesión
-    const logout = () => {
-        setIsAuthenticated(false)
-        setUser(null)
+    //Retornar la función de manejo de inicio de sesión y el estado de error para ser utilizado en el componente de formulario de inicio de sesión
+    return {
+        handleLogin,
+        error,
     }
-
-    //Funcion para devolver el estado de autenticación y el usuario actual
-};
+}
