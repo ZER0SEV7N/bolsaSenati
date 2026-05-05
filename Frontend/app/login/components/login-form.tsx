@@ -22,9 +22,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-8 w-full max-w-md", className)} {...props}>
       <Card className="p-8">
         <CardHeader className="gap-4">
-          <CardTitle className="text-3xl">Logueate con tu cuenta para acceder</CardTitle>
+          <CardTitle className="text-3xl">Iniciar sesión</CardTitle>
           <CardDescription className="text-base">
-            Ingresa tu email a continuación para iniciar sesión en tu cuenta
+            Ingresa tus credenciales para acceder a tu cuenta
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -35,14 +35,14 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="example@gmail.com"
                   className="h-12 text-base"
                   required
                 />
               </Field>
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password" className="text-base">Contraseña</FieldLabel>
+                  <FieldLabel htmlFor="contraseña" className="text-base">Contraseña</FieldLabel>
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
@@ -50,7 +50,7 @@ export function LoginForm({
                     ¿Olvidaste tu contraseña?
                   </a>
                 </div>
-                <Input id="password" type="password" className="h-12 text-base" required />
+                <Input id="contraseña" type="contraseña" className="h-12 text-base" required />
               </Field>
               <Button type="submit" className="h-12 text-base mt-4">
                 Iniciar sesión
