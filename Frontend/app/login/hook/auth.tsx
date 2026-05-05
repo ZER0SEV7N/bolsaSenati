@@ -3,7 +3,6 @@
 //bolsa/app/login/hook/auth.tsx
 //Hook personalizado para manejar la lógica de autenticación en el formulario de inicio de sesión.
 import { useState } from "react";
-import { User } from "../types/user";
 import { useAuth } from "@/context/context";
 import { redirect } from "next/navigation";
 

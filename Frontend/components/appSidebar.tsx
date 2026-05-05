@@ -22,22 +22,19 @@ import {
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useAuth } from "@/context/context";
 
 interface MenuItem {
   title: string;
   url: string;
 }
 
-interface AppSidebarProps {
-  userName: string;
-  menuItems: MenuItem[];
-}
-
 const onCerrarSesion = () => {
   redirect("/");
 };
 
-export function AppSidebar({ userName, menuItems }: AppSidebarProps) {
+export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
+  const { user } = useAuth();
   return (
     <Sidebar>
       {/* Cabecera del sidebar */}
@@ -92,7 +89,7 @@ export function AppSidebar({ userName, menuItems }: AppSidebarProps) {
                   <div className="flex items-center gap-2">
                     <User className="size-4" />
                     {/* Nombre del Usuario */}
-                    <span>{userName}</span>
+                    <span>{user?.nombre || "Usuario"}</span>
                   </div>
                   <ChevronUp className="ml-auto size-4" />
                 </SidebarMenuButton>

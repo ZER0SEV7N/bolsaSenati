@@ -16,7 +16,9 @@ export default function DashboardLayout({
   return (
     <TooltipProvider>
       <SidebarProvider>
-        <AppSidebar menuItems={menuItems} userName="Usuario" />
+        <AppSidebar
+          menuItems={menuItems}
+        />
         <main className="flex-1">{children}</main>
       </SidebarProvider>
     </TooltipProvider>
