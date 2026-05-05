@@ -2,7 +2,10 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/appSidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const menuItems = [{ title: "Dashboard", url: "/Estudiante/dashboard" }];
+const menuItems = [
+  { title: "Dashboard", url: "/Estudiante/dashboard" },
+  { title: "Perfil", url: "/Estudiante/perfil" },
+];
 
 export default function DashboardLayout({
   children,
@@ -12,7 +15,7 @@ export default function DashboardLayout({
   return (
     <TooltipProvider>
       <SidebarProvider>
-        <AppSidebar menuItems={menuItems} />
+        <AppSidebar menuItems={menuItems} userName="Usuario" />
         <main className="flex-1">{children}</main>
       </SidebarProvider>
     </TooltipProvider>

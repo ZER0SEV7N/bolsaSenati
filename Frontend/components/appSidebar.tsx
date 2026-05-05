@@ -20,13 +20,19 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface MenuItem {
   title: string;
   url: string;
 }
 
-export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
+interface AppSidebarProps {
+  userName: string;
+  menuItems: MenuItem[];
+}
+
+export function AppSidebar({ userName, menuItems }: AppSidebarProps) {
   return (
     <Sidebar>
       {/* Cabecera del sidebar */}
@@ -57,12 +63,12 @@ export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
                     tooltip={item.title}
                     className="hover:bg-accent hover:text-accent-foreground transition-all duration-200"
                   >
-                    <a
+                    <Link
                       href={item.url}
                       className="flex items-center gap-3 px-4 py-2"
                     >
                       <span className="font-medium">{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -81,7 +87,7 @@ export function AppSidebar({ menuItems }: { menuItems: MenuItem[] }) {
                   <div className="flex items-center gap-2">
                     <User className="size-4" />
                     {/* Nombre del Usuario */}
-                    <span>Usuario</span>
+                    <span>{userName}</span>
                   </div>
                   <ChevronUp className="ml-auto size-4" />
                 </SidebarMenuButton>
