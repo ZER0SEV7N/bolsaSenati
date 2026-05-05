@@ -1,3 +1,4 @@
+'use client'
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +11,7 @@ import {
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useLogin } from "../hook/auth";
-import { useState } from "react";
+import { use, useState } from "react";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");

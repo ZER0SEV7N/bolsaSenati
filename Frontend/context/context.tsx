@@ -10,6 +10,7 @@ type AuthContextType = {
     isAuthenticated: boolean
     user: User | null
     login: (email: string, password: string) => boolean
+    updateUser: (updatedUser: User) => boolean
     logout: () => void
     rol?: string | null
     token?: string | null
@@ -22,6 +23,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null); //Estado para almacenar el usuario autenticado
     const [isAuthenticated, setIsAuthenticated] = useState(false); //Estado para manejar la autenticación
 
+    //Función para persistir el usuario autenticado en el navegador
+    const saveAuthUser = (authUser: User | null) => {
+        if (typeof window === "undefined") {
+            return;
+        }
+
+        if (authUser) {
+            localStorage.setItem("auth-user", JSON.stringify(authUser));
+            return;
+        }
+
+        localStorage.removeItem("auth-user");
+    }
+
     //Función para manejar el inicio de sesión
     const login = (email: string, password: string) => {
         const foundUser = (users as User[]).find(
@@ -31,18 +46,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (foundUser) {
             setIsAuthenticated(true);
             setUser(foundUser);
+            saveAuthUser(foundUser);
             return true;
         }
 
         setIsAuthenticated(false);
         setUser(null);
+        saveAuthUser(null);
         return false;
+    }
+
+    //Función para actualizar los datos del usuario autenticado
+    const updateUser = (updatedUser: User) => {
+        if (!user) {
+            return false;
+        }
+
+        const nextUser = { ...user, ...updatedUser };
+        setUser(nextUser);
+        setIsAuthenticated(true);
+        saveAuthUser(nextUser);
+        return true;
     }
 
     //Función para manejar el cierre de sesión
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
+        saveAuthUser(null);
     }
 
     //Valor del contexto que se proporcionará a los componentes hijos
@@ -50,6 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated,
         user,
         login,
+        updateUser,
         logout,
     };
 
