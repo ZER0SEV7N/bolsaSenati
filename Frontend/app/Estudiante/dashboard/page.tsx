@@ -1,5 +1,5 @@
 import { SectionCard } from "@/components/sectionCard";
-import { ChartPieLegend } from "./pieCharts";
+import { ChartPieLegend } from "../../../components/charts/pieCharts";
 
 function page() {
   return <div>
