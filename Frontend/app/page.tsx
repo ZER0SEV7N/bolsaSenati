@@ -1,7 +1,6 @@
-//bolsasenati/app/page.tsx
-//Page de login, utilizando componentes de UI personalizados para el formulario de inicio de sesión.
-import { LoginForm } from "@/app/login/components/login-form"
-import { Card } from "@/components/ui/card"
+"use client";
+
+import { LoginForm } from "@/app/login/components/login-form";
 
 export default function Page() {
   return (
@@ -10,7 +9,5 @@ export default function Page() {
         <LoginForm />
       </div>
     </div>
-  )
+  );
 }
-
-
