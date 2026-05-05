@@ -21,6 +21,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 interface MenuItem {
   title: string;
@@ -31,6 +32,10 @@ interface AppSidebarProps {
   userName: string;
   menuItems: MenuItem[];
 }
+
+const onCerrarSesion = () => {
+  redirect("/");
+};
 
 export function AppSidebar({ userName, menuItems }: AppSidebarProps) {
   return (
@@ -99,7 +104,9 @@ export function AppSidebar({ userName, menuItems }: AppSidebarProps) {
                 <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
                   <LogOut className="mr-2 size-4" />
                   {/* Agregar la logica para cerrar sesión */}
-                  <Button variant="ghost">Cerrar Sesión</Button>
+                  <Button variant="ghost" onClick={onCerrarSesion}>
+                    Cerrar Sesión
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

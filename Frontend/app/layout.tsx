@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Public_Sans, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/context/context";
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -43,7 +44,9 @@ export default function RootLayout({
         dmSansHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <AuthProvider>
+        <body className="min-h-full flex flex-col">{children}</body>
+      </AuthProvider>
     </html>
   );
 }
