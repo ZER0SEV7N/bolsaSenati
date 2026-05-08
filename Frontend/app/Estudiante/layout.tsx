@@ -20,8 +20,10 @@ export default function DashboardLayout({
       <SidebarProvider>
         <AppSidebar menuItems={menuItems} />
         <main className="w-full">
+          {/* Cabecera NavBar*/}
           <header className="flex h-12 items-center px-4 border-b">
             <SidebarTrigger />
+            {/* Usuario- Sesion- CerrarSesion */}
           </header>
           {children}
         </main>

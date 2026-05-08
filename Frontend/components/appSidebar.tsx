@@ -19,6 +19,7 @@ import {
   UserCircle,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/context/context";
 import { useRouter } from "next/navigation";
 
@@ -51,7 +52,12 @@ export function AppSidebar({
         <div className="flex items-center gap-3">
           <div className="size-12 flex items-center justify-center">
             {/* Logo circular de Senati */}
-            <img src="/logoSenati.svg" />
+            <Image
+              src="/logoSenati.svg"
+              alt="Logo SENATI"
+              width={48}
+              height={48}
+            />
           </div>
           <span className="font-bold text-xl tracking-wider text-gray-100">
             SENATI
