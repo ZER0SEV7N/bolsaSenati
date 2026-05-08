@@ -1,19 +1,74 @@
+"use client";
+
+import { ColumnProps, GenericTable } from "@/components/table/GenericTable";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   Building,
   Calendar,
+  Eye,
   Mail,
   MapPin,
   Phone,
+  Play,
+  Plus,
   SquareArrowOutUpRight,
 } from "lucide-react";
 import Image from "next/image";
+import type { Empresa } from "@/types/Empresa";
+import empresaData from "@/data/empresaData.json";
+
+const data: Empresa[] = empresaData as Empresa[];
+
+const columns: ColumnProps<Empresa>[] = [
+  { key: "logo", header: "Logo" },
+  { key: "razonSocial", header: "Razon Social" },
+  { key: "periodo", header: "Periodo" },
+  { key: "cargo", header: "Cargo" },
+  // Acciones
+  {
+    key: "acciones",
+    header: "Acciones",
+    className: "text-right",
+    render: (row) => (
+      <div className="flex items-center justify-end gap-2">
+        {/* Botón Ver */}
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 gap-1"
+          onClick={() => alert("Ver detalles para empresa ID: " + row.id)}
+        >
+          <Eye size={14} />
+          <span>Ver</span>
+        </Button>
+
+        {/* Botón Continuar Prácticas */}
+        <Button
+          variant="default" // O "secondary" según tu paleta
+          size="sm"
+          className="h-8 gap-1 bg-blue-600 hover:bg-blue-700 text-white"
+          onClick={() =>
+            alert("Continuar prácticas para empresa ID: " + row.id)
+          }
+        >
+          <span>Continuar prácticas</span>
+        </Button>
+      </div>
+    ),
+  },
+];
 
 function page() {
   return (
-    <div className="px-4">
-      <div className="text-3xl font-bold py-4">Informacion de Empresa</div>
+    <div className="grid grid-cols-1 gap-4 px-4">
+      <div className="flex items-center justify-between text-3xl font-bold py-4">
+        <span>Informacion de Empresa</span>
+        <Button variant="default">
+          <Plus />
+          Registrar Nueva Empresa
+        </Button>
+      </div>
 
       <Card className="px-4">
         <div className="mb-2 px-4">
@@ -113,7 +168,18 @@ function page() {
         </div>
       </Card>
 
-      <div>{/* Card de Empresas Previas */}</div>
+      <Card>
+        <div className="mb-2 px-4">
+          <h2 className="text-2xl font-bold mb-2">Empresas Previas</h2>
+          <p className="text-gray-600 mb-4">
+            Historial de empresas donde has realizado practicas anteriormente.
+          </p>
+        </div>
+        {/* Tabla de Empresas Previas */}
+        <div className="px-4">
+          <GenericTable columns={columns} data={data} />
+        </div>
+      </Card>
     </div>
   );
 }
