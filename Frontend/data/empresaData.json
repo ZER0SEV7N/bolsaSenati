@@ -2,21 +2,21 @@
   {
     "id": "1",
     "razonSocial": "Empresa A",
-    "logoUrl": "/logos/empresaA.png",
+    "logoUrl": "https://i.pravatar.cc/150?u=1",
     "periodo": "Enero 2023 - Diciembre 2023",
     "cargo": "Practicante de Desarrollo Web"
   },
   {
     "id": "2",
     "razonSocial": "Empresa B",
-    "logoUrl": "/logos/empresaB.png",
+    "logoUrl": "https://i.pravatar.cc/150?u=2",
     "periodo": "Marzo 2022 - Diciembre 2022",
     "cargo": "Practicante de Análisis de Datos"
   },
   {
     "id": "3",
     "razonSocial": "Empresa C",
-    "logoUrl": "/logos/empresaC.png",
+    "logoUrl": "https://i.pravatar.cc/150?u=3",
     "periodo": "Junio 2021 - Diciembre 2021",
     "cargo": "Practicante de Marketing Digital"
   }

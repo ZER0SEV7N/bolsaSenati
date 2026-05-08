@@ -17,11 +17,21 @@ import {
 import Image from "next/image";
 import type { Empresa } from "@/types/Empresa";
 import empresaData from "@/data/empresaData.json";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const data: Empresa[] = empresaData as Empresa[];
 
 const columns: ColumnProps<Empresa>[] = [
-  { key: "logo", header: "Logo" },
+  {
+    key: "logoUrl",
+    header: "Logo",
+    render: (row: Empresa) => (
+      <Avatar>
+        <AvatarImage src={row.logoUrl} alt={row.razonSocial} />
+        <AvatarFallback>{row.razonSocial.charAt(0)}</AvatarFallback>
+      </Avatar>
+    ),
+  },
   { key: "razonSocial", header: "Razon Social" },
   { key: "periodo", header: "Periodo" },
   { key: "cargo", header: "Cargo" },
