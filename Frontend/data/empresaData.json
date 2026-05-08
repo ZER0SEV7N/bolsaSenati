@@ -1,23 +1,26 @@
 [
   {
     "id": "1",
-    "razonSocial": "Empresa A",
-    "logoUrl": "https://i.pravatar.cc/150?u=1",
-    "periodo": "Enero 2023 - Diciembre 2023",
+    "razonSocial": "Coca-Cola S.A.",
+    "logoUrl": "https://logo.clearbit.com/cocacola.com",
+    "periodoInicio": "22/07/2021",
+    "periodoFin": "21/11/2021",
     "cargo": "Practicante de Desarrollo Web"
   },
   {
     "id": "2",
-    "razonSocial": "Empresa B",
-    "logoUrl": "https://i.pravatar.cc/150?u=2",
-    "periodo": "Marzo 2022 - Diciembre 2022",
+    "razonSocial": "TechSolutions S.A.",
+    "logoUrl": "https://logo.clearbit.com/techsolutions.com",
+    "periodoInicio": "18/05/2021",
+    "periodoFin": "25/03/2022",
     "cargo": "Practicante de Análisis de Datos"
   },
   {
     "id": "3",
-    "razonSocial": "Empresa C",
-    "logoUrl": "https://i.pravatar.cc/150?u=3",
-    "periodo": "Junio 2021 - Diciembre 2021",
+    "razonSocial": "MarketingDigital S.A.",
+    "logoUrl": "https://logo.clearbit.com/marketingdigital.com",
+    "periodoInicio": "01/01/2021",
+    "periodoFin": "31/12/2021",
     "cargo": "Practicante de Marketing Digital"
   }
 ]

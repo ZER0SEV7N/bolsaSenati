@@ -10,7 +10,6 @@ import {
   Mail,
   MapPin,
   Phone,
-  Play,
   Plus,
   SquareArrowOutUpRight,
 } from "lucide-react";
@@ -33,7 +32,15 @@ const columns: ColumnProps<Empresa>[] = [
     ),
   },
   { key: "razonSocial", header: "Razon Social" },
-  { key: "periodo", header: "Periodo" },
+  {
+    key: "periodo",
+    header: "Periodo",
+    render: (row: Empresa) => (
+      <span className="flex items-center gap-1 text-sm ">
+        <Calendar /> {row.periodoInicio} - {row.periodoFin}
+      </span>
+    ),
+  },
   { key: "cargo", header: "Cargo" },
   // Acciones
   {

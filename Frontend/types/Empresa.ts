@@ -2,6 +2,7 @@ export interface Empresa {
   id?: string;
   razonSocial: string;
   logoUrl: string;
-  periodo: string;
+  periodoInicio: string;
+  periodoFin: string;
   cargo: string;
 }
