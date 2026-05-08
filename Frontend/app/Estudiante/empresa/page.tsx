@@ -17,6 +17,7 @@ import Image from "next/image";
 import type { Empresa } from "@/types/Empresa";
 import empresaData from "@/data/empresaData.json";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
 
 const data: Empresa[] = empresaData as Empresa[];
 
@@ -77,11 +78,16 @@ const columns: ColumnProps<Empresa>[] = [
 ];
 
 function page() {
+  const route = useRouter();
   return (
     <div className="grid grid-cols-1 gap-4 px-4">
       <div className="flex items-center justify-between text-3xl font-bold py-4">
         <span>Informacion de Empresa</span>
-        <Button variant="default">
+        <Button
+          variant="default"
+          onClick={() => route.push("/Estudiante/empresa/create")}
+          className="gap-2"
+        >
           <Plus />
           Registrar Nueva Empresa
         </Button>
@@ -180,6 +186,9 @@ function page() {
                 <Phone size={18} />
                 <span className="text-sm">+51 987 654 321</span>
               </p>
+              <Button variant="outline" size="sm" className="w-fit gap-2">
+                Ver más
+              </Button>
             </div>
           </div>
         </div>
