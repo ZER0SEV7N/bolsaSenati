@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/appSidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { NavBar } from "@/components/navBar";
 
 const menuItems = [
   { title: "Dashboard", url: "/Estudiante/dashboard" },
@@ -19,13 +20,14 @@ export default function DashboardLayout({
     <TooltipProvider>
       <SidebarProvider>
         <AppSidebar menuItems={menuItems} />
-        <main className="w-full">
-          {/* Cabecera NavBar*/}
-          <header className="flex h-12 items-center px-4 border-b">
-            <SidebarTrigger />
-            {/* Usuario- Sesion- CerrarSesion */}
+        <main className="w-full bg-gray-50 dark:bg-[#1e2124] min-h-screen transition-colors">
+          <header className="flex h-16 items-center px-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#2f343a] transition-colors">
+            <SidebarTrigger className="text-black dark:text-white hover:bg-gray-200 dark:hover:bg-[#3a3f47]" />
+            <NavBar />
           </header>
-          {children}
+          <div className="p-6">
+              {children}
+          </div>
         </main>
       </SidebarProvider>
     </TooltipProvider>

@@ -4,7 +4,7 @@
 //Contexto para manejar el estado global de autenticación en la aplicación.
 import { createContext, useContext, useState } from "react"
 import { User } from "../app/login/types/user"
-import users from "../app/login/data/user.json"
+import users from "../data/user.json"
 
 type AuthContextType = {
     isAuthenticated: boolean
