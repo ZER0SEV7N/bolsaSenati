@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "razonSocial": "Coca-Cola S.A.",
+    "logoUrl": "https://logo.clearbit.com/cocacola.com",
+    "periodoInicio": "22/07/2021",
+    "periodoFin": "21/11/2021",
+    "cargo": "Practicante de Desarrollo Web"
+  },
+  {
+    "id": "2",
+    "razonSocial": "TechSolutions S.A.",
+    "logoUrl": "https://logo.clearbit.com/techsolutions.com",
+    "periodoInicio": "18/05/2021",
+    "periodoFin": "25/03/2022",
+    "cargo": "Practicante de Análisis de Datos"
+  },
+  {
+    "id": "3",
+    "razonSocial": "MarketingDigital S.A.",
+    "logoUrl": "https://logo.clearbit.com/marketingdigital.com",
+    "periodoInicio": "01/01/2021",
+    "periodoFin": "31/12/2021",
+    "cargo": "Practicante de Marketing Digital"
+  }
+]

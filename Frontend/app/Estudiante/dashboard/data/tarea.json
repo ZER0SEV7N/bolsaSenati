@@ -1,0 +1,51 @@
+[
+  {
+    "idTarea": 1,
+    "titulo": "Tarea 1",
+    "descripcion": "Descripción de la tarea 1",
+    "fechaEntrega": "2024-07-01",
+    "estado": "Pendiente"
+  },
+  {
+    "idTarea": 2,
+    "titulo": "Tarea 2",
+    "descripcion": "Descripción de la tarea 2",
+    "fechaEntrega": "2024-07-05",
+    "estado": "En Progreso"
+  },
+  {
+    "idTarea": 3,
+    "titulo": "Tarea 3",
+    "descripcion": "Descripción de la tarea 3",
+    "fechaEntrega": "2024-07-10",
+    "estado": "Completado"
+  },
+  {
+    "idTarea": 4,
+    "titulo": "Tarea 4",
+    "descripcion": "Descripción de la tarea 4",
+    "fechaEntrega": "2024-07-15",
+    "estado": "Pendiente"
+  },
+  {
+    "idTarea": 5,
+    "titulo": "Tarea 5",
+    "descripcion": "Descripción de la tarea 5",
+    "fechaEntrega": "2024-07-20",
+    "estado": "En Progreso"
+  },
+  {
+    "idTarea": 6,
+    "titulo": "Tarea 6",
+    "descripcion": "Descripción de la tarea 6",
+    "fechaEntrega": "2024-07-25",
+    "estado": "Retrazado"
+  },
+  {
+    "idTarea": 7,
+    "titulo": "Tarea 7",
+    "descripcion": "Descripción de la tarea 7",
+    "fechaEntrega": "2024-07-30",
+    "estado": "Retrazado"
+  }
+]
