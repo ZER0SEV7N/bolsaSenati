@@ -77,7 +77,7 @@ const columns: ColumnProps<Empresa>[] = [
   },
 ];
 
-function page() {
+function EmpresaPage() {
   const route = useRouter();
   return (
     <div className="grid grid-cols-1 gap-4 px-4">
@@ -210,4 +210,4 @@ function page() {
   );
 }
 
-export default page;
+export default EmpresaPage;

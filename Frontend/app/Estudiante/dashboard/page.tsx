@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -14,6 +13,7 @@ import {
   MessageSquare,
   ListTodo,
 } from "lucide-react";
+import { Tarea } from "./types/Tarea";
 
 // ─── Datos de ejemplo ───────────────────────────────────────────────
 const historialVisitas = [
@@ -47,7 +47,7 @@ const comentarios = [
   },
 ];
 
-const tareas = [
+const tareas: Tarea[] = [
   {
     id: 1,
     titulo: "Mantenimiento Preventivo",
@@ -142,32 +142,31 @@ function TareasFiltradas({
   tareas,
 }: {
   filtro: string;
-  tareas: typeof tareas;
+  tareas: Tarea[];
 }) {
   const filtradas =
-    filtro === "Todas"
-      ? tareas
-      : tareas.filter((t) => t.estado === filtro);
-
+    filtro === "Todas" ? tareas : tareas.filter((t) => t.estado === filtro);
   return (
-    <div className="space-y-3">
+    <div>
       {filtradas.map((tarea) => (
         <div
           key={tarea.id}
-          className="flex items-start justify-between rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 hover:bg-white/[0.06] transition-colors"
+          className="flex items-start justify-between rounded-xl border border-border bg-card p-3 hover:bg-muted transition-colors"
         >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <p className="text-sm font-semibold text-slate-100 truncate">
+              <p className="text-sm font-semibold text-foreground truncate">
                 {tarea.titulo}
               </p>
               {tarea.estado === "Completadas" && (
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
               )}
             </div>
-            <p className="text-xs text-slate-500 truncate">{tarea.descripcion}</p>
+            <p className="text-xs text-muted-foreground truncate">
+              {tarea.descripcion}
+            </p>
             <div className="flex items-center gap-3 mt-1.5">
-              <span className="flex items-center gap-1 text-[10px] text-slate-500">
+              <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                 <CalendarDays className="h-3 w-3" />
                 {tarea.fecha}
               </span>
@@ -177,7 +176,7 @@ function TareasFiltradas({
         </div>
       ))}
       {filtradas.length === 0 && (
-        <p className="text-center text-sm text-slate-500 py-6">
+        <p className="text-center text-sm text-muted-foreground py-6">
           No hay tareas en esta categoría.
         </p>
       )}
@@ -187,25 +186,30 @@ function TareasFiltradas({
 
 // ─── Componente Principal ────────────────────────────────────────────
 export default function DashboardPage() {
-  const tareasCompletadas = tareas.filter((t) => t.estado === "Completadas").length;
-  const tareasPendientes = tareas.filter((t) => t.estado !== "Completadas").length;
+  const tareasCompletadas = tareas.filter(
+    (t) => t.estado === "Completadas",
+  ).length;
+  const tareasPendientes = tareas.filter(
+    (t) => t.estado !== "Completadas",
+  ).length;
   const operacionesEjecutadas = 18;
   const operacionesPendientes = 6;
 
   return (
-    <div className="min-h-screen bg-[#181c23] text-slate-100">
+    <Card>
       {/* ── HEADER ── */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-[#1e2533] via-[#1a2035] to-[#181c23] px-6 py-8 border-b border-white/[0.06]">
+      <div className="relative overflow-hidden bg-gradient-to-br from-background via-muted to-background px-6 py-8 border-b border-border">
         {/* Glow decorativo */}
         <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-violet-600/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-10 left-1/3 h-48 w-48 rounded-full bg-cyan-500/8 blur-3xl" />
 
         <div className="relative">
-          <h1 className="text-3xl font-bold tracking-tight text-white">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Bienvenido Aprendiz
           </h1>
-          <p className="mt-1 text-sm text-slate-400">
-            Aquí puedes ver tu avance, calificaciones y comentarios de tus monitores.
+          <p className="mt-1 text-sm text-muted-foreground">
+            Aquí puedes ver tu avance, calificaciones y comentarios de tus
+            monitores.
           </p>
         </div>
       </div>
@@ -219,7 +223,7 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {/* Tarjeta Promedio - Verde Neón */}
-            <Card className="relative overflow-hidden border border-emerald-500/30 bg-[#1a2535] shadow-lg">
+            <Card className="relative overflow-hidden border border-emerald-500/30 bg-card shadow-lg">
               <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-emerald-500/20" />
               <div className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-emerald-500/15 blur-xl" />
               <CardContent className="p-5">
@@ -246,7 +250,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Tarjeta Última Visita - Naranja */}
-            <Card className="relative overflow-hidden border border-orange-500/30 bg-[#1a2535] shadow-lg">
+            <Card className="relative overflow-hidden border border-orange-500/30 bg-card shadow-lg">
               <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-orange-500/20" />
               <div className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-orange-500/15 blur-xl" />
               <CardContent className="p-5">
@@ -273,7 +277,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Tarjeta Historial - Azul grisáceo */}
-            <Card className="relative overflow-hidden border border-sky-500/30 bg-[#1a2535] shadow-lg">
+            <Card className="relative overflow-hidden border border-sky-500/30 bg-card shadow-lg">
               <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-sky-500/20" />
               <CardContent className="p-5">
                 <div className="flex items-start justify-between mb-3">
@@ -310,7 +314,7 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {/* Cumplimiento - Violeta Neón */}
-            <Card className="relative overflow-hidden border border-violet-500/30 bg-[#1a2535] shadow-lg">
+            <Card className="relative overflow-hidden border border-violet-500/30 bg-card shadow-lg">
               <div className="pointer-events-none absolute -top-6 -right-6 h-28 w-28 rounded-full bg-violet-600/15 blur-xl" />
               <CardContent className="p-5">
                 <p className="text-xs text-slate-400 font-medium mb-2">
@@ -340,7 +344,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Tareas - Rosa */}
-            <Card className="relative overflow-hidden border border-pink-500/30 bg-[#1a2535] shadow-lg">
+            <Card className="relative overflow-hidden border border-pink-500/30 bg-card shadow-lg">
               <div className="pointer-events-none absolute -top-6 -right-6 h-28 w-28 rounded-full bg-pink-600/15 blur-xl" />
               <CardContent className="p-5">
                 <div className="flex items-start justify-between">
@@ -372,7 +376,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Operaciones - Rojo/Coral */}
-            <Card className="relative overflow-hidden border border-red-500/30 bg-[#1a2535] shadow-lg">
+            <Card className="relative overflow-hidden border border-red-500/30 bg-card shadow-lg">
               <div className="pointer-events-none absolute -top-6 -right-6 h-28 w-28 rounded-full bg-red-600/15 blur-xl" />
               <CardContent className="p-5">
                 <div className="flex items-start justify-between">
@@ -415,7 +419,7 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {/* Columna izquierda: Comentarios */}
-            <Card className="border border-white/[0.06] bg-[#1a2535]">
+            <Card className="border border-border bg-card">
               <CardHeader className="pb-3 pt-5 px-5">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-200">
                   <MessageSquare className="h-4 w-4 text-slate-400" />
@@ -449,7 +453,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Columna derecha: Tareas detalladas */}
-            <Card className="border border-white/[0.06] bg-[#1a2535]">
+            <Card className="border border-border bg-card">
               <CardHeader className="pb-3 pt-5 px-5">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-200">
                   <ListTodo className="h-4 w-4 text-slate-400" />
@@ -494,6 +498,6 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
-    </div>
+    </Card>
   );
 }

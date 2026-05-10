@@ -21,7 +21,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // Mapeo de iconos
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType> = {
   Dashboard: LayoutDashboard,
   "Bolsa de Trabajo": Briefcase,
   Empresa: Building2,
@@ -34,8 +34,6 @@ export function AppSidebar({
 }: {
   menuItems: { title: string; url: string }[];
 }) {
-  const router = useRouter();
-
   return (
     <Sidebar className="bg-[#2f343a] text-white border-none">
       {/* Cabecera */}
@@ -67,7 +65,7 @@ export function AppSidebar({
                     href={item.url}
                     className="flex items-center gap-3 w-full"
                   >
-                    <Icon className="size-5" />
+                    <Icon />
                     <span className="text-[15px]">{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
