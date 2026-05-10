@@ -3,7 +3,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -11,7 +10,6 @@ import {
 } from "@/components/ui/sidebar";
 import {
   User,
-  LogOut,
   LayoutDashboard,
   Briefcase,
   Building2,
@@ -20,11 +18,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useAuth } from "@/context/context";
 import { useRouter } from "next/navigation";
 
 // Mapeo de iconos
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType> = {
   Dashboard: LayoutDashboard,
   "Bolsa de Trabajo": Briefcase,
   Empresa: Building2,
@@ -37,31 +34,20 @@ export function AppSidebar({
 }: {
   menuItems: { title: string; url: string }[];
 }) {
-  const { user, logout } = useAuth();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    logout();
-    router.push("/");
-  };
-
   return (
     <Sidebar className="bg-[#2f343a] text-white border-none">
       {/* Cabecera */}
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3">
-          <div className="size-12 flex items-center justify-center">
-            {/* Logo circular de Senati */}
+        <div className="flex items-center gap-3 justify-center">
+          <div className="rounded-lg overflow-hidden">
+            {/* Logo de Senati */}
             <Image
-              src="/logoSenati.svg"
+              src="/Senati_logo_completo.png"
               alt="Logo SENATI"
-              width={48}
-              height={48}
+              width={140}
+              height={140}
             />
           </div>
-          <span className="font-bold text-xl tracking-wider text-gray-100">
-            SENATI
-          </span>
         </div>
       </SidebarHeader>
 
@@ -79,7 +65,7 @@ export function AppSidebar({
                     href={item.url}
                     className="flex items-center gap-3 w-full"
                   >
-                    <Icon className="size-5" />
+                    <Icon />
                     <span className="text-[15px]">{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
@@ -88,27 +74,6 @@ export function AppSidebar({
           })}
         </SidebarMenu>
       </SidebarContent>
-
-      {/* Footer con Cerrar Sesión */}
-      <SidebarFooter className="p-4 border-t border-gray-700">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              onClick={handleLogout}
-              className="text-gray-300 hover:bg-red-500/10 hover:text-red-400 gap-3"
-            >
-              <LogOut className="size-5" />
-              <span>Cerrar Sesión</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <div className="flex items-center gap-2 px-2 py-2 text-xs text-gray-500">
-              <User className="size-3" />
-              <span>{user?.nombre || "Usuario"}</span>
-            </div>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </Sidebar>
   );
 }
