@@ -63,9 +63,8 @@ const columns: ColumnProps<Empresa>[] = [
 
         {/* Botón Continuar Prácticas */}
         <Button
-          variant="default" // O "secondary" según tu paleta
+          className="bg-foreground text-background hover:bg-foreground/90 transition-colors"
           size="sm"
-          className="h-8 gap-1 bg-blue-600 hover:bg-blue-700 text-white"
           onClick={() =>
             alert("Continuar prácticas para empresa ID: " + row.id)
           }
@@ -84,9 +83,8 @@ function EmpresaPage() {
       <div className="flex items-center justify-between text-3xl font-bold py-4">
         <span>Informacion de Empresa</span>
         <Button
-          variant="default"
           onClick={() => route.push("/Estudiante/empresa/create")}
-          className="gap-2"
+          className="bg-foreground text-background hover:bg-foreground/90 transition-colors gap-2"
         >
           <Plus />
           Registrar Nueva Empresa
@@ -106,7 +104,7 @@ function EmpresaPage() {
           <div className="px-4 pb-4 flex flex-col gap-4">
             <div className="flex items-center gap-4">
               <Image
-                src="/empresa.svg"
+                src="/file.svg"
                 alt="Logo"
                 width={80}
                 height={80}
