@@ -28,7 +28,6 @@ function BolsaPage() {
               />
             </div>
 
-            {/* SECCIÓN INFERIOR: Cursos en columnas */}
             <SimpleProgressCard
               titulo="GESTORES DE ADMINISTRACIÓN WEB"
               progreso={7}
