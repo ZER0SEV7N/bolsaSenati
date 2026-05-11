@@ -4,6 +4,7 @@ import { ProfileCard } from "./components/ProfileCard";
 import { PersonalInfo} from "./components/PersonalInfo";
 import { usePerfil } from "./hook/usePerfil";
 import { AcademicInfo } from "./components/AcademicInfo";
+import { DistritosAdicionales } from "./components/DistritosAdicionales";
 
 
 
@@ -19,10 +20,12 @@ console.log(perfil)
       
       <ProfileCard perfil={perfil} />
 
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-2 space-y-6">
         <PersonalInfo perfil={perfil}/>
 
         <AcademicInfo/>
+
+        <DistritosAdicionales/>
 
       </div>
 

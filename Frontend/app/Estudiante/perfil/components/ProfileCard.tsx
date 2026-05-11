@@ -11,6 +11,7 @@ import { User } from "@/app/login/types/user";
 
 import { Button } from "@/components/ui/button";
 
+
 type ProfileCardProps = {
   perfil: User | null;
 };
