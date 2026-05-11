@@ -11,7 +11,7 @@ export default function Page() {
         {/* Titulo y foto */}
         <div className="flex flex-col items-center gap-6">
             <Image src="/Senati_logo_completo.png" alt="Logo senati" width={200} height={200} className="w-80 h-auto" />
-            <Label className="text-2xl font-bold text-center">Bienvenido</Label>
+            <Label className="text-5xl font-bold text-center">Bienvenido</Label>
             <Label className="text-sm text-center text-muted-foreground padding-y-2">Inicia sesión para continuar con tu cuenta de senati</Label>
         </div>
         <LoginForm />

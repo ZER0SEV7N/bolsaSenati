@@ -1,25 +1,25 @@
 //frontend/app/login/components/login-form.tsx
 //Componente de formulario de inicio de sesion - SHADCN 
 'use client'
+//Importaciones
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useLogin } from "../hook/auth";
 import { useState } from "react";
-import { Eye } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
+//Componente principal del formulario de inicio de sesión
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { handleLogin } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     handleLogin(email, password);
@@ -58,7 +58,7 @@ export function LoginForm() {
                 <div className="relative">
                   <Input
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="***********"
@@ -71,8 +71,13 @@ export function LoginForm() {
                     size="icon-sm"
                     className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
                     aria-label="Mostrar contraseña"
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-                    <Eye className="h-4 w-4" />
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </Button>
                 </div>
               </Field>

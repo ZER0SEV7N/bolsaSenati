@@ -1,9 +1,9 @@
 "use client";
 
-import { ProfileCard } from "./components/ProfileCard";
-import { PersonalInfo} from "./components/PersonalInfo";
-import { usePerfil } from "./hook/usePerfil";
-import { AcademicInfo } from "./components/AcademicInfo";
+import { ProfileCard } from "../avance/components/ProfileCard";
+import { PersonalInfo} from "../avance/components/PersonalInfo";
+import { usePerfil } from "../avance/hook/usePerfil";
+import { AcademicInfo } from "../avance/components/AcademicInfo";
 
 
 
