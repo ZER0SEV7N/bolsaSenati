@@ -7,4 +7,5 @@ export type User = {
     telefono?: number
     direccion?: string
     contraseña?: string
+    rol?: string
 }

@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { handleLogin } = useLogin();
+  const { handleLogin, error } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -89,6 +89,13 @@ export function LoginForm() {
                 />
                 <Label htmlFor="recuerdame">Recordarme</Label>
               </Field>
+
+              {/* Mostrar mensaje de error si existe */}
+              {error && (
+                <div className="text-sm text-destructive">
+                  {error}
+                </div>
+              )}
 
               <Button type="submit" className="h-12 rounded-xl bg-primary text-base font-semibold shadow-lg shadow-primary/20 transition-transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25">
                 Iniciar sesión

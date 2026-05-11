@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { Badge } from "./ui/badge";
+import { useAuth } from "@/context/context";
 
 // Mapeo de iconos
 const iconMap: Record<string, React.ComponentType> = {
@@ -31,9 +32,14 @@ const iconMap: Record<string, React.ComponentType> = {
 
 export function AppSidebar({
   menuItems,
+  role,
 }: {
   menuItems: { title: string; url: string }[];
+  role?: string;
 }) {
+  const { user } = useAuth();
+  const currentRole = role ?? user?.rol ?? "Invitado";
+
   return (
     <Sidebar className="bg-[#2f343a] text-white border-none">
       {/* Cabecera */}
@@ -49,6 +55,12 @@ export function AppSidebar({
             />
           </div>
         </div>
+        {/* Badge de rol */}
+        <div className="text-sm px-2 py-1 justify-content rounded">
+            <Badge variant="outline" className="text-green-300">
+              {currentRole}
+            </Badge>
+          </div>
       </SidebarHeader>
 
       <SidebarContent className="px-2">
