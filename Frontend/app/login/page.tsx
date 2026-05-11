@@ -1,7 +1,6 @@
 //bolsasenati/app/page.tsx
 //Page de login, utilizando componentes de UI personalizados para el formulario de inicio de sesión.
 import { LoginForm } from "@/app/login/components/login-form"
-import { Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 
