@@ -2,9 +2,10 @@
 
 //bolsasenati/frontend/context/context.tsx
 //Contexto para manejar el estado global de autenticación en la aplicación.
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { User } from "../app/login/types/user"
 import users from "../data/user.json"
+
 
 type AuthContextType = {
     isAuthenticated: boolean
@@ -22,6 +23,27 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined); //Pro
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null); //Estado para almacenar el usuario autenticado
     const [isAuthenticated, setIsAuthenticated] = useState(false); //Estado para manejar la autenticación
+
+    useEffect(() => {
+
+        if (typeof window === "undefined") {
+            return;
+        }
+
+        const storedUser =
+            localStorage.getItem("auth-user");
+
+        if (storedUser) {
+
+            const parsedUser =
+                JSON.parse(storedUser);
+
+            setUser(parsedUser);
+
+            setIsAuthenticated(true);
+        }
+
+    }, []);
 
     //Función para persistir el usuario autenticado en el navegador
     const saveAuthUser = (authUser: User | null) => {

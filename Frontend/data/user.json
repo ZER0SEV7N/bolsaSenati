@@ -3,6 +3,8 @@
         "nombre": "Denis",
         "apellido": "Jara",
         "email": "1799058@senati.pe",
+        "telefono":"999999999",
+        "direccion": "Miraflores",
         "contraseña": "123456"
     }
 ]
