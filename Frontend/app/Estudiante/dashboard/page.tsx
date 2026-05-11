@@ -178,7 +178,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="p-6 space-y-6 bg-transparent">
-        {/* ── CALIFICACIÓN ACTUAL ── */}
+        {/* ── Calificacion actual ── */}
         <section>
           <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-3">
             <BadgeCheck className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.4)] dark:drop-shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
@@ -191,7 +191,7 @@ export default function DashboardPage() {
           />
         </section>
 
-        {/* ── AVANCE PEA ── */}
+        {/* ── Avance Pea ── */}
         <section>
           <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-3">
             <BarChart3 className="h-3.5 w-3.5 text-violet-500 dark:text-violet-400 drop-shadow-[0_0_6px_rgba(167,139,250,0.4)] dark:drop-shadow-[0_0_6px_rgba(167,139,250,0.8)]" />
@@ -205,7 +205,7 @@ export default function DashboardPage() {
           />
         </section>
 
-        {/* ── FEEDBACK Y GESTIÓN ── */}
+        {/* ── Feedback y Gestión ── */}
         <section>
           <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-3">
             <MessagesSquare className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400 drop-shadow-[0_0_6px_rgba(56,189,248,0.4)] dark:drop-shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
@@ -246,6 +246,7 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
+            {/* ── Tareas Detalladas con Tabs ── */}
             <Card className="border border-border bg-card shadow-sm">
               <CardHeader className="pb-3 pt-5 px-5">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">

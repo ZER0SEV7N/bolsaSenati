@@ -16,13 +16,9 @@ export const usePerfil = () => {
 
     //Efecto para actualizar el perfil cuando el usuario autenticado cambia
     useEffect(() => {
-        if (user) {
-            setPerfil(user); //Actualizar el perfil con los datos del usuario autenticado
-            setError(null);
-            setSuccess(null);
-        } else {
-            setPerfil(null); //Si no hay usuario autenticado, limpiar el perfil
-        }
+        setPerfil(user || null); //Actualizar el perfil con los datos del usuario autenticado o null
+        setError(null);
+        setSuccess(null);
     }, [user]); //Dependencia del efecto para actualizar cuando el usuario cambia
 
     //Función para actualizar un campo del perfil de forma controlada
@@ -51,17 +47,16 @@ export const usePerfil = () => {
             return false;
         }
 
-        const saved = updateUser(perfil);
-
-        if (saved) {
+        try {
+            updateUser(perfil);
             setIsEditing(false);
             setSuccess("Perfil actualizado correctamente");
             setError(null);
             return true;
+        } catch {
+            setError("No se pudo guardar el perfil");
+            return false;
         }
-
-        setError("No se pudo guardar el perfil");
-        return false;
     };
 
     //Función para restaurar el perfil original autenticado
