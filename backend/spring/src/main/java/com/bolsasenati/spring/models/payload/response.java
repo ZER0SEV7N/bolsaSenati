@@ -1,5 +1,7 @@
 package com.bolsasenati.spring.models.payload;
 
+//Payload de respuesta generico 
+//Para estructuracion de respuestas de la API con un formato consistente
 public class response <T> {
     private Boolean success;
     private String message;
