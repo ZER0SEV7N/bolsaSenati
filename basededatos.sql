@@ -1,79 +1,121 @@
-drop database if exists bolsaSenati;
-create database bolsaSenati;
-use bolsaSenati;
+DROP DATABASE IF EXISTS bolsaSenati;
+CREATE DATABASE bolsaSenati;
+USE bolsaSenati;
 
-create table rol(
-	id int auto_increment primary key,
-    name char(50) not null unique
+
+CREATE TABLE rol (
+    id   INT AUTO_INCREMENT PRIMARY KEY,
+    name CHAR(50) NOT NULL UNIQUE
 );
 
-create table usuario(
-    id int auto_increment primary key,
-    correo varchar(100) not null unique,
-    contrasenia varchar(255) not null,
-    idRol int references rol(id)
+CREATE TABLE carrera (
+    id                  INT AUTO_INCREMENT PRIMARY KEY,
+    nombre              CHAR(100) NOT NULL UNIQUE,
+    codigo              CHAR(10)  NOT NULL UNIQUE,
+    duracion_semestres  INT DEFAULT 6
 );
 
-create table aprendiz(
-    idUsuario int references usuario(id),
-    nombres char(100) not null,
-    apellidos char(100) not null,
-    correo_personal char(250),
-    telefono char(12) ,
-    dni char(8) not null unique,
-    idCarrera int references carrera(id),
-    idPea int references pea(id),
-    ciclo enum("IV","V","VI") default 'IV',
-    sede char(100) not null,
-    palabras_clave json null,
-    primary key(idUsuario)
+
+CREATE TABLE empresa (
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    nombre   VARCHAR(150) NOT NULL,
+    ruc      CHAR(11)     NOT NULL UNIQUE,
+    sector   VARCHAR(100),
+    telefono CHAR(12),
+    correo   VARCHAR(100),
+    direccion VARCHAR(200),
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table carrera(
-	id int auto_increment primary key,
-    nombre char(100) not null unique, 
-    codigo char(10) not null unique, 
-    duracion_semestres int default 6  -- Carrera tiene 6 semestres default
+CREATE TABLE convenio (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    idEmpresa  INT NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin    DATE,
+    estado       ENUM('activo', 'inactivo', 'vencido') DEFAULT 'activo',
+    descripcion  TEXT,
+    create_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idEmpresa) REFERENCES empresa(id) ON DELETE CASCADE
 );
 
-create table pea(
-	id int auto_increment primary key,
-    anio char(4) not null,
-    estado boolean default true,
-    idCarrera int references carrera(id) on delete cascade,
-    create_at timestamp default current_timestamp
+CREATE TABLE historial_convenio (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    idConvenio  INT NOT NULL,
+    cambio      VARCHAR(255) NOT NULL,
+    fecha       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idConvenio) REFERENCES convenio(id) ON DELETE CASCADE
 );
 
-create table curso(
-	id int auto_increment primary key,
-    nombre char(100) not null,
-    -- credito int not null check (credito >= 0), (duda si va o no)
-    idPea int references pea(id) on delete cascade,
-    create_at timestamp default current_timestamp
+
+CREATE TABLE usuario (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    correo      VARCHAR(100) NOT NULL UNIQUE,
+    contrasenia VARCHAR(255) NOT NULL,
+    idRol       INT,
+    FOREIGN KEY (idRol) REFERENCES rol(id)
 );
 
-create table tarea(
-	id int auto_increment primary key,
-    nombre char(100) not null,
-    idCurso int references curso(id) on delete cascade,
-    create_at timestamp default current_timestamp
+
+CREATE TABLE pea (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    anio      CHAR(4)  NOT NULL,
+    estado    BOOLEAN  DEFAULT TRUE,
+    idCarrera INT,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idCarrera) REFERENCES carrera(id) ON DELETE CASCADE
 );
 
-create table operacion(
-	id int auto_increment primary key,
-    nombre char(100) not null,
-    idTarea int references tarea(id) on delete cascade,
-    create_at timestamp default current_timestamp
+
+CREATE TABLE aprendiz (
+    idUsuario      INT PRIMARY KEY,
+    nombres        CHAR(100) NOT NULL,
+    apellidos      CHAR(100) NOT NULL,
+    correo_personal CHAR(250),
+    telefono       CHAR(12),
+    dni            CHAR(8)   NOT NULL UNIQUE,
+    idCarrera      INT,
+    idPea          INT,
+    ciclo          ENUM('IV','V','VI') DEFAULT 'IV',
+    sede           CHAR(100) NOT NULL,
+    palabras_clave JSON      NULL,
+    FOREIGN KEY (idUsuario)  REFERENCES usuario(id),
+    FOREIGN KEY (idCarrera)  REFERENCES carrera(id),
+    FOREIGN KEY (idPea)      REFERENCES pea(id)
 );
 
--- Registro de operaciones realizadas por el aprendiz (de aca sacamos
--- el promedio de todo curso, semestre, counts de operaciones y tareas por estado)
-create table progreso_operacion (
-    id int auto_increment primary key,
-    idAprendiz int references usuario(id),
-    idOperacion int references operacion(id),
-    estado enum('pendiente', 'realizado') default 'pendiente',
-    fecha_registro timestamp default current_timestamp on update current_timestamp,
-    unique(idAprendiz, idOperacion)
+
+CREATE TABLE curso (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    nombre    CHAR(100) NOT NULL,
+    idPea     INT,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idPea) REFERENCES pea(id) ON DELETE CASCADE
 );
 
+CREATE TABLE tarea (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    nombre    CHAR(100) NOT NULL,
+    idCurso   INT,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idCurso) REFERENCES curso(id) ON DELETE CASCADE
+);
+
+CREATE TABLE operacion (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    nombre    CHAR(100) NOT NULL,
+    idTarea   INT,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idTarea) REFERENCES tarea(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE progreso_operacion (
+    id             INT AUTO_INCREMENT PRIMARY KEY,
+    idAprendiz     INT,
+    idOperacion    INT,
+    estado         ENUM('pendiente','realizado') DEFAULT 'pendiente',
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE (idAprendiz, idOperacion),
+    FOREIGN KEY (idAprendiz)  REFERENCES usuario(id),
+    FOREIGN KEY (idOperacion) REFERENCES operacion(id)
+);
