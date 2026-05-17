@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,7 +26,7 @@ public class SecurityConfig {
     //Encriptador de contraseñas utilizando el delegating password encoder de Spring Security
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder(); //Utiliza bcrypt por defecto para encriptar las contraseñas
+        return new BCryptPasswordEncoder(); //Utiliza bcrypt por defecto para encriptar las contraseñas
     }
 
     //Configuración de la cadena de filtros de seguridad
@@ -36,7 +36,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) //Deshabilitamos CSRF ya que usaremos JWT para la autenticación
             .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Indicamos que no se deben crear sesiones, ya que la autenticación se manejará con JWT
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() //Permitir acceso a las rutas de autenticación sin necesidad de estar autenticado
+                .requestMatchers("/auth/**").permitAll() //Permitir acceso a las rutas de autenticación sin necesidad de estar autenticado
+                .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated() //Requerir autenticación para cualquier otra ruta
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //Agregamos nuestro filtro de JWT antes del filtro de autenticación de Spring Security

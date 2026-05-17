@@ -14,14 +14,14 @@ import { Label } from "@/components/ui/label";
 
 //Componente principal del formulario de inicio de sesión 
 export function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const {handleLogin, error, isSubmitting } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleLogin(email, password);
+    handleLogin(correo, password);
   };
 
   return (
@@ -31,14 +31,14 @@ export function LoginForm() {
           <form onSubmit={onSubmit} className="space-y-5">
             <FieldGroup className="gap-5">
               <Field>
-                <FieldLabel htmlFor="email" className="text-sm font-medium text-foreground/90">
+                <FieldLabel htmlFor="correo" className="text-sm font-medium text-foreground/90">
                   Correo institucional
                 </FieldLabel>
                 <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="correo"
+                  type="correo"
+                  value={correo}
+                  onChange={(e) => setCorreo(e.target.value)}
                   placeholder="1234567@senati.pe"
                   className="h-12 rounded-xl border-border/70 bg-background/80 px-4 text-[15px] shadow-sm transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-primary/20"
                   required

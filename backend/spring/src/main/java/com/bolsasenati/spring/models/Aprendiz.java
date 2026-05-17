@@ -1,6 +1,11 @@
 package com.bolsasenati.spring.models;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -33,9 +38,15 @@ public class Aprendiz {
     @Column(columnDefinition = "json", nullable = true, name = "palabras_clave")
     private String palabrasClave;
 
+    @ManyToMany
+    @JoinTable(name = "aprendiz_distrito", joinColumns = @JoinColumn(name = "idAprendiz"), inverseJoinColumns = @JoinColumn(name = "idDistrito"))
+    private Set<Distrito> distritosDeInteres;
+
+    @CreationTimestamp
     @Column(updatable = false, name = "create_at")
     private LocalDateTime createAt;
 
+    @UpdateTimestamp
     @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
 }

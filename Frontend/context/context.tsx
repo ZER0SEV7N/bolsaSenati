@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         try {
-            const res = await api.get('/api/auth/perfil'); 
+            const res = await api.get('/auth/perfil'); 
             
             setUser(res.data.data || res.data.usuario || res.data);
         } catch (error) {
