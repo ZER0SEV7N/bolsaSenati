@@ -9,22 +9,23 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "tarea")
+@Table(name = "progreso_operacion")
 @Data
-public class Tarea {
-
+public class ProgresoOperacion {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false, name = "tarea")
-    private String tarea;
-    @Column(nullable = false, name = "descripcion")
-    private String descripcion;
-    
 
     @ManyToOne
-    @JoinColumn(name = "idCurso", nullable = false)
-    private Curso curso;
+    @JoinColumn(name = "idAprendiz", nullable = false)
+    private Aprendiz aprendiz;
+
+    @ManyToOne
+    @JoinColumn(name = "idOperacion", nullable = false)
+    private Operacion operacion;
+
+    private String estado;
 
     @CreationTimestamp
     @Column(updatable = false, name = "create_at")
