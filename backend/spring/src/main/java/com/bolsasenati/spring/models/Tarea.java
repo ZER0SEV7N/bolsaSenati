@@ -2,6 +2,7 @@ package com.bolsasenati.spring.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+<<<<<<< HEAD
 import java.time.LocalDateTime;
 
 @Data
@@ -22,4 +23,12 @@ public class Tarea {
 
     @Column(name = "create_at")
     private LocalDateTime createAt;
+=======
+
+@Entity
+@Table(name = "tarea")
+@Data
+public class Tarea {
+
+>>>>>>> origin/daniel
 }
