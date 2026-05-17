@@ -24,6 +24,7 @@ export function NavBar() {
 
   //Inicializar tema desde localStorage al montar
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const currentTheme = (localStorage.getItem("theme") as "light" | "dark") || "light";
     setTheme(currentTheme);
@@ -79,15 +80,15 @@ export function NavBar() {
           <Avatar className="h-9 w-9 border-2 border-transparent">
             <AvatarImage src="/avatar-placeholder.png" alt="Avatar" />
             <AvatarFallback className="bg-blue-600 text-white font-semibold">
-              {user?.nombre?.charAt(0) || ""}
-              {user?.apellido?.charAt(0) || ""}
+              {user?.nombres?.charAt(0) || ""}
+              {user?.apellidos?.charAt(0) || ""}
             </AvatarFallback>
           </Avatar>
 
           {user && (
             <div className="hidden md:flex flex-col items-start mr-1">
               <span className="text-sm font-medium leading-none">
-                {user.nombre} {user.apellido}
+                {user.nombres} {user.apellidos}
               </span>
             </div>
           )}

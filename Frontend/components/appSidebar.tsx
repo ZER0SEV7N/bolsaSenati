@@ -44,7 +44,9 @@ export function AppSidebar({
     <Sidebar className="bg-[#2f343a] text-white border-none">
       {/* Cabecera */}
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3 justify-center">
+        {/* Contenedor principal: Columna flexible y centrada */}
+        <div className="flex flex-col items-center gap-4 justify-center w-full">
+          
           <div className="rounded-lg overflow-hidden">
             {/* Logo de Senati */}
             <Image
@@ -54,13 +56,16 @@ export function AppSidebar({
               height={140}
             />
           </div>
+
+          {/* Badge de rol centralizado y más grande */}
+          <Badge 
+            variant="outline" 
+            className="text-green-300 border-green-300/30 text-sm px-5 py-1.5 font-medium tracking-wide uppercase"
+          >
+            {currentRole}
+          </Badge>
+          
         </div>
-        {/* Badge de rol */}
-        <div className="text-sm px-2 py-1 justify-content rounded">
-            <Badge variant="outline" className="text-green-300">
-              {currentRole}
-            </Badge>
-          </div>
       </SidebarHeader>
 
       <SidebarContent className="px-2">

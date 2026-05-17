@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.bolsasenati.spring.models.Usuario;
 import com.bolsasenati.spring.models.dtos.createAprendizDto;
 import com.bolsasenati.spring.models.dtos.loginDto;
+import com.bolsasenati.spring.models.dtos.responseAprendizDto;
 import com.bolsasenati.spring.models.payload.response;
 
 import org.springframework.http.ResponseEntity;
@@ -44,18 +45,23 @@ public class authController {
 
         String token = jwtServices.generarToken(dto.getCorreo());
 
+        Object perfilUsuario = authServices.mapearAprendizADto(usuario);
+        if (perfilUsuario == null) 
+            perfilUsuario = usuario; 
+        
+
         Map<String, Object> data =  new HashMap<>();
         data.put("token", token);
-        data.put("usuario", usuario);
+        data.put("usuario", perfilUsuario);
 
-        return ResponseEntity.status(200).body(new response<>(true,"Login exitoso", data    ));
+        return ResponseEntity.status(200).body(new response<>(true,"Login exitoso", data));
     }
 
     //ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se recomienda exponer esta ruta en producción)
     //POST: /auth/registrar-aprendiz
     @PostMapping("/registrar-aprendiz")
-    public ResponseEntity<response<Usuario>> registrarAprendiz(@RequestBody createAprendizDto dto){
-        Usuario usuario = authServices.registrarAprendiz(dto);
+    public ResponseEntity<response<responseAprendizDto>> registrarAprendiz(@RequestBody createAprendizDto dto){
+        responseAprendizDto usuario = authServices.registrarAprendiz(dto);
 
         if(usuario == null)
             return ResponseEntity.status(400).body(new response<>(false,"No se pudo registrar el aprendiz", null));
@@ -66,7 +72,7 @@ public class authController {
     //Ruta para obtener el perfil del usuario (esto es solo de prueba, no se recomienda exponer esta ruta en producción)
     //GET: /auth/perfil
     @GetMapping("/perfil")
-    public ResponseEntity<response<Usuario>> obtenerPerfil(){
+    public ResponseEntity<response<Object>> obtenerPerfil(){
         String correoAutenticado = SecurityContextHolder
             .getContext()
             .getAuthentication()
@@ -77,7 +83,12 @@ public class authController {
         if(usuario == null)
             return ResponseEntity.status(404).body(new response<>(false,"Usuario no encontrado", null));
 
-        return ResponseEntity.status(200).body(new response<>(true,"Perfil obtenido exitosamente", usuario));
+        Object perfilUsuario = authServices.mapearAprendizADto(usuario);
+        if (perfilUsuario == null) 
+            perfilUsuario = usuario;
+        
+
+        return ResponseEntity.status(200).body(new response<>(true,"Perfil obtenido exitosamente", perfilUsuario));
     }
 
 

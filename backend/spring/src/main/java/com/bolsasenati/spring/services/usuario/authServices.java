@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.bolsasenati.spring.models.Aprendiz;
 import com.bolsasenati.spring.models.Carrera;
+import com.bolsasenati.spring.models.Rol;
 import com.bolsasenati.spring.models.Usuario;
 import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
 import com.bolsasenati.spring.repository.usuarios.usuarioRepository;
 import com.bolsasenati.spring.repository.carrera.carreraRepository;
+import com.bolsasenati.spring.repository.usuarios.rolRepository;
 import com.bolsasenati.spring.models.dtos.createAprendizDto;
+import com.bolsasenati.spring.models.dtos.responseAprendizDto;
 
 //Servicio para manejar la autenticación y registro de usuarios
 @Service
@@ -24,6 +27,9 @@ public class authServices {
 
     @Autowired
     private carreraRepository carreraRepository;
+
+    @Autowired
+    private rolRepository rolRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -51,7 +57,7 @@ public class authServices {
 
     //Metodo de prueba para registrar un nuevo aprendiz
     @Transactional
-    public Usuario registrarAprendiz(createAprendizDto dto){
+    public responseAprendizDto registrarAprendiz(createAprendizDto dto){
         if(usuarioRepository.findByCorreoPersonal(dto.getCorreoPersonal()) != null) 
             return null;
 
@@ -66,6 +72,10 @@ public class authServices {
         usuario.setDocumentoIdentidad(dto.getDocumentoIdentidad());
         usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
         usuario.setTelefono(dto.getTelefono());
+
+        Rol rolAprendiz = rolRepository.findById(1)
+            .orElseThrow(() -> new RuntimeException("Error: El rol no existe en la BD"));
+        usuario.setRol(rolAprendiz);
 
         //Luego se guarda el usuario para obtener su id
         Usuario savedUsuario = usuarioRepository.save(usuario);
@@ -87,7 +97,7 @@ public class authServices {
         
         aprendizRepository.save(aprendiz);
 
-        return savedUsuario;
+        return mapearAprendizADto(savedUsuario);
     }
 
     //Metodo para obtener el perfil del usuario
@@ -97,5 +107,39 @@ public class authServices {
             return aprendiz != null ? aprendiz.getUsuario() : null;
         }
         return usuarioRepository.findByCorreoPersonal(correo);
+    }
+
+    //Metodo para estructurar la respuesta como DTO
+    public responseAprendizDto mapearAprendizADto(Usuario usuario) {
+        Aprendiz aprendiz = aprendizRepository.findById(usuario.getId()).orElse(null);
+        
+        if (aprendiz == null) 
+            return null; 
+        
+        responseAprendizDto response = new responseAprendizDto();
+        response.setId(usuario.getId());
+        response.setNombres(usuario.getNombres());
+        response.setApellidos(usuario.getApellidos());
+        response.setDocumentoIdentidad(usuario.getDocumentoIdentidad());
+        response.setCorreoPersonal(usuario.getCorreoPersonal());
+        response.setTelefono(usuario.getTelefono());
+        
+        response.setCodigoAprendiz(aprendiz.getCodigoAprendiz());
+        response.setCorreoInstitucional(aprendiz.getCorreoInstitucional());
+        response.setCiclo(aprendiz.getCiclo());
+        
+        if (aprendiz.getCarrera() != null) {
+            response.setCarrera(aprendiz.getCarrera().getCarrera());
+            
+            responseAprendizDto.CarreraDto cDto = new responseAprendizDto.CarreraDto();
+            cDto.setId(aprendiz.getCarrera().getId());
+            cDto.setCarrera(aprendiz.getCarrera().getCarrera());
+            response.setCarreraDto(cDto);
+        }
+
+        if (usuario.getRol() != null) 
+            response.setRol(usuario.getRol().getRol()); 
+
+        return response;
     }
 }
