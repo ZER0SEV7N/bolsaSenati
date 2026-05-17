@@ -6,10 +6,9 @@ import {
 } from "@/components/ui/avatar";
 
 import { Badge } from "@/components/ui/badge";
-
 import { User } from "@/app/login/types/user";
-
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/context";
 
 
 type ProfileCardProps = {
@@ -19,6 +18,9 @@ type ProfileCardProps = {
 export function ProfileCard({
   perfil,
 }: ProfileCardProps) {
+  const { user } = useAuth();
+  const currentRole = user?.rol ?? "Invitado";
+
 
   return (
     <Card className="p-6 flex flex-col items-center gap-4">
@@ -29,11 +31,11 @@ export function ProfileCard({
       </Avatar>
 
       <h2 className="text-xl font-bold">
-        {perfil?.nombre} {perfil?.apellido}
+        {perfil?.nombres} {perfil?.apellidos}
       </h2>
 
       <Badge>
-        Aprendiz
+        {currentRole}
       </Badge>
 
       <Button variant="outline">

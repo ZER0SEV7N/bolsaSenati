@@ -1,14 +1,15 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/context/context";
 
-import { User } from "@/app/login/types/user";
-type PersonalInfoProps = {
-    perfil: User | null;
-};
 
 export function PersonalInfo({
     perfil,
 }: PersonalInfoProps) {
+    const { user } = useAuth();
+    const source = perfil || user;
+    
+
     return (
         <Card className="p-6">
             <h2 className="font-bold text-lg">
@@ -24,7 +25,7 @@ export function PersonalInfo({
                     </p>
 
                     <Input className="font-medium"
-                        value={`${perfil?.nombre || ""} ${perfil?.apellido || ""}`}
+                        value={`${source?.nombres || ""} ${source?.apellidos || ""}`}
                         readOnly
                     />
                 </div>
@@ -35,7 +36,7 @@ export function PersonalInfo({
                     </p>
 
                     <Input
-                        value={perfil?.telefono || ""}
+                        value={source?.telefono || ""}
                         readOnly
                     />
                 </div>
@@ -46,7 +47,7 @@ export function PersonalInfo({
                     </p>
 
                     <Input
-                        value={perfil?.email || ""}
+                        value={source?.correoPersonal || ""}
                         readOnly
                     />
                 </div>
@@ -56,7 +57,7 @@ export function PersonalInfo({
                         Distrito de Recidencia
                     </p>
                     <Input
-                        value={perfil?.direccion || ""}
+                        value={source?.distrito || ""}
                         readOnly
                     />
                 </div>

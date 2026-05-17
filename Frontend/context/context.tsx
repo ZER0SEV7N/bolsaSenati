@@ -55,8 +55,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     //Refrescar el perfil después de una actualización (ej. editar datos personales)
     const refreshProfile = async () => {
         try {
-            const res = await api.get('/api/auth/perfil');
-            setUser(res.data.data);
+            const res = await api.get('/auth/perfil');
+            setUser(res.data.data || res.data.usuario || res.data);
         } catch (error) {
             console.error('Error al refrescar el perfil:', error);
         }

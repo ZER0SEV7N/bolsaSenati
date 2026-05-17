@@ -8,9 +8,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
+@Data
 @Entity
 @Table(name = "pea")
-@Data
 public class Pea {
 
     @Id

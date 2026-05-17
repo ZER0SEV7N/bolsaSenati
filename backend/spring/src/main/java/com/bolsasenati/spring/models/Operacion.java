@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "tarea")
-public class Tarea {
+@Table(name = "operacion")
+public class Operacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,8 @@ public class Tarea {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "idCurso")
-    private Curso curso;
+    @JoinColumn(name = "idTarea")
+    private Tarea tarea;
 
     @Column(name = "create_at")
     private LocalDateTime createAt;
