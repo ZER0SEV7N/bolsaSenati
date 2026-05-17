@@ -16,9 +16,8 @@ public class Curso {
     @Column(nullable = false)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "idPea")
-    private Pea pea;
+    @Column(nullable = false, name = "credito")
+    private Integer credito;
 
     @Column(name = "create_at")
     private LocalDateTime createAt;

@@ -1,25 +1,37 @@
 package com.bolsasenati.spring.models;
 
-import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDateTime;
 
-@Data
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
 @Entity
 @Table(name = "operacion")
+@Data
 public class Operacion {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String nombre;
+    @Column(nullable = false, name = "operacion")
+    private String operacion;
+    @Column(nullable = false, name = "descripcion")
+    private String descripcion;
+    
 
     @ManyToOne
-    @JoinColumn(name = "idTarea")
+    @JoinColumn(name = "idTarea" ,referencedColumnName = "id", nullable = false)
     private Tarea tarea;
 
-    @Column(name = "create_at")
+    @CreationTimestamp
+    @Column(updatable = false, name = "create_at")
     private LocalDateTime createAt;
+
+    @UpdateTimestamp
+    @Column(insertable = false, name = "update_at")
+    private LocalDateTime updateAt;
 }

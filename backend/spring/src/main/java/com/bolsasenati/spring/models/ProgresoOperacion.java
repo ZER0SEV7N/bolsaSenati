@@ -1,33 +1,37 @@
 package com.bolsasenati.spring.models;
 
-import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDateTime;
 
-@Data
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
 @Entity
 @Table(name = "progreso_operacion")
+@Data
 public class ProgresoOperacion {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "idAprendiz")
-    private Usuario aprendiz;
+    @JoinColumn(name = "idAprendiz", nullable = false)
+    private Aprendiz aprendiz;
 
     @ManyToOne
-    @JoinColumn(name = "idOperacion")
+    @JoinColumn(name = "idOperacion", nullable = false)
     private Operacion operacion;
 
-    @Enumerated(EnumType.STRING)
-    private EstadoOperacion estado = EstadoOperacion.pendiente;
+    private String estado;
 
-    @Column(name = "fecha_registro")
-    private LocalDateTime fechaRegistro;
+    @CreationTimestamp
+    @Column(updatable = false, name = "create_at")
+    private LocalDateTime createAt;
 
-    public enum EstadoOperacion {
-        pendiente, realizado
-    }
+    @UpdateTimestamp
+    @Column(insertable = false, name = "update_at")
+    private LocalDateTime updateAt;
 }
