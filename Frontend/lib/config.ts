@@ -9,7 +9,7 @@ const api = axios.create({
     }
 });
 
-
+//Interceptors para agregar el token a cada solicitud y manejar errores de autenticación
 api.interceptors.request.use(
     (config) => {
         if(typeof window !== 'undefined') {
@@ -29,6 +29,7 @@ api.interceptors.request.use(
     }
 );
 
+//Interceptor para manejar respuestas 401 y redirigir al login si el token es inválido o ha expirado
 api.interceptors.response.use(
     (response) => {
         return response;
@@ -38,9 +39,11 @@ api.interceptors.response.use(
             const originalRequestUrl = error.config.url;
             if (typeof window !== 'undefined' && !originalRequestUrl.includes('/auth/login')) {
                 localStorage.removeItem('token');
-                window.location.href = '/auth'; 
+                window.location.href = '/login'; 
             }
         }
         return Promise.reject(error);
     }
 );
+
+export default api;

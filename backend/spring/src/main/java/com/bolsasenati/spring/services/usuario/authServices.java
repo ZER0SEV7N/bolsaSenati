@@ -86,4 +86,12 @@ public class authServices {
         return savedUsuario;
     }
 
+    //Metodo para obtener el perfil del usuario
+    public Usuario obtenerPerfil(String correo){
+        if(correo != null && correo.toLowerCase().endsWith("@senati.pe")){
+            Aprendiz aprendiz = aprendizRepository.findByCorreoInstitucional(correo);
+            return aprendiz != null ? aprendiz.getUsuario() : null;
+        }
+        return usuarioRepository.findByCorreoPersonal(correo);
+    }
 }

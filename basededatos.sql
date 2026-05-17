@@ -42,7 +42,8 @@ create table aprendiz(
     update_at timestamp default current_timestamp on update current_timestamp,
     primary key(idaprendiz)
 );
--- Catálogo de Carreras 
+
+-- Catálogo de Carrera
 create table carrera(
     id int auto_increment primary key,
     carrera char(100) not null unique, 
