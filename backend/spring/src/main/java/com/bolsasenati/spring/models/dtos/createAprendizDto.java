@@ -13,5 +13,5 @@ public class createAprendizDto {
     private String telefono;
     private String codigoAprendiz;
     private Integer idCarrera;
-    private String Ciclo = "III";
+    private String ciclo = "III";
 }

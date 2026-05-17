@@ -9,6 +9,7 @@ import com.bolsasenati.spring.models.Carrera;
 import com.bolsasenati.spring.models.Usuario;
 import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
 import com.bolsasenati.spring.repository.usuarios.usuarioRepository;
+import com.bolsasenati.spring.repository.carrera.carreraRepository;
 import com.bolsasenati.spring.models.dtos.createAprendizDto;
 
 //Servicio para manejar la autenticación y registro de usuarios
@@ -20,6 +21,9 @@ public class authServices {
 
     @Autowired
     private aprendizRepository aprendizRepository;
+
+    @Autowired
+    private carreraRepository carreraRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -38,7 +42,6 @@ public class authServices {
             }
         }
 
-        //
         if(usuario == null || !passwordEncoder.matches(password, usuario.getPassword())) {
             return null; 
         }
@@ -77,8 +80,9 @@ public class authServices {
         aprendiz.setCiclo(dto.getCiclo());
 
         //Se asigna la carrera al aprendiz
-        Carrera carreraRef = new Carrera();
-        carreraRef.setId(dto.getIdCarrera());
+        Carrera carreraRef = carreraRepository.findById(dto.getIdCarrera())
+            .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+        
         aprendiz.setCarrera(carreraRef);
         
         aprendizRepository.save(aprendiz);
