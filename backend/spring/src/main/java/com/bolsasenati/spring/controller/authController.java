@@ -23,7 +23,7 @@ import com.bolsasenati.spring.models.payload.response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-//Controlador para manejar las rutas de autenticación y registro de usuarios
+// Controlador para manejar las rutas de autenticación y registro de usuarios
 @RestController
 @RequestMapping("/auth")
 public class authController {
@@ -34,8 +34,8 @@ public class authController {
     @Autowired
     private jwtServices jwtServices;
 
-    // ruta para loguearse
     // POST: /auth/login
+    // Inicia sesión y devuelve el token JWT + perfil del usuario
     @PostMapping("/login")
     public ResponseEntity<response<Map<String, Object>>> login(@RequestBody loginDto dto) {
         Usuario usuario = authServices.login(dto.getCorreo(), dto.getPassword());
@@ -45,38 +45,24 @@ public class authController {
 
         String token = jwtServices.generarToken(dto.getCorreo());
 
-<<<<<<< HEAD
-        Map<String, Object> data = new HashMap<>();
-=======
+        // Intentar devolver el DTO completo del aprendiz; si no aplica (otro rol),
+        // devolver usuario base
         Object perfilUsuario = authServices.mapearAprendizADto(usuario);
-        if (perfilUsuario == null) 
-            perfilUsuario = usuario; 
-        
+        if (perfilUsuario == null)
+            perfilUsuario = usuario;
 
-        Map<String, Object> data =  new HashMap<>();
->>>>>>> origin/daniel
+        Map<String, Object> data = new HashMap<>();
         data.put("token", token);
         data.put("usuario", perfilUsuario);
 
-<<<<<<< HEAD
         return ResponseEntity.status(200).body(new response<>(true, "Login exitoso", data));
-=======
-        return ResponseEntity.status(200).body(new response<>(true,"Login exitoso", data));
->>>>>>> origin/daniel
     }
 
-    // ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se
-    // recomienda exponer esta ruta en producción)
     // POST: /auth/registrar-aprendiz
+    // Registra un nuevo aprendiz (ruta de prueba)
     @PostMapping("/registrar-aprendiz")
-<<<<<<< HEAD
-    public ResponseEntity<response<Usuario>> registrarAprendiz(@RequestBody createAprendizDto dto) {
-        Usuario usuario = authServices.registrarAprendiz(dto);
-=======
-
-    public ResponseEntity<response<responseAprendizDto>> registrarAprendiz(@RequestBody createAprendizDto dto){
+    public ResponseEntity<response<responseAprendizDto>> registrarAprendiz(@RequestBody createAprendizDto dto) {
         responseAprendizDto usuario = authServices.registrarAprendiz(dto);
->>>>>>> origin/daniel
 
         if (usuario == null)
             return ResponseEntity.status(400).body(new response<>(false, "No se pudo registrar el aprendiz", null));
@@ -84,16 +70,10 @@ public class authController {
         return ResponseEntity.status(201).body(new response<>(true, "Aprendiz registrado exitosamente", usuario));
     }
 
-    // Ruta para obtener el perfil del usuario (esto es solo de prueba, no se
-    // recomienda exponer esta ruta en producción)
     // GET: /auth/perfil
+    // Devuelve el perfil del usuario autenticado (ruta de prueba)
     @GetMapping("/perfil")
-<<<<<<< HEAD
-    public ResponseEntity<response<Usuario>> obtenerPerfil() {
-=======
-
-    public ResponseEntity<response<Object>> obtenerPerfil(){
->>>>>>> origin/daniel
+    public ResponseEntity<response<Object>> obtenerPerfil() {
         String correoAutenticado = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -104,16 +84,11 @@ public class authController {
         if (usuario == null)
             return ResponseEntity.status(404).body(new response<>(false, "Usuario no encontrado", null));
 
-<<<<<<< HEAD
-        return ResponseEntity.status(200).body(new response<>(true, "Perfil obtenido exitosamente", usuario));
-=======
+        // Si es aprendiz, devolver el DTO completo; si no, devolver el usuario base
         Object perfilUsuario = authServices.mapearAprendizADto(usuario);
-        if (perfilUsuario == null) 
+        if (perfilUsuario == null)
             perfilUsuario = usuario;
-        
 
-        return ResponseEntity.status(200).body(new response<>(true,"Perfil obtenido exitosamente", perfilUsuario));
->>>>>>> origin/daniel
+        return ResponseEntity.status(200).body(new response<>(true, "Perfil obtenido exitosamente", perfilUsuario));
     }
-
 }
