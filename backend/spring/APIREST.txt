@@ -1,0 +1,57 @@
+-- AUTH
+POST: auth/registrar-aprendiz
+
+{
+  "nombres": "Daniel Enrique",
+  "apellidos": "Singer Rojas",
+  "documentoIdentidad": "006780185",
+  "correoPersonal": "danielsinger07@hotmail.com",
+  "password": "123456",
+  "telefono": "987654321",
+  "codigoAprendiz": "1599048",
+  "idCarrera": 1, 
+  "ciclo": "V"
+}
+
+{
+  "success": true,
+  "message": "Aprendiz registrado exitosamente",
+  "data": {
+    "apellidos": "Singer Rojas",
+    "correoPersonal": "danielsinger07@hotmail.com",
+    "createAt": "2026-05-17T13:38:13.276375",
+    "documentoIdentidad": "006780185",
+    "id": 4,
+    "nombres": "Daniel Enrique",
+    "password": "{bcrypt}$2a$10$FqYozJAt.nVordxQoPdP8.ku8xi5dLZVhPS4JmpqU0sqWFQaylma2",
+    "rol": null,
+    "telefono": "987654321",
+    "updateAt": "2026-05-17T13:38:13.276375"
+  }
+}
+
+POST: auth/login
+{
+  "correo": "1599048@senati.pe",
+  "password": "123456"
+}
+
+{
+  "success": true,
+  "message": "Login exitoso",
+  "data": {
+    "usuario": {
+      "apellidos": "Singer Rojas",
+      "correoPersonal": "danielsinger07@hotmail.com",
+      "createAt": "2026-05-17T13:41:47",
+      "documentoIdentidad": "006780185",
+      "id": 5,
+      "nombres": "Daniel Enrique",
+      "password": "$2a$10$XG7x/RprmKxiTCZVhRVLJ..94BQgDDxTCgnnupa9LfLvqG6.d5zAm",
+      "rol": null,
+      "telefono": "987654321",
+      "updateAt": "2026-05-17T13:41:47"
+    },
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTk5MDQ4QHNlbmF0aS5wZSIsImlhdCI6MTc3OTA0MzQ4MiwiZXhwIjoxNzc5MDQ3MDgyfQ.neasRFxeSTB7GUp8-_Y0mncEDmcrivclbiKliTPcRXA"
+  }
+}

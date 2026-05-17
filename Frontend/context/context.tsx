@@ -1,102 +1,91 @@
-//frontend/context/context.tsx
-//Define el contexto de autenticacion para toda la aplicacion,
-//Manejando el estado del usuario, token y funciones de login/logout/updateUser
+//Frontend/context/context.tsx
+//Contexto de autenticación para manejar el estado del usuario en toda la aplicación
 "use client";
 
-//Importaciones
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { User } from "../app/login/types/user"; 
-import users from "../data/user.json"; 
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import api from '@/lib/config'; 
+import { User } from '../app/login/types/user'; 
 
-//Type unico para el contexto de autenticacion
-type AuthContextType = {
+//Interface para definir la forma del contexto de autenticación
+interface AuthContextType {
+    user: User | null;
     isAuthenticated: boolean;
     isLoading: boolean;
-    user: User | null;
-    token: string | null;
-    login: (email: string, password: string, redirectTo?: string) => boolean;
+    login: (token: string, redirectTo?: string) => Promise<void>;
     logout: () => void;
-    updateUser: (updatedData: Partial<User>) => void;
-};
+    refreshProfile: () => Promise<void>;
+}
 
+//Creación del contexto con un valor inicial indefinido
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-//Provider que envuelve toda la app para proveer el contexto de autenticacion
+//Proveedor del contexto que envuelve la aplicación y maneja el estado de autenticación
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    //Verificar si hay un token y usuario guardados al cargar la app
     useEffect(() => {
-        const storedToken = localStorage.getItem("auth_token");
-        const storedUser = localStorage.getItem("auth_user");
-
-        if (storedToken && storedUser) {
-            setToken(storedToken);
-            setUser(JSON.parse(storedUser));
-        }
-        
-        setIsLoading(false); 
+        //eslint-disable-next-line react-hooks/immutability
+        validarAuth();
     }, []);
 
-    //Funcion para iniciar sesión: Valida con JSON, crea un token falso y guarda todo
-    const login = (email: string, password: string, redirectTo: string = "/Estudiante/dashboard") => {
-        const foundUser = (users as unknown as User[]).find(
-            (u) => u.email === email && u.contraseña === password
-        );
-
-        if (foundUser) {
-            const fakeToken = `local-mock-token-${Date.now()}`;
-            
-            //Guardamos en localStorage
-            localStorage.setItem("auth_token", fakeToken);
-            localStorage.setItem("auth_user", JSON.stringify(foundUser));
-
-            //Actualizamos el estado de React
-            setToken(fakeToken);
-            setUser(foundUser);
-
-            //Redirigimos al usuario
-            router.push(redirectTo);
-            return true;
+    //Metodo para validar si el token es válido y obtener el perfil directamente del backend
+    const validarAuth = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setIsLoading(false);
+            return;
         }
 
-        return false;
+        try {
+            const res = await api.get('/auth/perfil'); 
+            
+            setUser(res.data.data || res.data.usuario || res.data);
+        } catch (error) {
+            console.error('Error al obtener el perfil o token expirado:', error);
+            localStorage.removeItem('token');
+            setUser(null);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    //Funcion para cerrar sesión: Limpia el localStorage, el estado y redirige
+    //Refrescar el perfil después de una actualización (ej. editar datos personales)
+    const refreshProfile = async () => {
+        try {
+            const res = await api.get('/api/auth/perfil');
+            setUser(res.data.data);
+        } catch (error) {
+            console.error('Error al refrescar el perfil:', error);
+        }
+    };
+
+    //Iniciar sesión: guarda el token, carga el perfil y luego redirige
+    const login = async (token: string, redirectTo: string = '/Estudiante/dashboard') => {
+        setIsLoading(true);
+        localStorage.setItem('token', token);
+        await validarAuth();
+        router.push(redirectTo);
+    };
+
+    //Cerrar sesión: elimina el token, el estado y redirige al inicio
     const logout = () => {
-        localStorage.removeItem("auth_token");
-        localStorage.removeItem("auth_user");
-        setToken(null);
+        localStorage.removeItem('token');
         setUser(null);
-        router.push("/");
-    };
-    
-    //Funcion para actualizar usuario: Para cuando edites el perfil en la otra pantalla
-    const updateUser = (updatedData: Partial<User>) => {
-        if (!user) return;
-        
-        const newUser = { ...user, ...updatedData };
-        setUser(newUser);
-        localStorage.setItem("auth_user", JSON.stringify(newUser));
-    };
-
-    const value = {
-        isAuthenticated: !!user,
-        isLoading,
-        user,
-        token,
-        login,
-        logout,
-        updateUser
+        router.push('/');
     };
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={{ 
+            user, 
+            isAuthenticated: !!user, 
+            isLoading, 
+            login, 
+            logout, 
+            refreshProfile 
+        }}>
             {children}
         </AuthContext.Provider>
     );
@@ -105,7 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error("useAuth debe usarse dentro de un AuthProvider");
+        throw new Error('useAuth debe ser usado dentro de un AuthProvider');
     }
     return context;
 };
