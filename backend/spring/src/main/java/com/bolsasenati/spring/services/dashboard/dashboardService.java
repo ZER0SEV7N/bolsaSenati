@@ -1,34 +1,40 @@
-package com.bolsasenati.spring.services;
+package com.bolsasenati.spring.services.dashboard;
 
 import com.bolsasenati.spring.models.Aprendiz;
 import com.bolsasenati.spring.models.ProgresoOperacion;
 import com.bolsasenati.spring.models.Tarea;
 import com.bolsasenati.spring.models.payload.DashboardResumenDTO;
 import com.bolsasenati.spring.models.payload.DashboardResumenDTO.TareaDetalleDTO;
-import com.bolsasenati.spring.repository.AprendizRepository;
-import com.bolsasenati.spring.repository.ProgresoOperacionRepository;
+import com.bolsasenati.spring.repository.dashboard.progresoOperacionRepository;
+import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+// Servicio del dashboard: calcula el resumen de progreso del aprendiz autenticado
 @Service
-public class DashboardService {
+public class dashboardService {
 
     @Autowired
-    private ProgresoOperacionRepository progresoRepo;
+    private progresoOperacionRepository progresoRepo;
 
     @Autowired
-    private AprendizRepository aprendizRepo;
+    private aprendizRepository aprendizRepo;
 
-    public DashboardResumenDTO getResumen(Integer idAprendiz) {
+    // Obtiene el resumen completo del dashboard dado el correo del aprendiz
+    public DashboardResumenDTO getResumen(String correo) {
 
-        // Buscar aprendiz
-        Aprendiz aprendiz = aprendizRepo.findByUsuarioId(idAprendiz)
-                .orElseThrow(() -> new RuntimeException("Aprendiz no encontrado"));
+        // Buscar aprendiz por su correo institucional (igual que hace authServices)
+        Aprendiz aprendiz = aprendizRepo.findByCorreoInstitucional(correo);
 
-        // Traer todas las operaciones del aprendiz con detalles
+        if (aprendiz == null)
+            throw new RuntimeException("Aprendiz no encontrado");
+
+        Integer idAprendiz = aprendiz.getIdaprendiz();
+
+        // Traer todas las operaciones con sus relaciones cargadas
         List<ProgresoOperacion> progresos = progresoRepo.findByAprendizIdWithDetails(idAprendiz);
 
         long totalOperaciones = progresos.size();
@@ -37,7 +43,7 @@ public class DashboardService {
                 .count();
         long operacionesPendientes = totalOperaciones - operacionesRealizadas;
 
-        // Agrupar operaciones por tarea
+        // Agrupar por tarea para calcular el estado de cada una
         Map<Tarea, List<ProgresoOperacion>> porTarea = progresos.stream()
                 .collect(Collectors.groupingBy(p -> p.getOperacion().getTarea()));
 
@@ -64,7 +70,6 @@ public class DashboardService {
             dto.setTotalOperaciones(totalOps);
             dto.setOperacionesRealizadas(realizadas);
             dto.setEstado(completada ? "completada" : "en progreso");
-
             tareasDetalle.add(dto);
         }
 
@@ -76,16 +81,16 @@ public class DashboardService {
                 ? Math.round((operacionesRealizadas * 100.0 / totalOperaciones) * 10.0) / 10.0
                 : 0.0;
 
-        // Promedio simulado (ajustar cuando exista tabla de calificaciones)
+        // Promedio estimado (ajustar cuando exista tabla de calificaciones)
         double promedio = porcentaje >= 90 ? 19.0
                 : porcentaje >= 70 ? 17.0
                         : porcentaje >= 50 ? 14.0
                                 : 11.0;
 
-        // Armar respuesta
+        // Armar y retornar el DTO de respuesta
         DashboardResumenDTO resumen = new DashboardResumenDTO();
-        resumen.setNombres(aprendiz.getNombres());
-        resumen.setApellidos(aprendiz.getApellidos());
+        resumen.setNombres(aprendiz.getUsuario().getNombres());
+        resumen.setApellidos(aprendiz.getUsuario().getApellidos());
         resumen.setPromedio(promedio);
         resumen.setTotalTareas(totalTareas);
         resumen.setTareasCompletadas(tareasCompletadas);

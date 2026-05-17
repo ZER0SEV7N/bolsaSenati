@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bolsasenati.spring.services.jwtServices;
@@ -34,52 +33,53 @@ public class authController {
     @Autowired
     private jwtServices jwtServices;
 
-    //ruta para loguearse
-    //POST: /auth/login
+    // ruta para loguearse
+    // POST: /auth/login
     @PostMapping("/login")
-    public ResponseEntity<response<Map<String, Object>>> login(@RequestBody loginDto dto ){
+    public ResponseEntity<response<Map<String, Object>>> login(@RequestBody loginDto dto) {
         Usuario usuario = authServices.login(dto.getCorreo(), dto.getPassword());
 
-        if(usuario == null)
-            return ResponseEntity.status(400).body(new response<>(false,"Credenciales inválidas", null));
+        if (usuario == null)
+            return ResponseEntity.status(400).body(new response<>(false, "Credenciales inválidas", null));
 
         String token = jwtServices.generarToken(dto.getCorreo());
 
-        Map<String, Object> data =  new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("token", token);
         data.put("usuario", usuario);
 
-        return ResponseEntity.status(200).body(new response<>(true,"Login exitoso", data    ));
+        return ResponseEntity.status(200).body(new response<>(true, "Login exitoso", data));
     }
 
-    //ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se recomienda exponer esta ruta en producción)
-    //POST: /auth/registrar-aprendiz
+    // ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se
+    // recomienda exponer esta ruta en producción)
+    // POST: /auth/registrar-aprendiz
     @PostMapping("/registrar-aprendiz")
-    public ResponseEntity<response<Usuario>> registrarAprendiz(@RequestBody createAprendizDto dto){
+    public ResponseEntity<response<Usuario>> registrarAprendiz(@RequestBody createAprendizDto dto) {
         Usuario usuario = authServices.registrarAprendiz(dto);
 
-        if(usuario == null)
-            return ResponseEntity.status(400).body(new response<>(false,"No se pudo registrar el aprendiz", null));
+        if (usuario == null)
+            return ResponseEntity.status(400).body(new response<>(false, "No se pudo registrar el aprendiz", null));
 
-        return ResponseEntity.status(201).body(new response<>(true,"Aprendiz registrado exitosamente", usuario));
+        return ResponseEntity.status(201).body(new response<>(true, "Aprendiz registrado exitosamente", usuario));
     }
 
-    //Ruta para obtener el perfil del usuario (esto es solo de prueba, no se recomienda exponer esta ruta en producción)
-    //GET: /auth/perfil
+    // Ruta para obtener el perfil del usuario (esto es solo de prueba, no se
+    // recomienda exponer esta ruta en producción)
+    // GET: /auth/perfil
     @GetMapping("/perfil")
-    public ResponseEntity<response<Usuario>> obtenerPerfil(){
+    public ResponseEntity<response<Usuario>> obtenerPerfil() {
         String correoAutenticado = SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getName();
+                .getContext()
+                .getAuthentication()
+                .getName();
 
         Usuario usuario = authServices.obtenerPerfil(correoAutenticado);
 
-        if(usuario == null)
-            return ResponseEntity.status(404).body(new response<>(false,"Usuario no encontrado", null));
+        if (usuario == null)
+            return ResponseEntity.status(404).body(new response<>(false, "Usuario no encontrado", null));
 
-        return ResponseEntity.status(200).body(new response<>(true,"Perfil obtenido exitosamente", usuario));
+        return ResponseEntity.status(200).body(new response<>(true, "Perfil obtenido exitosamente", usuario));
     }
-
 
 }
