@@ -19,7 +19,6 @@ public class MallaCurricular {
     @JoinColumn(name = "idcurso", nullable = false)
     private Curso curso;
 
-    @Column(nullable = false, columnDefinition = "ENUM('I','II','III','IV','V','VI') default 'I'")
-    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('I','II','III','IV','V','VI') default 'I'")
     private String ciclo;
 }

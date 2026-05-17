@@ -36,7 +36,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) //Deshabilitamos CSRF ya que usaremos JWT para la autenticación
             .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Indicamos que no se deben crear sesiones, ya que la autenticación se manejará con JWT
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() //Permitir acceso a las rutas de autenticación sin necesidad de estar autenticado
+                .requestMatchers("/auth/**").permitAll() //Permitir acceso a las rutas de autenticación sin necesidad de estar autenticado
+                .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated() //Requerir autenticación para cualquier otra ruta
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //Agregamos nuestro filtro de JWT antes del filtro de autenticación de Spring Security

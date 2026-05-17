@@ -2,6 +2,9 @@ package com.bolsasenati.spring.models;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,9 +27,11 @@ public class Pea {
     @JoinColumn(name = "idcarrera", nullable = false)
     private Carrera carrera;
 
+    @CreationTimestamp
     @Column(name = "create_at", updatable = false)
     private LocalDateTime createAt;
 
+    @UpdateTimestamp
     @Column(name = "update_at", insertable = false)
     private LocalDateTime updateAt;
 }

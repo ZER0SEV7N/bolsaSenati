@@ -1,6 +1,10 @@
 package com.bolsasenati.spring.models;
 
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,25 +23,27 @@ public class Usuario {
     @Column(nullable = false, name = "apellidos")
     private String apellidos;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "documento_identidad", unique = true, length = 12)
     private String documentoIdentidad;
 
-    @Column(nullable = false, name = "telefono")
-    private String telefono;
-
-    @Column(nullable = false, unique = true, name = "correo_personal")
+    @Column(name = "correo_personal", unique = true, length = 150)
     private String correoPersonal;
 
-    @Column(nullable = false, name = "password")
+    @Column(nullable = false, length = 255)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "idrol", nullable = false)
+    @Column(length = 12)
+    private String telefono;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idrol")
     private Rol rol;
 
+    @CreationTimestamp
     @Column(name = "create_at", updatable = false)
     private LocalDateTime createAt;
 
+    @UpdateTimestamp
     @Column(name = "update_at", insertable = false)
     private LocalDateTime updateAt;
 }
