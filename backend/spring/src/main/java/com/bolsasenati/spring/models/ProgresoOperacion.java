@@ -35,4 +35,11 @@ public class ProgresoOperacion {
     @UpdateTimestamp
     @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
+
+
+    // Definición del enum para el estado de la operación
+    public enum EstadoOperacion {
+        pendiente, realizado
+    }
 }
+
