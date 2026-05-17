@@ -20,13 +20,13 @@ public class Usuario {
     private String apellidos;
 
     @Column(nullable = false, unique = true)
-    private String documento_identidad;
+    private String documentoIdentidad;
 
     @Column(nullable = false, name = "telefono")
     private String telefono;
 
     @Column(nullable = false, unique = true, name = "correo_personal")
-    private String correo_personal;
+    private String correoPersonal;
 
     @Column(nullable = false, name = "password")
     private String password;

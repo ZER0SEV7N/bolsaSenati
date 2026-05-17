@@ -219,3 +219,92 @@ create table aprendiz_distrito (
     idDistrito int references distrito(id) on delete cascade,
     primary key (idAprendiz, idDistrito)
 );
+
+-- Insertar roles
+insert rol values 
+(null, 'Aprendiz'), 
+(null, 'Instructor'), 
+(null, 'Seguimiento'), 
+(null, 'Monitor');
+
+-- Insertar distritos (Ejemplo)
+insert distrito  values
+(null, 'Ancón'),
+(null, 'Ate'),
+(null, 'Barranco'),
+(null, 'Breña'),
+(null, 'Carabayllo'),
+(null, 'Cercado de Lima'),
+(null, 'Chaclacayo'),
+(null, 'Chorrillos'),
+(null, 'Cieneguilla'),
+(null, 'Comas'),
+(null, 'El agustino'),
+(null, 'Independencia'),
+(null, 'Jesús maría'),
+(null, 'La molina'),
+(null, 'La victoria'),
+(null, 'Lince'),
+(null, 'Los olivos'),
+(null, 'Lurigancho'),
+(null, 'Lurín'),
+(null, 'Magdalena del mar'),
+(null, 'Miraflores'),
+(null, 'Pachacámac'),
+(null, 'Pucusana'),
+(null, 'Pueblo libre'),
+(null, 'Puente piedra'),
+(null, 'Punta hermosa'),
+(null, 'Punta negra'),
+(null, 'Rímac'),
+(null, 'San bartolo'),
+(null, 'San borja'),
+(null, 'San isidro'),
+(null, 'San Juan de Lurigancho'),
+(null, 'San Juan de Miraflores'),
+(null, 'San Luis'),
+(null, 'San Martin de Porres'),
+(null, 'San Miguel'),
+(null, 'Santa Anita'),
+(null, 'Santa María del Mar'),
+(null, 'Santa Rosa'),
+(null, 'Santiago de Surco'),
+(null, 'Surquillo'),
+(null, 'Villa el Salvador'),
+(null, 'Villa Maria del Triunfo');
+
+-- Insertar carreras (Ejemplo)
+insert carrera (carrera, codigo) values
+('Desarrollo de Software', 'PDSD'),
+('Redes y Comunicaciones', 'PDRC'),
+('Mecatrónica', 'PDM'),
+('Administración de Empresas', 'PDAE'),
+('Marketing Digital', 'PDMD'),
+('Diseño Gráfico', 'PDG'),
+('Logística', 'PDL'),
+('Seguridad Informática', 'PDSI'),
+('Inteligencia Artificial', 'PDIA'),
+('Ciberseguridad', 'PDC');
+
+-- Insertar cursos (Ejemplo)
+insert curso (curso, credito) values
+('Programación Web', 20),
+('Base de Datos', 23),
+('Redes de Computadoras', 25),
+('Sistemas Operativos', 15),
+('Ingeniería de Software', 19),
+('Diseño de Interfaces', 10),
+('Marketing Digital', 17),
+('Gestión de Proyectos', 20),
+('Seguridad Informática', 21),
+('Inteligencia Artificial', 26),
+('Maquinas virtuales', 27),
+('Java Fundamental', 22),
+('Python para Data Science', 24),
+('Ciberseguridad en la Nube', 18),
+('Logística y Cadena de Suministro', 16),
+('Diseño Gráfico con Adobe', 14),
+('Administración de Empresas', 20),
+('Redes y Comunicaciones', 23),
+('Mecatrónica', 25),
+('Desarrollo de Software I', 30);

@@ -11,11 +11,18 @@ import lombok.Data;
 public class Aprendiz {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idaprendiz;
+
+    @OneToOne
+    @MapsId 
+    @JoinColumn(name = "idaprendiz")
+    private Usuario usuario;
 
     @Column(nullable = false, unique = true, name = "codigo_aprendiz")
     private String codigoAprendiz;
+
+    @Column(nullable = false, unique = true, name = "correo_institucional")
+    private String correoInstitucional;
 
     @ManyToOne
     @JoinColumn(name = "idcarrera", nullable = false)
@@ -32,4 +39,5 @@ public class Aprendiz {
 
     @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
+
 }
