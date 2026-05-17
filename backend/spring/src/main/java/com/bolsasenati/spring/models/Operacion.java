@@ -24,7 +24,7 @@ public class Operacion {
     
 
     @ManyToOne
-    @JoinColumn(name = "idTarea", nullable = false)
+    @JoinColumn(name = "idTarea" ,referencedColumnName = "id", nullable = false)
     private Tarea tarea;
 
     @CreationTimestamp

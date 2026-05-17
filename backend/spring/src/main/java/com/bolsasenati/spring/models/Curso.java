@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 @Entity
 @Table(name = "curso")
 @Data
@@ -17,8 +18,8 @@ public class Curso {
     @Column(nullable = false, unique = true, name = "curso")
     private String curso;
 
-    @Column(nullable = false, name = "creditos")
-    private Integer creditos;
+    @Column(nullable = false, name = "credito")
+    private Integer credito;
 
     @Column(name = "create_at", updatable = false)
     private LocalDateTime createAt;

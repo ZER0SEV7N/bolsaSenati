@@ -23,7 +23,7 @@ public class Tarea {
     
 
     @ManyToOne
-    @JoinColumn(name = "idCurso", nullable = false)
+    @JoinColumn(name = "idCurso", referencedColumnName = "id", nullable = false)
     private Curso curso;
 
     @CreationTimestamp

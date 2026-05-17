@@ -37,3 +37,15 @@ insert into operacion (id, operacion, descripcion, idTarea) values
 -- Operaciones para Tarea 5 (Implementación de Programación en BD)
 (null, 'Escribir procedimientos almacenados complejos', 'Crear SPs para inserciones masivas o lógica transaccional.', 5),
 (null, 'Configurar Triggers de auditoría', 'Programar disparadores para registrar cambios en las tablas críticas de historial.', 5);
+
+-- Creando PEA
+insert into pea (id, year, estado, idcarrera) values (1, '2026', true, 1);
+
+-- Datos para la tabla malla_curricular
+-- vinculamos los cursos al pea id 1 en sus respectivos ciclos
+insert into malla_curricular (id, idpea, idcurso, ciclo) values 
+(null, 1, 1, 'V'), -- curso de programación web
+(null, 1, 2, 'IV'), -- curso de base de datos
+(null, 1, 5, 'IV'), -- ingeniería de software
+(null, 1, 6, 'III'), -- diseño de interfaces
+(null, 1, 20, 'III'); -- desarrollo de software i
