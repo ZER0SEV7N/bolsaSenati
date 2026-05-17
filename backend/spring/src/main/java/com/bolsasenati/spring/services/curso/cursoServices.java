@@ -26,7 +26,7 @@ public class cursoServices {
     return cursos.stream().map(curso -> {
         cursoDTO cDto = new cursoDTO();
         cDto.setId(curso.getId());
-        cDto.setNombre(curso.getCurso());
+        cDto.setNombre(curso.getNombre());
         cDto.setCredito(curso.getCredito());
         cDto.setCreateAt(curso.getCreateAt() != null ? curso.getCreateAt().toString() : null);
         cDto.setUpdateAt(curso.getUpdateAt() != null ? curso.getUpdateAt().toString() : null);
@@ -36,7 +36,7 @@ public class cursoServices {
         List<tareaDTO> tareasDTO = tareas.stream().map(tarea -> {
             tareaDTO tDto = new tareaDTO();
             tDto.setId(tarea.getId());
-            tDto.setTarea(tarea.getTarea());
+            tDto.setTarea(tarea.getNombre());
             tDto.setDescripcion(tarea.getDescripcion());
             tDto.setCreateAt(tarea.getCreateAt() != null ? tarea.getCreateAt().toString() : null);
             tDto.setUpdateAt(tarea.getUpdateAt() != null ? tarea.getUpdateAt().toString() : null);

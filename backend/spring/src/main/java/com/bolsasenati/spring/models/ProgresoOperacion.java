@@ -25,7 +25,8 @@ public class ProgresoOperacion {
     @JoinColumn(name = "idOperacion", nullable = false)
     private Operacion operacion;
 
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoOperacion estado = EstadoOperacion.pendiente;
 
     @CreationTimestamp
     @Column(updatable = false, name = "create_at")

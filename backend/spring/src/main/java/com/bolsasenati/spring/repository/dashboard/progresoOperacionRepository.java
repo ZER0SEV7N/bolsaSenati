@@ -28,5 +28,5 @@ public interface progresoOperacionRepository extends JpaRepository<ProgresoOpera
     // Cuenta de operaciones por estado
     long countByAprendizIdAndEstado(
             Integer idAprendiz,
-            ProgresoOperacion.EstadoOperacion estado);
+            ProgresoOperacion.estado estado);
 }
