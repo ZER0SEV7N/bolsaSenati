@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,6 +31,7 @@ public class Usuario {
     @Column(name = "correo_personal", unique = true, length = 150)
     private String correoPersonal;
 
+    @JsonIgnore
     @Column(nullable = false, length = 255)
     private String password;
 

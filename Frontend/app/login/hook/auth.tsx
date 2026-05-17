@@ -12,9 +12,9 @@ export const useLogin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false); //Estado para manejar el estado de envío del formulario
 
   //Función para manejar el envío del formulario de inicio de sesión
-  const handleLogin = async (email: string, password: string) => {
-    if (!email || !password) {
-      setError("Debes ingresar email y contraseña");
+  const handleLogin = async (correo: string, password: string) => {
+    if (!correo || !password) {
+      setError("Debes ingresar correo y contraseña");
       return;
     }
 
@@ -22,7 +22,7 @@ export const useLogin = () => {
       setIsSubmitting(true); //Indicar que el formulario se está enviando
       setError(null); //Limpiar errores previos
 
-      const res = await api.post("/auth/login", { email, password }); //Enviar solicitud de inicio de sesión al backend
+      const res = await api.post("/auth/login", { correo, password }); //Enviar solicitud de inicio de sesión al backend
 
       const { token } = res.data.data; //Obtener el token JWT de la respuesta 
     
