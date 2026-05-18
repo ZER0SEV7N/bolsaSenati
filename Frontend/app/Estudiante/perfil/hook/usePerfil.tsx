@@ -1,81 +1,121 @@
-//frontend/app/Estudiante/perfil/hook/usePerfil.tsx
+// frontend/app/Estudiante/perfil/hook/usePerfil.tsx
 "use client";
 
-//hook personalizado para manejar la lógica del perfil del estudiante.
-import { useAuth } from "@/context/context";
-import { User } from "@/app/login/types/user";
 import { useState, useEffect } from "react";
+import api from "@/lib/config";
 
-//Función para obtener los datos del perfil del estudiante
+export interface AprendizPerfil {
+    id: number;
+    nombres: string;
+    apellidos: string;
+    documentoIdentidad: string;
+    correoPersonal: string;
+    telefono: string;
+    rol: string;
+    correoInstitucional: string;
+    carrera: string;
+    ciclo: string;
+    palabrasClave?: string;
+}
+
 export const usePerfil = () => {
-    const {user } = useAuth(); //Obtener el usuario autenticado del contexto de autenticación
-    const [perfil, setPerfil] = useState<User | null>(null); //Estado para almacenar los datos del perfil
+    const [perfil, setPerfil] = useState<AprendizPerfil | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState(false);
 
-    //Efecto para actualizar el perfil cuando el usuario autenticado cambia
-    useEffect(() => {
-        setPerfil(user || null); //Actualizar el perfil con los datos del usuario autenticado o null
-        setError(null);
-        setSuccess(null);
-    }, [user]); //Dependencia del efecto para actualizar cuando el usuario cambia
+    // ESTADOS SIMULADOS (LOCALSTORAGE)
+    const [fotoPerfil, setFotoPerfil] = useState<string>("https://github.com/shadcn.png");
+    const [palabrasClave, setPalabrasClave] = useState<string[]>([]);
+    const [nuevaPalabra, setNuevaPalabra] = useState("");
 
-    //Función para actualizar un campo del perfil de forma controlada
-    const handleChange = (
-        field: keyof User, //Campo del perfil a actualizar (nombre, apellido, email, contraseña)
-        value: string //Valor del campo a actualizar
-    ) => {
-        setPerfil((currentPerfil) => {
-            if (!currentPerfil) {
-                return currentPerfil;
+    const cargarPerfil = async () => {
+        try {
+            setLoading(true);
+            const response = await api.get("/auth/perfil");
+            if (response.data && response.data.success) {
+                setPerfil(response.data.data);
             }
 
-            return {
-                ...currentPerfil,
-                [field]: value,
-            };
+            if (typeof window !== "undefined") {
+                
+                const fotoGuardada = localStorage.getItem("simulado_foto_perfil");
+                if (fotoGuardada) setFotoPerfil(fotoGuardada);
+
+                
+                const tagsGuardados = localStorage.getItem("simulado_palabras_clave");
+                if (tagsGuardados) {
+                    setPalabrasClave(JSON.parse(tagsGuardados));
+                } else {
+                    
+                    const porDefecto = ["Next.js", "Spring Boot", "Java", "MySQL"];
+                    setPalabrasClave(porDefecto);
+                    localStorage.setItem("simulado_palabras_clave", JSON.stringify(porDefecto));
+                }
+            }
+        } catch (err: any) {
+            console.error("Error cargando perfil:", err);
+            setError("No se pudo conectar con el servidor.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        cargarPerfil();
+    }, []);
+
+    // Función para cambiar la foto (Simulado)
+    const cambiarFotoPerfil = (file: File) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result as string;
+            setFotoPerfil(base64String);
+            localStorage.setItem("simulado_foto_perfil", base64String);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    
+    const agregarPalabraClave = () => {
+        const textoLimpio = nuevaPalabra.trim();
+        if (textoLimpio && !palabrasClave.includes(textoLimpio)) {
+            const listaActualizada = [...palabrasClave, textoLimpio];
+            setPalabrasClave(listaActualizada);
+            setNuevaPalabra("");
+            localStorage.setItem("simulado_palabras_clave", JSON.stringify(listaActualizada));
+        }
+    };
+
+    // Función para eliminar palabra clave (Simulado)
+    const eliminarPalabraClave = (palabraAEliminar: string) => {
+        const listaActualizada = palabrasClave.filter((p) => p !== palabraAEliminar);
+        setPalabrasClave(listaActualizada);
+        localStorage.setItem("simulado_palabras_clave", JSON.stringify(listaActualizada));
+    };
+
+    const handleChange = (field: keyof AprendizPerfil, value: string) => {
+        setPerfil((currentPerfil) => {
+            if (!currentPerfil) return currentPerfil;
+            return { ...currentPerfil, [field]: value };
         });
-        setError(null);
-        setSuccess(null);
     };
 
-    //Función para guardar los cambios del perfil
-    const savePerfil = () => {
-        if (!perfil) {
-            setError("No hay un perfil cargado para editar");
-            return false;
-        }
-
-        try {
-            // updateUser(perfil);
-            setIsEditing(false);
-            setSuccess("Perfil actualizado correctamente");
-            setError(null);
-            return true;
-        } catch {
-            setError("No se pudo guardar el perfil");
-            return false;
-        }
-    };
-
-    //Función para restaurar el perfil original autenticado
-    const resetPerfil = () => {
-        setPerfil(user);
-        setIsEditing(false);
-        setError(null);
-        setSuccess(null);
-    };
-
-    //Retornar el perfil para ser utilizado en el componente de perfil del estudiante
     return {
         perfil,
-        isEditing,
-        setIsEditing,
+        loading,
         error,
         success,
+        isEditing,
+        setIsEditing,
         handleChange,
-        savePerfil,
-        resetPerfil,
+        palabrasClave,
+        nuevaPalabra,
+        setNuevaPalabra,
+        agregarPalabraClave,
+        eliminarPalabraClave,
+        fotoPerfil,
+        cambiarFotoPerfil
     };
-}
+};
