@@ -39,11 +39,7 @@ public class Aprendiz {
     private String palabrasClave;
 
     @ManyToMany
-    @JoinTable(
-        name = "aprendiz_distrito",
-        joinColumns = @JoinColumn(name = "idAprendiz"),
-        inverseJoinColumns = @JoinColumn(name = "idDistrito")
-    )
+    @JoinTable(name = "aprendiz_distrito", joinColumns = @JoinColumn(name = "idAprendiz"), inverseJoinColumns = @JoinColumn(name = "idDistrito"))
     private Set<Distrito> distritosDeInteres;
 
     @CreationTimestamp

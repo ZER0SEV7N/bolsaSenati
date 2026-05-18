@@ -24,7 +24,7 @@ import com.bolsasenati.spring.models.payload.response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-//Controlador para manejar las rutas de autenticación y registro de usuarios
+// Controlador para manejar las rutas de autenticación y registro de usuarios
 @RestController
 @RequestMapping("/auth")
 
@@ -36,8 +36,8 @@ public class authController {
     @Autowired
     private jwtServices jwtServices;
 
-    // ruta para loguearse
     // POST: /auth/login
+    // Inicia sesión y devuelve el token JWT + perfil del usuario
     @PostMapping("/login")
     public ResponseEntity<response<Map<String, Object>>> login(@RequestBody loginDto dto) {
         Usuario usuario = authServices.login(dto.getCorreo(), dto.getPassword());
@@ -47,6 +47,8 @@ public class authController {
 
         String token = jwtServices.generarToken(dto.getCorreo());
 
+        // Intentar devolver el DTO completo del aprendiz; si no aplica (otro rol),
+        // devolver usuario base
         Object perfilUsuario = authServices.mapearAprendizADto(usuario);
         if (perfilUsuario == null)
             perfilUsuario = usuario;
@@ -58,9 +60,8 @@ public class authController {
         return ResponseEntity.status(200).body(new response<>(true, "Login exitoso", data));
     }
 
-    // ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se
-    // recomienda exponer esta ruta en producción)
     // POST: /auth/registrar-aprendiz
+    // Registra un nuevo aprendiz (ruta de prueba)
     @PostMapping("/registrar-aprendiz")
     public ResponseEntity<response<responseAprendizDto>> registrarAprendiz(@RequestBody createAprendizDto dto) {
         responseAprendizDto usuario = authServices.registrarAprendiz(dto);
@@ -71,9 +72,8 @@ public class authController {
         return ResponseEntity.status(201).body(new response<>(true, "Aprendiz registrado exitosamente", usuario));
     }
 
-    // Ruta para obtener el perfil del usuario (esto es solo de prueba, no se
-    // recomienda exponer esta ruta en producción)
     // GET: /auth/perfil
+    // Devuelve el perfil del usuario autenticado (ruta de prueba)
     @GetMapping("/perfil")
     public ResponseEntity<response<Object>> obtenerPerfil() {
         String correoAutenticado = SecurityContextHolder
@@ -94,36 +94,35 @@ public class authController {
     }
 
     @PutMapping("/perfil/palabras-clave")
-public ResponseEntity<response<responseAprendizDto>> actualizarPalabrasClave(@RequestBody Map<String, Object> payload) {
-    try {
-        // CORRECCIÓN: Conversión segura sin importar si Jackson lo lee como Integer, Long o String
-        Object idObj = payload.get("id");
-        Integer idUsuario = null;
-        
-        if (idObj instanceof Number) {
-            idUsuario = ((Number) idObj).intValue();
-        } else if (idObj instanceof String) {
-            idUsuario = Integer.parseInt((String) idObj);
+    public ResponseEntity<response<responseAprendizDto>> actualizarPalabrasClave(@RequestBody Map<String, Object> payload) {
+        try {
+            Object idObj = payload.get("id");
+            Integer idUsuario = null;
+            
+            if (idObj instanceof Number) {
+                idUsuario = ((Number) idObj).intValue();
+            } else if (idObj instanceof String) {
+                idUsuario = Integer.parseInt((String) idObj);
+            }
+
+            String palabrasClaveJson = (String) payload.get("palabrasClave");
+
+            if (idUsuario == null) {
+                return ResponseEntity.status(400).body(new response<>(false, "El ID del usuario es obligatorio", null));
+            }
+
+        responseAprendizDto perfilActualizado = authServices.actualizarPalabrasClave(idUsuario, palabrasClaveJson);
+            
+            if (perfilActualizado == null) {
+                return ResponseEntity.status(404).body(new response<>(false, "Aprendiz no encontrado", null));
+            }
+
+            return ResponseEntity.status(200).body(new response<>(true, "Palabras clave actualizadas correctamente", perfilActualizado));
+        } catch (Exception e) {
+            // Esto te imprimirá el error real en la consola de Spring Boot si algo más falla
+            e.printStackTrace(); 
+            return ResponseEntity.status(500).body(new response<>(false, "Error interno: " + e.getMessage(), null));
         }
-
-        String palabrasClaveJson = (String) payload.get("palabrasClave");
-
-        if (idUsuario == null) {
-            return ResponseEntity.status(400).body(new response<>(false, "El ID del usuario es obligatorio", null));
-        }
-
-       responseAprendizDto perfilActualizado = authServices.actualizarPalabrasClave(idUsuario, palabrasClaveJson);
-        
-        if (perfilActualizado == null) {
-            return ResponseEntity.status(404).body(new response<>(false, "Aprendiz no encontrado", null));
-        }
-
-        return ResponseEntity.status(200).body(new response<>(true, "Palabras clave actualizadas correctamente", perfilActualizado));
-    } catch (Exception e) {
-        // Esto te imprimirá el error real en la consola de Spring Boot si algo más falla
-        e.printStackTrace(); 
-        return ResponseEntity.status(500).body(new response<>(false, "Error interno: " + e.getMessage(), null));
     }
-}
 
 }
