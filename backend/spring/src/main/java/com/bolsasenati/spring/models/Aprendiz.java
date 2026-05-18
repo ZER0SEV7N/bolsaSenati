@@ -15,10 +15,10 @@ import lombok.Data;
 public class Aprendiz {
 
     @Id
-    private Integer idaprendiz;
+    private Integer idAprendiz;
 
     @OneToOne
-    @MapsId 
+    @MapsId
     @JoinColumn(name = "idaprendiz")
     private Usuario usuario;
 
@@ -53,5 +53,4 @@ public class Aprendiz {
     @UpdateTimestamp
     @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
-
 }

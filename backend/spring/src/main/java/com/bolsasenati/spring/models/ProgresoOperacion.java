@@ -8,23 +8,25 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
 @Entity
-@Table(name = "tarea")
-public class Tarea {
-
+@Table(name = "progreso_operacion")
+@Data
+public class ProgresoOperacion {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false, name = "tarea")
-    private String nombre;
-    @Column(nullable = false, name = "descripcion")
-    private String descripcion;
-    
 
     @ManyToOne
-    @JoinColumn(name = "idCurso", referencedColumnName = "id", nullable = false)
-    private Curso curso;
+    @JoinColumn(name = "idAprendiz", nullable = false)
+    private Aprendiz aprendiz;
+
+    @ManyToOne
+    @JoinColumn(name = "idOperacion", nullable = false)
+    private Operacion operacion;
+
+    @Enumerated(EnumType.STRING)
+    private EstadoOperacion estado = EstadoOperacion.pendiente;
 
     @CreationTimestamp
     @Column(updatable = false, name = "create_at")
@@ -33,4 +35,11 @@ public class Tarea {
     @UpdateTimestamp
     @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
+
+
+    // Definición del enum para el estado de la operación
+    public enum EstadoOperacion {
+        pendiente, realizado
+    }
 }
+

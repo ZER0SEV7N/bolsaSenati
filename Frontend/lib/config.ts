@@ -37,7 +37,7 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             const originalRequestUrl = error.config.url;
-            if (typeof window !== 'undefined' && !originalRequestUrl.includes('/auth/login')) {
+            if (typeof window !== 'undefined' && !originalRequestUrl.includes('/login')) {
                 localStorage.removeItem('token');
                 window.location.href = '/login'; 
             }

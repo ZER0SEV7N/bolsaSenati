@@ -34,14 +34,14 @@ public class authController {
     @Autowired
     private jwtServices jwtServices;
 
-    //ruta para loguearse
-    //POST: /auth/login
+    // ruta para loguearse
+    // POST: /auth/login
     @PostMapping("/login")
-    public ResponseEntity<response<Map<String, Object>>> login(@RequestBody loginDto dto ){
+    public ResponseEntity<response<Map<String, Object>>> login(@RequestBody loginDto dto) {
         Usuario usuario = authServices.login(dto.getCorreo(), dto.getPassword());
 
-        if(usuario == null)
-            return ResponseEntity.status(400).body(new response<>(false,"Credenciales inválidas", null));
+        if (usuario == null)
+            return ResponseEntity.status(400).body(new response<>(false, "Credenciales inválidas", null));
 
         String token = jwtServices.generarToken(dto.getCorreo());
 
@@ -57,31 +57,33 @@ public class authController {
         return ResponseEntity.status(200).body(new response<>(true,"Login exitoso", data));
     }
 
-    //ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se recomienda exponer esta ruta en producción)
-    //POST: /auth/registrar-aprendiz
+    // ruta para registrar un nuevo aprendiz (esto es solo de prueba, no se
+    // recomienda exponer esta ruta en producción)
+    // POST: /auth/registrar-aprendiz
     @PostMapping("/registrar-aprendiz")
     public ResponseEntity<response<responseAprendizDto>> registrarAprendiz(@RequestBody createAprendizDto dto){
         responseAprendizDto usuario = authServices.registrarAprendiz(dto);
 
-        if(usuario == null)
-            return ResponseEntity.status(400).body(new response<>(false,"No se pudo registrar el aprendiz", null));
+        if (usuario == null)
+            return ResponseEntity.status(400).body(new response<>(false, "No se pudo registrar el aprendiz", null));
 
-        return ResponseEntity.status(201).body(new response<>(true,"Aprendiz registrado exitosamente", usuario));
+        return ResponseEntity.status(201).body(new response<>(true, "Aprendiz registrado exitosamente", usuario));
     }
 
-    //Ruta para obtener el perfil del usuario (esto es solo de prueba, no se recomienda exponer esta ruta en producción)
-    //GET: /auth/perfil
+    // Ruta para obtener el perfil del usuario (esto es solo de prueba, no se
+    // recomienda exponer esta ruta en producción)
+    // GET: /auth/perfil
     @GetMapping("/perfil")
     public ResponseEntity<response<Object>> obtenerPerfil(){
         String correoAutenticado = SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getName();
+                .getContext()
+                .getAuthentication()
+                .getName();
 
         Usuario usuario = authServices.obtenerPerfil(correoAutenticado);
 
-        if(usuario == null)
-            return ResponseEntity.status(404).body(new response<>(false,"Usuario no encontrado", null));
+        if (usuario == null)
+            return ResponseEntity.status(404).body(new response<>(false, "Usuario no encontrado", null));
 
         Object perfilUsuario = authServices.mapearAprendizADto(usuario);
         if (perfilUsuario == null) 
@@ -90,6 +92,5 @@ public class authController {
 
         return ResponseEntity.status(200).body(new response<>(true,"Perfil obtenido exitosamente", perfilUsuario));
     }
-
 
 }

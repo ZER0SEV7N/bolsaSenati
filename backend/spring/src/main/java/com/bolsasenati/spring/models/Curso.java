@@ -1,28 +1,32 @@
 package com.bolsasenati.spring.models;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Data
 @Entity
 @Table(name = "curso")
-@Data
 public class Curso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, name = "curso")
-    private String curso;
+    @Column(nullable = false, name= "curso")
+    private String nombre;
 
-    @Column(nullable = false, name = "creditos")
-    private Integer creditos;
+    @Column(nullable = false, name = "credito")
+    private Integer credito;
 
-    @Column(name = "create_at", updatable = false)
+    @CreationTimestamp
+    @Column(updatable = false, name = "create_at")
     private LocalDateTime createAt;
 
-    @Column(name = "update_at", insertable = false)
+    @UpdateTimestamp
+    @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
 }

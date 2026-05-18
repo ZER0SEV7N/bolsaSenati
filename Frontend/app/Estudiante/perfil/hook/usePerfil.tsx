@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 //Función para obtener los datos del perfil del estudiante
 export const usePerfil = () => {
-    const {user, updateUser } = useAuth(); //Obtener el usuario autenticado del contexto de autenticación
+    const {user } = useAuth(); //Obtener el usuario autenticado del contexto de autenticación
     const [perfil, setPerfil] = useState<User | null>(null); //Estado para almacenar los datos del perfil
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export const usePerfil = () => {
         }
 
         try {
-            updateUser(perfil);
+            // updateUser(perfil);
             setIsEditing(false);
             setSuccess("Perfil actualizado correctamente");
             setError(null);

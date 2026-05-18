@@ -8,31 +8,30 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
-@Data
 @Entity
-@Table(name = "pea")
-public class Pea {
-
+@Table(name = "operacion")
+@Data
+public class Operacion {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "year")
-    private Integer year;
-
-    @Column(name = "estado")
-    private Boolean estado = true;
+    @Column(nullable = false, name = "operacion")
+    private String operacion;
+    @Column(nullable = false, name = "descripcion")
+    private String descripcion;
+    
 
     @ManyToOne
-    @JoinColumn(name = "idcarrera", nullable = false)
-    private Carrera carrera;
+    @JoinColumn(name = "idTarea" ,referencedColumnName = "id", nullable = false)
+    private Tarea tarea;
 
     @CreationTimestamp
-    @Column(name = "create_at", updatable = false)
+    @Column(updatable = false, name = "create_at")
     private LocalDateTime createAt;
 
     @UpdateTimestamp
-    @Column(name = "update_at", insertable = false)
+    @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
 }
