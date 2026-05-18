@@ -1,14 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { AprendizPerfil } from "../hook/usePerfil";
 
-import { User } from "@/app/login/types/user";
 type PersonalInfoProps = {
-    perfil: User | null;
+    perfil: AprendizPerfil | null;
 };
 
-export function PersonalInfo({
-    perfil,
-}: PersonalInfoProps) {
+export function PersonalInfo({ perfil }: PersonalInfoProps) {
     return (
         <Card className="p-6">
             <h2 className="font-bold text-lg">
@@ -17,23 +15,22 @@ export function PersonalInfo({
             <p className="text-sm text-muted-foreground">
                 Datos de contacto y Ubicación
             </p>
-            <div className="grid grid-cols-2 gap-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground mb-1">
                         Nombre y apellidos
                     </p>
-
-                    <Input className="font-medium"
-                        value={`${perfil?.nombre || ""} ${perfil?.apellido || ""}`}
+                    <Input 
+                        className="font-medium"
+                        value={perfil ? `${perfil.nombres} ${perfil.apellidos}` : ""}
                         readOnly
                     />
                 </div>
 
                 <div>
-                    <p className="text-sm text-muted-foreground">
-                        Telefono Móvil
+                    <p className="text-sm text-muted-foreground mb-1">
+                        Teléfono Móvil
                     </p>
-
                     <Input
                         value={perfil?.telefono || ""}
                         readOnly
@@ -41,28 +38,25 @@ export function PersonalInfo({
                 </div>
 
                 <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground mb-1">
                         Correo Personal
                     </p>
-
                     <Input
-                        value={perfil?.email || ""}
+                        value={perfil?.correoPersonal || ""}
                         readOnly
                     />
                 </div>
 
                 <div>
-                    <p className="text-sm text-muted-foreground">
-                        Distrito de Recidencia
+                    <p className="text-sm text-muted-foreground mb-1">
+                        Documento de Identidad
                     </p>
                     <Input
-                        value={perfil?.direccion || ""}
+                        value={perfil?.documentoIdentidad || ""}
                         readOnly
                     />
                 </div>
             </div>
         </Card>
-
-
-    )
+    );
 }
