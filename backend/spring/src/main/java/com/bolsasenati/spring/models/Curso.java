@@ -16,7 +16,7 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name= "curso")
     private String nombre;
 
     @Column(nullable = false, name = "credito")

@@ -13,20 +13,22 @@ public interface progresoOperacionRepository extends JpaRepository<ProgresoOpera
 
     // Todas las operaciones del aprendiz con sus relaciones (tarea → curso)
     @Query("""
-                SELECT po FROM ProgresoOperacion po
-                JOIN FETCH po.operacion o
-                JOIN FETCH o.tarea t
-                JOIN FETCH t.curso c
-                WHERE po.aprendiz.id = :idAprendiz
-                ORDER BY t.id
+            SELECT po FROM ProgresoOperacion po
+            JOIN FETCH po.operacion o
+            JOIN FETCH o.tarea t
+            JOIN FETCH t.curso c
+            WHERE po.aprendiz.id = :idAprendiz
+            ORDER BY t.id
             """)
     List<ProgresoOperacion> findByAprendizIdWithDetails(@Param("idAprendiz") Integer idAprendiz);
 
     // Cuenta total de operaciones del aprendiz
-    long countByAprendizId(Integer idAprendiz);
+    @Query("SELECT COUNT(po) FROM ProgresoOperacion po WHERE po.aprendiz.id = :idAprendiz")
+    long countByAprendizId(@Param("idAprendiz") Integer idAprendiz);
 
     // Cuenta de operaciones por estado
+    @Query("SELECT COUNT(po) FROM ProgresoOperacion po WHERE po.aprendiz.id = :idAprendiz AND po.estado = :estado")
     long countByAprendizIdAndEstado(
-            Integer idAprendiz,
-            ProgresoOperacion.EstadoOperacion estado);
+            @Param("idAprendiz") Integer idAprendiz,
+            @Param("estado") ProgresoOperacion.EstadoOperacion estado);
 }
