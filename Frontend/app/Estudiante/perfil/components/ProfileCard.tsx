@@ -6,10 +6,9 @@ import {
 } from "@/components/ui/avatar";
 
 import { Badge } from "@/components/ui/badge";
-
 import { User } from "@/app/login/types/user";
-
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/context";
 
 import {Input} from "@/components/ui/input";
 
@@ -35,6 +34,9 @@ export function ProfileCard({
   agregarPalabraClave,
   eliminarPalabraClave
 }: ProfileCardProps) {
+  const { user } = useAuth();
+  const currentRole = user?.rol ?? "Invitado";
+
 
   const iniciales = perfil 
     ? `${perfil.nombres?.[0] || ""}${perfil.apellidos?.[0] || ""}` 
@@ -50,10 +52,11 @@ export function ProfileCard({
 
       <h2 className="text-xl font-bold">
         {perfil ? `${perfil.nombres} ${perfil.apellidos}` : "Cargando..."}
+        {perfil?.nombres} {perfil?.apellidos}
       </h2>
 
       <Badge>
-        Aprendiz
+        {currentRole}
       </Badge>
 
       <Button variant="outline">

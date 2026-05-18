@@ -7,9 +7,6 @@ import { usePerfil } from "./hook/usePerfil";
 import { AcademicInfo } from "./components/AcademicInfo";
 import { DistritosAdicionales } from "./components/DistritosAdicionales";
 
-
-
-
 export default function PerfilPage() {
     // Traemos todo lo necesario del Hook
     const { 

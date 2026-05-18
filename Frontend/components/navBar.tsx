@@ -24,24 +24,17 @@ export function NavBar() {
 
   //Inicializar tema desde localStorage al montar
   useEffect(() => {
-    async function initializeTheme() {
-      setMounted(true);
-      const savedTheme = localStorage.getItem("theme") as
-        | "light"
-        | "dark"
-        | null;
-      const initialTheme = savedTheme || "light";
-      setTheme(initialTheme);
-      applyTheme(initialTheme);
-    }
-    initializeTheme();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+    const currentTheme = (localStorage.getItem("theme") as "light" | "dark") || "light";
+    setTheme(currentTheme);
   }, []);
 
   //Función para aplicar el tema al documento
   const applyTheme = (newTheme: "light" | "dark") => {
     const htmlElement = document.documentElement;
     if (newTheme === "dark") htmlElement.classList.add("dark");
-    else htmlElement.classList.remove("dark");
+    else htmlElement.classList.remove("dark");      
   };
 
   //Funcion para cambiar el tema entre claro y oscuro
@@ -58,6 +51,7 @@ export function NavBar() {
     router.push("/");
   };
 
+  //Evitar renderizar nada hasta que el componente este montado para evitar problemas con el tema en SSR
   if (!mounted) return null;
 
   return (
@@ -86,15 +80,15 @@ export function NavBar() {
           <Avatar className="h-9 w-9 border-2 border-transparent">
             <AvatarImage src="/avatar-placeholder.png" alt="Avatar" />
             <AvatarFallback className="bg-blue-600 text-white font-semibold">
-              {user?.nombre?.charAt(0) || ""}
-              {user?.apellido?.charAt(0) || ""}
+              {user?.nombres?.charAt(0) || ""}
+              {user?.apellidos?.charAt(0) || ""}
             </AvatarFallback>
           </Avatar>
 
           {user && (
             <div className="hidden md:flex flex-col items-start mr-1">
               <span className="text-sm font-medium leading-none">
-                {user.nombre} {user.apellido}
+                {user.nombres} {user.apellidos}
               </span>
             </div>
           )}

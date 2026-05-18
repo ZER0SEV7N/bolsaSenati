@@ -1,0 +1,151 @@
+[
+  {
+    "id": "pea-001",
+    "titulo": "Programación Orientada a Objetos",
+    "progreso": 75,
+    "hitos": [
+      {
+        "id": "HT-01",
+        "nombre": "HT-01 Enfoque general de la POO",
+        "progreso": 60,
+        "operaciones": [
+          {
+            "id": "HO-01",
+            "nombre": "HO-01 Conceptos y creación de Clase, método y Objeto",
+            "completado": true
+          },
+          {
+            "id": "HO-02",
+            "nombre": "HO-02 Definición y creación de Objetos de software",
+            "completado": false
+          }
+        ]
+      },
+      {
+        "id": "HT-01-B",
+        "nombre": "HT-01 Pilares de la POO",
+        "progreso": 40,
+        "operaciones": [
+          {
+            "id": "HO-01-B1",
+            "nombre": "HO-01 Herencia y Polimorfismo",
+            "completado": true
+          },
+          {
+            "id": "HO-01-B2",
+            "nombre": "HO-01 Encapsulamiento y Abstracción",
+            "completado": false
+          }
+        ]
+      },
+      {
+        "id": "HT-01-C",
+        "nombre": "HT-01 Interfaces y Clases Abstractas",
+        "progreso": 20,
+        "operaciones": [
+          {
+            "id": "HO-01-C1",
+            "nombre": "HO-01 Implementación de Interfaces",
+            "completado": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pea-002",
+    "titulo": "Desarrollo Web Frontend",
+    "progreso": 40,
+    "hitos": [
+      {
+        "id": "HT-02",
+        "nombre": "HT-02 Maquetación Avanzada con CSS",
+        "progreso": 40,
+        "operaciones": [
+          {
+            "id": "HO-03",
+            "nombre": "HO-03 Flexbox y Grid Layout",
+            "completado": true
+          },
+          {
+            "id": "HO-04",
+            "nombre": "HO-04 Animaciones y Transiciones",
+            "completado": false
+          }
+        ]
+      },
+      {
+        "id": "HT-02-B",
+        "nombre": "HT-02 JavaScript Moderno (ES6+)",
+        "progreso": 30,
+        "operaciones": [
+          {
+            "id": "HO-02-B1",
+            "nombre": "HO-02 Promesas y Async/Await",
+            "completado": false
+          }
+        ]
+      },
+      {
+        "id": "HT-02-C",
+        "nombre": "HT-02 Frameworks de UI (React/Vue)",
+        "progreso": 10,
+        "operaciones": [
+          {
+            "id": "HO-02-C1",
+            "nombre": "HO-02 Gestión de Estado",
+            "completado": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pea-003",
+    "titulo": "Base de Datos SQL",
+    "progreso": 90,
+    "hitos": [
+      {
+        "id": "HT-03",
+        "nombre": "HT-03 Diseño de Modelo Relacional",
+        "progreso": 100,
+        "operaciones": [
+          {
+            "id": "HO-05",
+            "nombre": "HO-05 Normalización de tablas",
+            "completado": true
+          },
+          {
+            "id": "HO-06",
+            "nombre": "HO-06 Creación de llaves primarias y foráneas",
+            "completado": true
+          }
+        ]
+      },
+      {
+        "id": "HT-03-B",
+        "nombre": "HT-03 Consultas Complejas",
+        "progreso": 80,
+        "operaciones": [
+          {
+            "id": "HO-03-B1",
+            "nombre": "HO-03 Inner, Left y Right Joins",
+            "completado": true
+          }
+        ]
+      },
+      {
+        "id": "HT-03-C",
+        "nombre": "HT-03 Optimización y Triggers",
+        "progreso": 50,
+        "operaciones": [
+          {
+            "id": "HO-03-C1",
+            "nombre": "HO-03 Creación de Procedimientos Almacenados",
+            "completado": false
+          }
+        ]
+      }
+    ]
+  }
+]

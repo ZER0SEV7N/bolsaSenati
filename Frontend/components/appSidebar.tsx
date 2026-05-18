@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { Badge } from "./ui/badge";
+import { useAuth } from "@/context/context";
 
 // Mapeo de iconos
 const iconMap: Record<string, React.ComponentType> = {
@@ -31,14 +32,21 @@ const iconMap: Record<string, React.ComponentType> = {
 
 export function AppSidebar({
   menuItems,
+  role,
 }: {
   menuItems: { title: string; url: string }[];
+  role?: string;
 }) {
+  const { user } = useAuth();
+  const currentRole = role ?? user?.rol ?? "Invitado";
+
   return (
     <Sidebar className="bg-[#2f343a] text-white border-none">
       {/* Cabecera */}
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3 justify-center">
+        {/* Contenedor principal: Columna flexible y centrada */}
+        <div className="flex flex-col items-center gap-4 justify-center w-full">
+          
           <div className="rounded-lg overflow-hidden">
             {/* Logo de Senati */}
             <Image
@@ -48,6 +56,15 @@ export function AppSidebar({
               height={140}
             />
           </div>
+
+          {/* Badge de rol centralizado y más grande */}
+          <Badge 
+            variant="outline" 
+            className="text-green-300 border-green-300/30 text-sm px-5 py-1.5 font-medium tracking-wide uppercase"
+          >
+            {currentRole}
+          </Badge>
+          
         </div>
       </SidebarHeader>
 
