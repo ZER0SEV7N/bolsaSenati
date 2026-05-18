@@ -11,6 +11,7 @@ import com.bolsasenati.spring.models.dtos.cursoDTO;
 import com.bolsasenati.spring.models.dtos.operacionDTO;
 import com.bolsasenati.spring.models.dtos.tareaDTO;
 import com.bolsasenati.spring.repository.curso.cursoRepository;
+import com.bolsasenati.spring.repository.dashboard.progresoOperacionRepository;
 import com.bolsasenati.spring.repository.tarea.tareaRepository;
 import com.bolsasenati.spring.repository.operacion.operacionRepository;
 
@@ -19,8 +20,9 @@ public class cursoServices {
     @Autowired private cursoRepository cursoRepository;
     @Autowired private tareaRepository tareaRepository;
     @Autowired private operacionRepository operacionRepository;
+    @Autowired private progresoOperacionRepository progresoOperacionRepository;
 
-    public List<cursoDTO> obtenerCursosPorCarreraYCiclo(Integer idCarrera, String ciclo) {
+    public List<cursoDTO> obtenerCursosPorCarreraYCiclo(Integer idAprendiz, Integer idCarrera, String ciclo) {
         // Buscamos solo los cursos que cumplen con el filtro de la malla curricular
         List<Curso> cursosFiltrados = cursoRepository.findCursosByCarreraYCiclo(idCarrera, ciclo);
 
@@ -52,6 +54,9 @@ public class cursoServices {
                     oDto.setId(operacion.getId());
                     oDto.setOperacion(operacion.getOperacion());
                     oDto.setDescripcion(operacion.getDescripcion());
+                    // Obtener estado de la operacion
+                    String estado = progresoOperacionRepository.obtenerEstado(idAprendiz, operacion.getId()); 
+                    oDto.setEstado(estado);
                     oDto.setCreateAt(operacion.getCreateAt() != null ? operacion.getCreateAt().toString() : null);
                     oDto.setUpdateAt(operacion.getUpdateAt() != null ? operacion.getUpdateAt().toString() : null);
                     return oDto;

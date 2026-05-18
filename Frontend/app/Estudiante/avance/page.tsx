@@ -1,11 +1,15 @@
+"use client";
+
 import CheckListCard from "@/components/CheckListCard";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { SimpleProgressCard } from "@/components/SimpleProgressCard";
 
-import peaData from "@/data/peaData.json";
+import { useCurso } from "@/hooks/useCurso";
 
 function AvancePage() {
+  const { cursos, operacionEstado } = useCurso();
+
   return (
     <div>
       <div className="flex items-center justify-between text-3xl font-bold py-4">
@@ -36,9 +40,9 @@ function AvancePage() {
           </div>
         </Card>
         <Card className="p-6">
-          {peaData.map((curso) => (
+          {cursos?.map((curso) => (
             <div key={curso.id} className="px-6 py-4 overflow-visible">
-              <CheckListCard data={curso} />
+              <CheckListCard data={curso} onCheckChange={operacionEstado} />
             </div>
           ))}
         </Card>

@@ -8,20 +8,45 @@ import { Field, FieldLabel } from "./ui/field";
 import { Progress } from "./ui/progress";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
-import type { CourseData, Hito } from "@/types/Pea";
+import type { Curso } from "@/types/Curso";
+import type { Tarea } from "@/types/Tarea";
+import type { Operacion } from "@/types/Operacion";
 
 interface CheckListCardProps {
-  data: CourseData | Hito;
+  data: Curso | Tarea;
   isChild?: boolean;
+  onCheckChange?: (operacionId: number) => void;
 }
 
-function CheckListCard({ data, isChild = false }: CheckListCardProps) {
-  const title = "titulo" in data ? data.titulo : data.nombre;
-  const progress = data.progreso;
+function CheckListCard({
+  data,
+  isChild = false,
+  onCheckChange,
+}: CheckListCardProps) {
+  const title =
+    "nombre" in data ? data.nombre : "tarea" in data ? data.tarea : "Item";
+
   const uniqueId = String(data.id);
 
-  const hasHitos = "hitos" in data && data.hitos;
-  const hasOperaciones = "operaciones" in data && data.operaciones;
+  const tareas: Tarea[] = "tareas" in data ? (data.tareas ?? []) : [];
+
+  const operaciones: Operacion[] =
+    "operaciones" in data
+      ? (data.operaciones ?? [])
+      : tareas.flatMap((t) => t.operaciones ?? []);
+
+  const totalOps = operaciones.length;
+
+  const completedOps = operaciones.filter(
+    (op) => op.estado === "realizado",
+  ).length;
+  
+  const progress =
+    totalOps === 0 ? 0 : Math.round((completedOps / totalOps) * 100);
+
+  const hasTareas = !isChild && tareas.length > 0;
+  const hasOperaciones =
+    isChild && "operaciones" in data && (data.operaciones ?? []).length > 0;
 
   return (
     <Accordion type="single" collapsible className="w-full">
@@ -32,13 +57,13 @@ function CheckListCard({ data, isChild = false }: CheckListCardProps) {
               <span
                 className={`font-bold transition-all ${
                   isChild
-                    ? "text-xs text-foreground/80"
-                    : "text-xl md:text-1xl text-foreground"
+                    ? "text-sm text-foreground/90"
+                    : "text-xl md:text-2xl text-foreground"
                 }`}
               >
                 {title}
               </span>
-              <span className="text-xs font-bold text-foreground">
+              <span className="text-xs font-bold text-foreground/70">
                 {progress}%
               </span>
             </FieldLabel>
@@ -58,20 +83,31 @@ function CheckListCard({ data, isChild = false }: CheckListCardProps) {
                 : "pl-4 border-l-2 border-border ml-2 flex flex-col gap-3"
             }
           >
-            {hasHitos &&
-              data.hitos?.map((ht) => (
-                <CheckListCard key={ht.id} data={ht} isChild={true} />
+            {hasTareas &&
+              tareas.map((ht) => (
+                <CheckListCard
+                  key={ht.id}
+                  data={ht}
+                  isChild={true}
+                  onCheckChange={onCheckChange}
+                />
               ))}
 
             {hasOperaciones &&
-              data.operaciones?.map((ho) => (
+              (data as Tarea).operaciones.map((ho) => (
                 <div key={ho.id} className="flex items-center space-x-2 py-1">
-                  <Checkbox id={ho.id} checked={ho.completado} />
+                  <Checkbox
+                    id={String(ho.id)}
+                    checked={ho.estado === "realizado"}
+                    onCheckedChange={() => {
+                      if (onCheckChange) onCheckChange(ho.id);
+                    }}
+                  />
                   <Label
-                    htmlFor={ho.id}
-                    className="text-ls font-medium leading-none cursor-pointer text-foreground/80 hover:text-foreground transition-colors"
+                    htmlFor={String(ho.id)}
+                    className="text-sm font-medium leading-none cursor-pointer text-foreground/80 hover:text-foreground transition-colors"
                   >
-                    {ho.nombre}
+                    {ho.operacion || ho.nombre}
                   </Label>
                 </div>
               ))}

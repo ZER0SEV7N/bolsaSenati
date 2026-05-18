@@ -7,6 +7,7 @@ public class operacionDTO {
     private Integer id;
     private String operacion;
     private String descripcion;
+    private String estado;
     private String createAt;
     private String updateAt;
 }

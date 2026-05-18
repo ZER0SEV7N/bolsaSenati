@@ -19,9 +19,9 @@ public class cursoController {
     @Autowired cursoServices cursoServices;
 
     @GetMapping("/filtrar")
-    public ResponseEntity<response<List<cursoDTO>>> allCursos(@RequestParam Integer idCarrera, @RequestParam String ciclo) {
+    public ResponseEntity<response<List<cursoDTO>>> allCursos(@RequestParam Integer idAprendiz,@RequestParam Integer idCarrera, @RequestParam String ciclo) {
         try {
-            List<cursoDTO> cursos = cursoServices.obtenerCursosPorCarreraYCiclo(idCarrera, ciclo);
+            List<cursoDTO> cursos = cursoServices.obtenerCursosPorCarreraYCiclo(idAprendiz, idCarrera, ciclo);
             return ResponseEntity.ok(new response<>(true, "Cursos obtenidos exitosamente", cursos));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new response<>(false, "Error al obtener los cursos: " + e.getMessage(), null));

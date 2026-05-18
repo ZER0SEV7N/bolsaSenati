@@ -31,4 +31,7 @@ public interface progresoOperacionRepository extends JpaRepository<ProgresoOpera
     long countByAprendizIdAndEstado(
             @Param("idAprendiz") Integer idAprendiz,
             @Param("estado") ProgresoOperacion.EstadoOperacion estado);
+
+    @Query(value = "SELECT po.estado FROM progreso_operacion po WHERE po.idaprendiz = :idAprendiz AND po.idoperacion = :idOperacion", nativeQuery = true)
+    String obtenerEstado(Integer idAprendiz, Integer idOperacion);
 }

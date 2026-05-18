@@ -19,17 +19,12 @@ public class operacionController {
 
     @PostMapping("/guardar-progreso-operacion")
     public ResponseEntity<response<String>> guardarProgresoOperacion(@RequestBody operacionRequest request) {        
-        String resultado = operacionServices.guardarProgresoOperacion(request.getIdAprendiz(), request.getIdOperacion(), request.getEstado());
-
-        if(resultado.equals("Aprendiz no encontrado")) {
-            return ResponseEntity.status(404).body(new response<>(false, resultado, null));
+        try{
+            String resultado = operacionServices.guardarProgresoOperacion(request.getIdAprendiz(), request.getIdOperacion(), request.getEstado());
+            return ResponseEntity.status(200).body(new response<>(true, resultado, null));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new response<>(false, "Error: " + e.getMessage(), null));
         }
-
-        if(resultado.equals("Estado no valido (acepta 'pendiente' o 'realizado')")) {
-            return ResponseEntity.status(400).body(new response<>(false, resultado, null));
-        }
-
-        return ResponseEntity.status(200).body(new response<>(true, resultado, null));
     }
     
 }
