@@ -1,7 +1,6 @@
 -- Datos de prueba para la base de datos de la bolsa de trabajo del SENATI
 use bolsaSenati;
 
-use bolsasenati;
 
 -- Datos para la tabla tarea
 insert into tarea (id, tarea, descripcion, idCurso) values
