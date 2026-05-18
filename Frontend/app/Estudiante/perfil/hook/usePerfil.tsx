@@ -15,7 +15,7 @@ export interface AprendizPerfil {
     correoInstitucional: string;
     carrera: string;
     ciclo: string;
-    sede?: string;
+    palabrasClave?: string;
 }
 
 export const usePerfil = () => {
@@ -25,26 +25,10 @@ export const usePerfil = () => {
     const [success, setSuccess] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState(false);
 
-    // ESTADOS DE PALABRAS CLAVE
-    const [palabrasClave, setPalabrasClave] = useState<string[]>([
-        "Next.js",
-        "Spring Boot",
-        "Java",
-        "MySQL"
-    ]);
+    // ESTADOS SIMULADOS (LOCALSTORAGE)
+    const [fotoPerfil, setFotoPerfil] = useState<string>("https://github.com/shadcn.png");
+    const [palabrasClave, setPalabrasClave] = useState<string[]>([]);
     const [nuevaPalabra, setNuevaPalabra] = useState("");
-
-    const agregarPalabraClave = () => {
-        const textoLimpio = nuevaPalabra.trim();
-        if (textoLimpio && !palabrasClave.includes(textoLimpio)) {
-            setPalabrasClave([...palabrasClave, textoLimpio]);
-            setNuevaPalabra(""); 
-        }
-    };
-
-    const eliminarPalabraClave = (palabraAEliminar: string) => {
-        setPalabrasClave(palabrasClave.filter((p) => p !== palabraAEliminar));
-    };
 
     const cargarPerfil = async () => {
         try {
@@ -52,12 +36,27 @@ export const usePerfil = () => {
             const response = await api.get("/auth/perfil");
             if (response.data && response.data.success) {
                 setPerfil(response.data.data);
-            } else {
-                setError("No se pudo estructurar el perfil correctamente.");
+            }
+
+            if (typeof window !== "undefined") {
+                
+                const fotoGuardada = localStorage.getItem("simulado_foto_perfil");
+                if (fotoGuardada) setFotoPerfil(fotoGuardada);
+
+                
+                const tagsGuardados = localStorage.getItem("simulado_palabras_clave");
+                if (tagsGuardados) {
+                    setPalabrasClave(JSON.parse(tagsGuardados));
+                } else {
+                    
+                    const porDefecto = ["Next.js", "Spring Boot", "Java", "MySQL"];
+                    setPalabrasClave(porDefecto);
+                    localStorage.setItem("simulado_palabras_clave", JSON.stringify(porDefecto));
+                }
             }
         } catch (err: any) {
             console.error("Error cargando perfil:", err);
-            setError(err.response?.data?.message || "Error al conectar con el servidor");
+            setError("No se pudo conectar con el servidor.");
         } finally {
             setLoading(false);
         }
@@ -67,16 +66,40 @@ export const usePerfil = () => {
         cargarPerfil();
     }, []);
 
+    // Función para cambiar la foto (Simulado)
+    const cambiarFotoPerfil = (file: File) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result as string;
+            setFotoPerfil(base64String);
+            localStorage.setItem("simulado_foto_perfil", base64String);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    
+    const agregarPalabraClave = () => {
+        const textoLimpio = nuevaPalabra.trim();
+        if (textoLimpio && !palabrasClave.includes(textoLimpio)) {
+            const listaActualizada = [...palabrasClave, textoLimpio];
+            setPalabrasClave(listaActualizada);
+            setNuevaPalabra("");
+            localStorage.setItem("simulado_palabras_clave", JSON.stringify(listaActualizada));
+        }
+    };
+
+    // Función para eliminar palabra clave (Simulado)
+    const eliminarPalabraClave = (palabraAEliminar: string) => {
+        const listaActualizada = palabrasClave.filter((p) => p !== palabraAEliminar);
+        setPalabrasClave(listaActualizada);
+        localStorage.setItem("simulado_palabras_clave", JSON.stringify(listaActualizada));
+    };
+
     const handleChange = (field: keyof AprendizPerfil, value: string) => {
         setPerfil((currentPerfil) => {
             if (!currentPerfil) return currentPerfil;
             return { ...currentPerfil, [field]: value };
         });
-    };
-
-    const resetPerfil = () => {
-        cargarPerfil();
-        setIsEditing(false);
     };
 
     return {
@@ -87,12 +110,12 @@ export const usePerfil = () => {
         isEditing,
         setIsEditing,
         handleChange,
-        resetPerfil,
-        // ¡SÚPER IMPORTANTE REVISAR QUE ESTO ESTÉ AQUÍ!
         palabrasClave,
         nuevaPalabra,
         setNuevaPalabra,
         agregarPalabraClave,
-        eliminarPalabraClave
+        eliminarPalabraClave,
+        fotoPerfil,
+        cambiarFotoPerfil
     };
 };

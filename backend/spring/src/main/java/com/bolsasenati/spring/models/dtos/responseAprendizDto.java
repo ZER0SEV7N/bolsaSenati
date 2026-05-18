@@ -38,6 +38,7 @@ public class responseAprendizDto {
     })
     private CarreraDto carreraDto;
     private String ciclo;
+    private String palabrasClave;
 
     @Data
     public static class CarreraDto {

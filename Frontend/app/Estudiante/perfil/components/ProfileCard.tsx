@@ -1,122 +1,163 @@
+// frontend/app/Estudiante/perfil/components/ProfileCard.tsx
+"use client";
+
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { User } from "@/app/login/types/user";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/context/context";
-
-import {Input} from "@/components/ui/input";
-
-import { AprendizPerfil } from "../hook/usePerfil";
-
-import { Plus, X } from "lucide-react";
-
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { X, Plus, KeyRound, Camera } from "lucide-react";
 
 type ProfileCardProps = {
-  perfil: AprendizPerfil | null;
+  perfil: any;
   palabrasClave: string[];
   nuevaPalabra: string;
-  setNuevaPalabra: (value: string) => void;
+  setNuevaPalabra: (val: string) => void;
   agregarPalabraClave: () => void;
   eliminarPalabraClave: (palabra: string) => void;
+  isEditing: boolean;
+  fotoPerfil: string;
+  cambiarFotoPerfil: (file: File) => void;
 };
 
-export function ProfileCard({ 
+export function ProfileCard({
   perfil,
   palabrasClave,
   nuevaPalabra,
   setNuevaPalabra,
   agregarPalabraClave,
-  eliminarPalabraClave
+  eliminarPalabraClave,
+  isEditing,
+  fotoPerfil,
+  cambiarFotoPerfil
 }: ProfileCardProps) {
-  const { user } = useAuth();
-  const currentRole = user?.rol ?? "Invitado";
+  
+  const [openModal, setOpenModal] = useState(false);
+  const [passwords, setPasswords] = useState({ actual: "", nueva: "", confirmar: "" });
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      cambiarFotoPerfil(e.target.files[0]);
+    }
+  };
 
-  const iniciales = perfil 
-    ? `${perfil.nombres?.[0] || ""}${perfil.apellidos?.[0] || ""}` 
-    : "AP";
+  const handleGuardarContrasena = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwords.nueva !== passwords.confirmar) {
+      alert("La nueva contraseña y la confirmación no coinciden.");
+      return;
+    }
+    alert("¡Contraseña actualizada con éxito (Simulado)!");
+    setOpenModal(false);
+    setPasswords({ actual: "", nueva: "", confirmar: "" });
+  };
 
   return (
-    <Card className="p-6 flex flex-col items-center gap-4">
+    <Card className="p-6 flex flex-col items-center gap-4 relative">
+      
+      
+      <div className="relative group">
+        <Avatar className="w-40 h-40 border-2 border-muted">
+          <AvatarImage src={fotoPerfil} className="object-cover" />
+          <AvatarFallback>DN</AvatarFallback>
+        </Avatar>
+        
+        <input 
+          type="file" 
+          id="foto-upload" 
+          accept="image/*" 
+          className="hidden" 
+          onChange={handleFileChange}
+        />
+        
+        <label 
+          htmlFor="foto-upload" 
+          className="absolute bottom-1 right-1 bg-primary text-primary-foreground p-2 rounded-full cursor-pointer shadow-md hover:scale-105 transition-transform flex items-center justify-center"
+        >
+          <Camera className="w-4 h-4" />
+        </label>
+      </div>
 
-      <Avatar className="w-40 h-40">
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>DN</AvatarFallback>
-      </Avatar>
-
-      <h2 className="text-xl font-bold">
-        {perfil ? `${perfil.nombres} ${perfil.apellidos}` : "Cargando..."}
-        {perfil?.nombres} {perfil?.apellidos}
+      <h2 className="text-xl font-bold text-center">
+        {perfil?.nombres}
       </h2>
 
-      <Badge>
-        {currentRole}
-      </Badge>
+      <Badge>Aprendiz</Badge>
 
-      <Button variant="outline">
+      <Button variant="outline" className="flex items-center gap-2" onClick={() => setOpenModal(true)}>
+        <KeyRound className="w-4 h-4" />
         Cambiar contraseña
       </Button>
 
-      <div className="w-full mt-4 space-y-3">
-        <div>
-          <h3 className="font-semibold text-sm">Palabras Clave</h3>
-          <p className="text-xs text-muted-foreground">
-            Habilidades y tecnologías que manejas
-          </p>
+     
+      {openModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-[425px] p-6 bg-background space-y-4 shadow-xl border">
+            <h3 className="text-lg font-semibold">Cambiar Contraseña</h3>
+            <form onSubmit={handleGuardarContrasena} className="space-y-4">
+              <div className="space-y-2">
+                <Label>Contraseña Actual</Label>
+                <Input type="password" required value={passwords.actual} onChange={(e)=>setPasswords({...passwords, actual: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>Nueva Contraseña</Label>
+                <Input type="password" required value={passwords.nueva} onChange={(e)=>setPasswords({...passwords, nueva: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>Confirmar Nueva Contraseña</Label>
+                <Input type="password" required value={passwords.confirmar} onChange={(e)=>setPasswords({...passwords, confirmar: e.target.value})} />
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <Button type="button" variant="outline" onClick={() => setOpenModal(false)}>Cancelar</Button>
+                <Button type="submit">Actualizar</Button>
+              </div>
+            </form>
+          </Card>
         </div>
+      )}
 
-        {/* Input usando el estado y funciones del hook */}
-        <div className="flex gap-2 items-center">
-          <Input
-            type="text"
-            placeholder="Agrega palabra clave..."
-            value={nuevaPalabra}
-            onChange={(e) => setNuevaPalabra(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && agregarPalabraClave()}
-            className="text-xs placeholder:text-muted-foreground/50 h-9"
-          />
-          <Button 
-            type="button" 
-            size="icon" 
-            variant="outline"
-            onClick={agregarPalabraClave}
-            className="h-9 w-9 shrink-0"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
+      
+<div className="w-full space-y-3 pt-2">
+  <div>
+    <h3 className="font-semibold">Palabras Clave</h3>
+    <p className="text-sm text-muted-foreground">Habilidades y tecnologías que manejas</p>
+  </div>
 
-        {/* Listado de palabras */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {palabrasClave.map((palabra, index) => (
-            <Badge 
-              key={index} 
-              variant="outline" 
-              className="text-xs py-0.5 px-2 flex items-center gap-1 bg-secondary/30"
-            >
-              {palabra}
-              <button
-                type="button"
-                onClick={() => eliminarPalabraClave(palabra)}
-                className="hover:text-destructive rounded-full p-0.5 transition-colors"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </Badge>
-          ))}
-          {palabrasClave.length === 0 && (
-            <p className="text-xs text-muted-foreground/60 italic">
-              No has agregado habilidades aún.
-            </p>
-          )}
-        </div>
-      </div>
+  
+  <div className="flex gap-2">
+    <Input 
+      placeholder="Agregar palabra clave..." 
+      value={nuevaPalabra}
+      onChange={(e) => setNuevaPalabra(e.target.value)}
+      onKeyDown={(e) => e.key === 'Enter' && agregarPalabraClave()}
+    />
+    <Button size="icon" type="button" onClick={agregarPalabraClave}>
+      <Plus className="w-4 h-4" />
+    </Button>
+  </div>
+
+  
+  <div className="flex flex-wrap gap-2 pt-1">
+    {palabrasClave.map((palabra, index) => (
+      <Badge key={index} variant="secondary" className="flex items-center gap-1 py-1 px-2">
+        {palabra}
+        
+        <button 
+          type="button" 
+          onClick={() => eliminarPalabraClave(palabra)} 
+          className="text-muted-foreground hover:text-destructive rounded-full transition-colors focus:outline-none"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      </Badge>
+    ))}
+    {palabrasClave.length === 0 && (
+      <p className="text-xs text-muted-foreground italic">No hay palabras clave registradas.</p>
+    )}
+  </div>
+</div>
     </Card>
   );
 }

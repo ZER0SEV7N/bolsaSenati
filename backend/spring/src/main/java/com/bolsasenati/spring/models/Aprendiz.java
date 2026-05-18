@@ -15,7 +15,7 @@ import lombok.Data;
 public class Aprendiz {
 
     @Id
-    private Integer idaprendiz;
+    private Integer idAprendiz;
 
     @OneToOne
     @MapsId

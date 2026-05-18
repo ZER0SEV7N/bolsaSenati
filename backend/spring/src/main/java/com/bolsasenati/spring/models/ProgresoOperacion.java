@@ -25,7 +25,8 @@ public class ProgresoOperacion {
     @JoinColumn(name = "idOperacion", nullable = false)
     private Operacion operacion;
 
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoOperacion estado = EstadoOperacion.pendiente;
 
     @CreationTimestamp
     @Column(updatable = false, name = "create_at")
@@ -34,4 +35,11 @@ public class ProgresoOperacion {
     @UpdateTimestamp
     @Column(insertable = false, name = "update_at")
     private LocalDateTime updateAt;
+
+
+    // Definición del enum para el estado de la operación
+    public enum EstadoOperacion {
+        pendiente, realizado
+    }
 }
+

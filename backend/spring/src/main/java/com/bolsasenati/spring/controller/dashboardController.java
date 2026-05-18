@@ -1,4 +1,4 @@
-package com.bolsasenati.spring.controllers;
+package com.bolsasenati.spring.controller;
 
 import com.bolsasenati.spring.models.payload.DashboardResumenDTO;
 import com.bolsasenati.spring.models.payload.response;

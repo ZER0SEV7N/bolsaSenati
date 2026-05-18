@@ -32,7 +32,7 @@ public class dashboardService {
         if (aprendiz == null)
             throw new RuntimeException("Aprendiz no encontrado");
 
-        Integer idAprendiz = aprendiz.getIdaprendiz();
+        Integer idAprendiz = aprendiz.getIdAprendiz();
 
         // Traer todas las operaciones con sus relaciones cargadas
         List<ProgresoOperacion> progresos = progresoRepo.findByAprendizIdWithDetails(idAprendiz);

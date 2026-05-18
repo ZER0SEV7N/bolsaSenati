@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Data
 @Entity
 @Table(name = "curso")
@@ -13,12 +16,17 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name= "curso")
     private String nombre;
 
     @Column(nullable = false, name = "credito")
     private Integer credito;
 
-    @Column(name = "create_at")
+    @CreationTimestamp
+    @Column(updatable = false, name = "create_at")
     private LocalDateTime createAt;
+
+    @UpdateTimestamp
+    @Column(insertable = false, name = "update_at")
+    private LocalDateTime updateAt;
 }
