@@ -255,8 +255,8 @@ insert into rol values
 (null, 'Seguimiento'), 
 (null, 'Monitor');
 
--- Insertar distritos (Ejemplo)
-insert into distrito  values
+-- Insertar distritos 
+insert distrito  values
 (null, 'Ancón'),
 (null, 'Ate'),
 (null, 'Barranco'),
@@ -302,7 +302,7 @@ insert into distrito  values
 (null, 'Villa Maria del Triunfo');
 
 -- Insertar carreras (Ejemplo)
-insert into carrera (carrera, codigo) values
+insert carrera (carrera, codigo) values
 ('Desarrollo de Software', 'PDSD'),
 ('Redes y Comunicaciones', 'PDRC'),
 ('Mecatrónica', 'PDM'),
@@ -315,7 +315,7 @@ insert into carrera (carrera, codigo) values
 ('Ciberseguridad', 'PDC');
 
 -- Insertar cursos (Ejemplo)
-insert into curso (curso, credito) values
+insert curso (curso, credito) values
 ('Programación Web', 20),
 ('Base de Datos', 23),
 ('Redes de Computadoras', 25),
