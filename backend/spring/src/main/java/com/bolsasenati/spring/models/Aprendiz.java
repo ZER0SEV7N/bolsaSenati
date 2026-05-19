@@ -23,7 +23,7 @@ public class Aprendiz {
     @OneToOne
     @MapsId
     @JoinColumn(name = "idaprendiz")
-    private Usuario usuario;
+    private Usuario usuario;    
 
     @Column(nullable = false, unique = true, name = "codigo_aprendiz")
     private String codigoAprendiz;

@@ -68,7 +68,7 @@ public class dashboardController {
         }
     }
 
-    // 4. CALIFICACION (Ya corregido)
+    // 4. CALIFICACION
     @GetMapping("/calificacion")
     public ResponseEntity<response<DashboardCalificacionDTO>> getCalificacion() {
         try {
