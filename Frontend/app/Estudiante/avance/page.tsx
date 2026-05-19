@@ -31,12 +31,9 @@ function AvancePage() {
                 indicatorClassName="bg-black dark:bg-white"
               />
             </div>
-
-            <SimpleProgressCard
-              titulo="GESTORES DE ADMINISTRACIÓN WEB"
-              progreso={7}
-            />
-            <SimpleProgressCard titulo="SERVICIOS WEB" progreso={0} />
+            {cursos?.map((curso) => (
+              <SimpleProgressCard data={curso} key={curso.id} />
+            ))}
           </div>
         </Card>
         <Card className="p-6">

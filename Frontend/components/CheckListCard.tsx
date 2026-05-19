@@ -24,7 +24,11 @@ function CheckListCard({
   onCheckChange,
 }: CheckListCardProps) {
   const title =
-    "nombre" in data ? data.nombre : "tarea" in data ? data.tarea : "Item";
+    "nombre" in data && typeof data.nombre === "string"
+      ? data.nombre
+      : "tarea" in data && typeof data.tarea === "string"
+        ? data.tarea
+        : "Item";
 
   const uniqueId = String(data.id);
 
@@ -40,7 +44,7 @@ function CheckListCard({
   const completedOps = operaciones.filter(
     (op) => op.estado === "realizado",
   ).length;
-  
+
   const progress =
     totalOps === 0 ? 0 : Math.round((completedOps / totalOps) * 100);
 
@@ -100,7 +104,7 @@ function CheckListCard({
                     id={String(ho.id)}
                     checked={ho.estado === "realizado"}
                     onCheckedChange={() => {
-                      if (onCheckChange) onCheckChange(ho.id);
+                      if (onCheckChange) onCheckChange(Number(ho.id));
                     }}
                   />
                   <Label

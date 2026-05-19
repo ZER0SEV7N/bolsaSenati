@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Pie, PieChart } from "recharts"
+import { Pie, PieChart } from "recharts";
 
 import {
   Card,
@@ -8,21 +8,21 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   type ChartConfig,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-export const description = "A pie chart with a legend"
+export const description = "A pie chart with a legend";
 
 const chartData = [
   { tareas: "Completadas", cantidad: 275, fill: "var(--chart-1)" },
   { tareas: "Pendientes", cantidad: 200, fill: "var(--chart-2)" },
   { tareas: "En progreso", cantidad: 187, fill: "var(--chart-3)" },
-]
+];
 
 const chartConfig = {
   cantidad: {
@@ -36,11 +36,11 @@ const chartConfig = {
     label: "En progreso",
     color: "var(--chart-2)",
   },
-  "Completadas": {
+  Completadas: {
     label: "Completadas",
     color: "var(--chart-3)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function ChartPieLegend() {
   return (
@@ -52,7 +52,7 @@ export function ChartPieLegend() {
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
+          className="mx-auto aspect-square max-h-75"
         >
           <PieChart>
             <Pie data={chartData} dataKey="cantidad" />
@@ -64,5 +64,5 @@ export function ChartPieLegend() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
