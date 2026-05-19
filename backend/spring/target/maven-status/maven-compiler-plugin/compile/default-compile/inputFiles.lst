@@ -1,60 +1,60 @@
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\Application.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\config\jwtFilter.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\config\ListToStringConverter.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\config\SecurityConfig.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\carrera\cursoController.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\carrera\operacionController.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\dashboardController.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\usuarios\aprendizController.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\usuarios\authController.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\usuarios\distritoController.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Aprendiz.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Carrera.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\ComentarioAvance.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Curso.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Distrito.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\cambiarPasswordDto.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\createAprendizDto.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\cursoDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\loginDto.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\operacionDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\operacionRequest.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\responseAprendizDto.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\tareaDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\updateAprendizDto.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\updateContactoDto.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Empresa.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\InstructorSeguimiento.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\MallaCurricular.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\OfertaLaboral.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Operacion.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardAvancePeaDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardCalificacionDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardComentariosDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardResumenDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardTareasDTO.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\response.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Pea.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\ProgresoOperacion.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Rol.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Tarea.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Usuario.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\VisitaSeguimiento.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\carrera\carreraRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\curso\cursoRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\dashboard\comentarioAvanceRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\dashboard\progresoOperacionRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\dashboard\visitaSeguimientoRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\operacion\operacionRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\tarea\tareaRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\aprendizRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\distritoRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\rolRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\usuarioRepository.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\curso\cursoServices.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\dashboard\dashboardService.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\jwtServices.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\operacion\operacionServices.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\usuario\aprendizService.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\usuario\authServices.java
-D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\usuario\distritoService.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\Application.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\config\jwtFilter.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\config\ListToStringConverter.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\config\SecurityConfig.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\carrera\cursoController.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\carrera\operacionController.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\dashboardController.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\usuarios\aprendizController.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\usuarios\authController.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\controller\usuarios\distritoController.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Aprendiz.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Carrera.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\ComentarioAvance.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Curso.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Distrito.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\cambiarPasswordDto.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\createAprendizDto.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\cursoDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\loginDto.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\operacionDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\operacionRequest.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\responseAprendizDto.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\tareaDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\updateAprendizDto.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\updateContactoDto.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Empresa.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\InstructorSeguimiento.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\MallaCurricular.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\OfertaLaboral.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Operacion.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardAvancePeaDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardCalificacionDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardComentariosDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardResumenDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\DashboardTareasDTO.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\payload\response.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Pea.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\ProgresoOperacion.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Rol.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Tarea.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Usuario.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\VisitaSeguimiento.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\carrera\carreraRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\curso\cursoRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\dashboard\comentarioAvanceRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\dashboard\progresoOperacionRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\dashboard\visitaSeguimientoRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\operacion\operacionRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\tarea\tareaRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\aprendizRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\distritoRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\rolRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\repository\usuarios\usuarioRepository.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\curso\cursoServices.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\dashboard\dashboardService.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\jwtServices.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\operacion\operacionServices.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\usuario\aprendizService.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\usuario\authServices.java
+C:\Users\Alumno\Documents\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\services\usuario\distritoService.java

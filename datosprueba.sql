@@ -89,3 +89,61 @@ INSERT comentario_avance (idAprendiz, idInstructor, nota, contenido, fecha) VALU
 (1, 2, 18.5, 'Excelente avance en el módulo de programación web, sigue así.', '2025-05-08'),
 (1, 3, 16.0, 'Buen desempeño, pero debe mejorar la puntualidad en entregas.', '2025-05-01'),
 (1, 2, 14.75, 'Avance regular, se recomienda repasar los temas de base de datos.', '2025-04-24');
+
+
+-- Datos de prueba del modulo Dashboard para insertar:
+-- Crear usuario instructor de seguimiento:
+INSERT INTO usuario (nombres, apellidos, documento_identidad, correo_personal, password, telefono, idrol)
+VALUES ('Marco', 'Quispe', '12345678', 'marco.quispe@senati.pe', '123456', '987000111', 3);
+-- Este quedará con id=2 (el aprendiz Daniel ya es id=1)
+
+-- Crear el registro en instructor_seguimiento
+INSERT INTO instructor_seguimiento (idUsuario, zona_asignada)
+VALUES (2, 'Lima Norte');
+-- Este quedará con id=1
+
+-- Ahora sí insertar las visitas (ya tendrá FK válida)
+INSERT INTO visita_seguimiento (idAprendiz, idSeguimiento, fecha_visita, nota, estado) VALUES
+(1, 1, '2025-05-15', 20, 'Aprobado'),
+(1, 1, '2025-05-10', 13, 'Bajo'),
+(1, 1, '2025-05-03', 19, 'Aprobado'),
+(1, 1, '2025-04-26', 17, 'Aprobado'),
+(1, 1, '2025-04-19', 11, 'Bajo');
+
+-- Crear usuarios instructores (rol=2, no rol=3)
+INSERT INTO usuario (nombres, apellidos, documento_identidad, correo_personal, password, telefono, idrol) VALUES
+('Carlos', 'Rodríguez', '45678901', 'carlos.rodriguez@senati.pe', '123456', '987111222', 2),
+('Ana', 'Flores', '45678902', 'ana.flores@senati.pe', '123456', '987333444', 2);
+-- Quedarán con id=3 y id=4
+
+
+-- Insertar comentarios (ajustando los IDs)
+INSERT INTO comentario_avance (idAprendiz, idInstructor, nota, contenido, fecha) VALUES
+(1, 3, 18.5, 'Excelente avance en el módulo de programación web, sigue así.', '2025-05-08'),
+(1, 4, 16.0, 'Buen desempeño, pero debe mejorar la puntualidad en entregas.', '2025-05-01'),
+(1, 3, 14.75, 'Avance regular, se recomienda repasar los temas de base de datos.', '2025-04-24');
+
+-- Las tareas y operaciones corregidas
+-- Nuevas tareas (quedarán id=6 y id=7)
+INSERT INTO tarea (tarea, idCurso) VALUES
+('Implementar Login', 1),
+('Diseñar mockups', 6);
+
+-- Operaciones apuntando a las tareas NUEVAS (id=6 y id=7)
+INSERT INTO operacion (operacion, idTarea) VALUES
+('Crear formulario', 6),
+('Validar campos', 6),
+('Conectar con API', 6),
+('Diseñar wireframes', 7),
+('Crear prototipo', 7);
+-- Quedarán con id=12 al 16
+
+-- Progreso con los IDs correctos
+INSERT INTO progreso_operacion (idAprendiz, idOperacion, estado) VALUES
+(1, 12, 'realizado'),
+(1, 13, 'realizado'),
+(1, 14, 'pendiente'),
+(1, 15, 'realizado'),
+(1, 16, 'pendiente');
+
+UPDATE progreso_operacion SET estado = 'realizado' WHERE idAprendiz = 1 AND idOperacion = 3;
