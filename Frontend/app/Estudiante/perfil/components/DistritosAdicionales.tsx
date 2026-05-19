@@ -1,9 +1,11 @@
 // frontend/app/Estudiante/perfil/components/DistritosAdicionales.tsx
+"use client"
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Save, X, MapPin } from "lucide-react";
+import { useState } from "react";
 
 type DistritosAdicionalesProps = {
   distritos: string[];
@@ -22,6 +24,8 @@ export function DistritosAdicionales({
   catalogoDistritos,
   hayCambiosSinGuardar
 }: DistritosAdicionalesProps) {
+
+  const [resetKey, setResetKey] = useState(0);
 
   const distritosDisponibles = catalogoDistritos.filter(
     (d) => !distritos.includes(d.distrito)
@@ -51,8 +55,11 @@ export function DistritosAdicionales({
         {/* Un solo Select Dinámico */}
         <div className="max-w-md">
           <Select 
-            value="" // Siempre mostramos el placeholder después de elegir
-            onValueChange={(val) => agregarDistrito(val)}
+            key={resetKey} 
+            onValueChange={(val) => {
+              agregarDistrito(val);
+              setResetKey(prev => prev + 1); 
+            }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Agregar un distrito..." />

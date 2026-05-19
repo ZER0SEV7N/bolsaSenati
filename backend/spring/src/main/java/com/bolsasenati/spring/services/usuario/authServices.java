@@ -1,11 +1,16 @@
 package com.bolsasenati.spring.services.usuario;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.bolsasenati.spring.models.Aprendiz;
 import com.bolsasenati.spring.models.Carrera;
+import com.bolsasenati.spring.models.Distrito;
 import com.bolsasenati.spring.models.Rol;
 import com.bolsasenati.spring.models.Usuario;
 import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
@@ -36,12 +41,12 @@ public class authServices {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    // Metodo para loguearse
+    //Metodo para loguearse
     public Usuario login(String correo, String password) {
         Usuario usuario = usuarioRepository.findByCorreoPersonal(correo);
 
-        // Si no se encuentra el usuario por correo institucional, se busca por correo
-        // personal en la tabla de usuarios
+        //Si no se encuentra el usuario por correo institucional, se busca por correo
+        //personal en la tabla de usuarios
         if (correo != null && password != null) {
             Aprendiz aprendiz = aprendizRepository.findByCorreoInstitucional(correo);
             if (aprendiz != null) {
@@ -58,7 +63,7 @@ public class authServices {
         return usuario;
     }
 
-    // Metodo de prueba para registrar un nuevo aprendiz
+    //Metodo de prueba para registrar un nuevo aprendiz
     @Transactional
     public responseAprendizDto registrarAprendiz(createAprendizDto dto) {
         if (usuarioRepository.findByCorreoPersonal(dto.getCorreoPersonal()) != null)
@@ -67,7 +72,6 @@ public class authServices {
         if (usuarioRepository.findByDocumentoIdentidad(dto.getDocumentoIdentidad()) != null)
             return null;
 
-        // Primero se crea el usuario
         Usuario usuario = new Usuario();
         usuario.setNombres(dto.getNombres());
         usuario.setApellidos(dto.getApellidos());
@@ -80,19 +84,15 @@ public class authServices {
                 .orElseThrow(() -> new RuntimeException("Error: El rol no existe en la BD"));
         usuario.setRol(rolAprendiz);
 
-        // Luego se guarda el usuario para obtener su id
         Usuario savedUsuario = usuarioRepository.save(usuario);
 
-        // Ahora se crea el aprendiz con el id del usuario
         Aprendiz aprendiz = new Aprendiz();
         aprendiz.setUsuario(savedUsuario);
         aprendiz.setCodigoAprendiz(dto.getCodigoAprendiz());
         aprendiz.setCorreoInstitucional(dto.getCodigoAprendiz().replace("@", ".") + "@senati.pe");
 
-        // Se asigna el ciclo por defecto
         aprendiz.setCiclo(dto.getCiclo());
 
-        // Se asigna la carrera al aprendiz
         Carrera carreraRef = carreraRepository.findById(dto.getIdCarrera())
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
@@ -139,6 +139,16 @@ public class authServices {
             response.setCarreraDto(cDto);
         }
 
+        if (aprendiz.getDistritosInteres() != null && !aprendiz.getDistritosInteres().isEmpty()) {
+            Set<String> nombresDistritos = aprendiz.getDistritosInteres().stream()
+                    .map(Distrito::getDistrito) 
+                    .collect(Collectors.toSet());
+            
+            response.setDistritosInteres(nombresDistritos);
+        } else {
+            response.setDistritosInteres(new HashSet<>()); 
+        }
+
         if (usuario.getRol() != null)
             response.setRol(usuario.getRol().getRol());
 
@@ -163,7 +173,7 @@ public class authServices {
         if (usuario == null) return false;
         
         if (!passwordEncoder.matches(dto.getActualPassword(), usuario.getPassword())) {
-            return false; // Contraseña actual no coincide
+            return false; 
         }
         
         usuario.setPassword(passwordEncoder.encode(dto.getNuevaPassword()));
