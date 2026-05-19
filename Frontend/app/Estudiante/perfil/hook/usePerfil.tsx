@@ -59,7 +59,7 @@ export const usePerfil = () => {
                 setPerfil(data);
                 if (data.palabrasClave) setPalabrasClave(data.palabrasClave);
                 
-                // Carga dinámica de distritos
+                //Carga dinámica de distritos
                 if (data.distritosInteres) {
                     setDistritosSeleccionados(data.distritosInteres); 
                     setDistritosOriginales(data.distritosInteres); // Backup

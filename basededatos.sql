@@ -242,7 +242,7 @@ CREATE TABLE comentario_avance (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     idAprendiz   INT,
     idInstructor INT,
-    nota         DECIMAL(5,2) NULL CHECK (nota >= 0 AND nota <= 20),
+    nota         INT NULL CHECK (nota >= 0 AND nota <= 20),
     contenido    TEXT NOT NULL,
     fecha        DATE NOT NULL,
     create_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -251,7 +251,7 @@ CREATE TABLE comentario_avance (
 );
 
 -- Insertar roles
-insert into rol values 
+insert rol values 
 (null, 'Aprendiz'), 
 (null, 'Instructor'), 
 (null, 'Seguimiento'), 
