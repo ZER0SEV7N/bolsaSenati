@@ -52,7 +52,7 @@ public class cursoServices {
                 List<operacionDTO> operacionesDTO = operaciones.stream().map(operacion -> {
                     operacionDTO oDto = new operacionDTO();
                     oDto.setId(operacion.getId());
-                    oDto.setOperacion(operacion.getOperacion());
+                    oDto.setOperacion(operacion.getNombre());
                     oDto.setDescripcion(operacion.getDescripcion());
                     // Obtener estado de la operacion
                     String estado = progresoOperacionRepository.obtenerEstado(idAprendiz, operacion.getId()); 

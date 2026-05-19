@@ -26,6 +26,7 @@ public class ProgresoOperacion {
     private Operacion operacion;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
     private EstadoOperacion estado = EstadoOperacion.pendiente;
 
     @CreationTimestamp

@@ -17,11 +17,11 @@ public class Operacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "operacion")
-    private String operacion;
-    @Column(nullable = false, name = "descripcion")
+    @Column(name = "operacion", nullable = false)
+    private String nombre;
+
+    @Column(name = "descripcion")
     private String descripcion;
-    
 
     @ManyToOne
     @JoinColumn(name = "idTarea" ,referencedColumnName = "id", nullable = false)

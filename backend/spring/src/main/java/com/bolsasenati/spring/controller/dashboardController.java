@@ -1,8 +1,10 @@
 package com.bolsasenati.spring.controller;
 
+import com.bolsasenati.spring.models.payload.DashboardAvancePeaDTO;
 import com.bolsasenati.spring.models.payload.DashboardCalificacionDTO;
 import com.bolsasenati.spring.models.payload.DashboardComentariosDTO;
 import com.bolsasenati.spring.models.payload.DashboardResumenDTO;
+import com.bolsasenati.spring.models.payload.DashboardTareasDTO;
 import com.bolsasenati.spring.models.payload.response;
 import com.bolsasenati.spring.services.dashboard.dashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-// Todas las rutas requieren autenticación JWT
+// Todas las rutas requieren autenticacion JWT
 @RestController
 @RequestMapping("/dashboard")
 public class dashboardController {
@@ -27,14 +29,29 @@ public class dashboardController {
     }
 
     // GET /dashboard/resumen
-    // Devuelve el resumen completo: promedio, tareas, operaciones y cumplimiento
     @GetMapping("/resumen")
     public ResponseEntity<response<DashboardResumenDTO>> getResumen() {
         try {
             DashboardResumenDTO resumen = dashboardService.getResumen(getCorreo());
             return ResponseEntity.ok(
                     new response<>(true, "Resumen obtenido correctamente", resumen));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(
+                    new response<>(false, e.getMessage(), null));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    new response<>(false, "Error interno del servidor", null));
+        }
+    }
 
+    // GET /dashboard/avance-pea
+    // Devuelve % cumplimiento, total tareas y total operaciones
+    @GetMapping("/avance-pea")
+    public ResponseEntity<response<DashboardAvancePeaDTO>> getAvancePea() {
+        try {
+            DashboardAvancePeaDTO data = dashboardService.getAvancePea(getCorreo());
+            return ResponseEntity.ok(
+                    new response<>(true, "Avance PEA obtenido correctamente", data));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(
                     new response<>(false, e.getMessage(), null));
@@ -45,14 +62,13 @@ public class dashboardController {
     }
 
     // GET /dashboard/tareas
-    // Devuelve solo la lista de tareas con su estado y progreso
+    // Devuelve la lista de tareas con estado
     @GetMapping("/tareas")
-    public ResponseEntity<response<?>> getTareas() {
+    public ResponseEntity<response<DashboardTareasDTO>> getTareas() {
         try {
-            DashboardResumenDTO resumen = dashboardService.getResumen(getCorreo());
+            DashboardTareasDTO data = dashboardService.getTareas(getCorreo());
             return ResponseEntity.ok(
-                    new response<>(true, "Tareas obtenidas correctamente", resumen.getTareas()));
-
+                    new response<>(true, "Tareas obtenidas correctamente", data));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(
                     new response<>(false, e.getMessage(), null));
@@ -70,7 +86,6 @@ public class dashboardController {
             DashboardCalificacionDTO data = dashboardService.getCalificacion(getCorreo());
             return ResponseEntity.ok(
                     new response<>(true, "Calificación obtenida correctamente", data));
-
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(
                     new response<>(false, e.getMessage(), null));
@@ -88,7 +103,6 @@ public class dashboardController {
             DashboardComentariosDTO data = dashboardService.getComentarios(getCorreo());
             return ResponseEntity.ok(
                     new response<>(true, "Comentarios obtenidos correctamente", data));
-
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(
                     new response<>(false, e.getMessage(), null));
