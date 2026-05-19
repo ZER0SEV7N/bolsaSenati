@@ -1,4 +1,4 @@
-package com.bolsasenati.spring.controller;
+package com.bolsasenati.spring.controller.usuarios;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,36 +93,6 @@ public class authController {
         return ResponseEntity.status(200).body(new response<>(true, "Perfil obtenido exitosamente", perfilUsuario));
     }
 
-    @PutMapping("/perfil/palabras-clave")
-    public ResponseEntity<response<responseAprendizDto>> actualizarPalabrasClave(@RequestBody Map<String, Object> payload) {
-        try {
-            Object idObj = payload.get("id");
-            Integer idUsuario = null;
-            
-            if (idObj instanceof Number) {
-                idUsuario = ((Number) idObj).intValue();
-            } else if (idObj instanceof String) {
-                idUsuario = Integer.parseInt((String) idObj);
-            }
-
-            String palabrasClaveJson = (String) payload.get("palabrasClave");
-
-            if (idUsuario == null) {
-                return ResponseEntity.status(400).body(new response<>(false, "El ID del usuario es obligatorio", null));
-            }
-
-        responseAprendizDto perfilActualizado = authServices.actualizarPalabrasClave(idUsuario, palabrasClaveJson);
-            
-            if (perfilActualizado == null) {
-                return ResponseEntity.status(404).body(new response<>(false, "Aprendiz no encontrado", null));
-            }
-
-            return ResponseEntity.status(200).body(new response<>(true, "Palabras clave actualizadas correctamente", perfilActualizado));
-        } catch (Exception e) {
-            // Esto te imprimirá el error real en la consola de Spring Boot si algo más falla
-            e.printStackTrace(); 
-            return ResponseEntity.status(500).body(new response<>(false, "Error interno: " + e.getMessage(), null));
-        }
-    }
+   
 
 }

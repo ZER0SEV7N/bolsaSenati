@@ -44,7 +44,7 @@ export function AcademicInfo({ perfil }: AcademicInfoProps) {
                 <div>
                     <p className="text-sm text-muted-foreground">Sede</p>
                     <h3 className="font-medium text-sm">
-                        {perfil?.sede || "Lima Centro"} 
+                        { "Lima Centro"} 
                     </h3>
                 </div>
 

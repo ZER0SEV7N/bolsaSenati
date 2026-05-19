@@ -44,6 +44,8 @@ create table usuario(
     password varchar(255) not null,
     telefono char(12),
     idrol int,
+    iddistrito int null references distrito(id),
+    avatar varchar(255) null,
     create_at timestamp default current_timestamp,
     update_at timestamp default current_timestamp on update current_timestamp,
     foreign key (idrol) references rol(id)

@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { X, Plus, KeyRound, Camera } from "lucide-react";
 
 type ProfileCardProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perfil: any;
   palabrasClave: string[];
   nuevaPalabra: string;
@@ -29,6 +30,7 @@ export function ProfileCard({
   setNuevaPalabra,
   agregarPalabraClave,
   eliminarPalabraClave,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isEditing,
   fotoPerfil,
   cambiarFotoPerfil
