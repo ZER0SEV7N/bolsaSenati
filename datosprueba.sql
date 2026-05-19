@@ -48,3 +48,44 @@ insert malla_curricular (id, idpea, idcurso, ciclo) values
 (null, 1, 5, 'IV'), -- ingeniería de software
 (null, 1, 6, 'III'), -- diseño de interfaces
 (null, 1, 20, 'III'); -- desarrollo de software I
+
+-- Datos prueba para probar el Dashboard
+-- Nuevas visitas de seguimiento para el aprendiz (id=1)
+INSERT INTO visita_seguimiento (idAprendiz, idSeguimiento, fecha_visita, nota, estado) VALUES
+(1, 1, '2025-05-15', 20, 'Aprobado'),
+(1, 1, '2025-05-10', 13, 'Bajo'),
+(1, 1, '2025-05-03', 19, 'Aprobado'),
+(1, 1, '2025-04-26', 17, 'Aprobado'),
+(1, 1, '2025-04-19', 11, 'Bajo');
+
+-- Agregar más tareas y operaciones
+INSERT INTO tarea (tarea, idCurso) VALUES
+('Implementar Login', 1),
+('Diseñar mockups', 6);
+
+INSERT INTO operacion (operacion, idTarea) VALUES
+('Crear formulario', 4), ('Validar campos', 4), ('Conectar con API', 4),
+('Diseñar wireframes', 5), ('Crear prototipo', 5);
+
+-- Registrar progreso para el aprendiz (id=1)
+INSERT INTO progreso_operacion (idAprendiz, idOperacion, estado) VALUES
+(1, 7, 'realizado'),
+(1, 8, 'realizado'),
+(1, 9, 'pendiente'),
+(1, 10, 'realizado'),
+(1, 11, 'pendiente');
+
+-- Además marcar una operación pendiente anterior como realizada
+UPDATE progreso_operacion SET estado = 'realizado' WHERE idAprendiz = 1 AND idOperacion = 3;
+
+-- Para probar los comentarios:
+-- Primero crear usuarios instructores
+INSERT usuario (nombres, apellidos, documento_identidad, correo_personal, password, telefono, idrol) VALUES
+('Carlos', 'Rodríguez', '45678901', 'carlos.rodriguez@senati.pe', '123456', '987111222', 3),
+('Ana', 'Flores', '45678902', 'ana.flores@senati.pe', '123456', '987333444', 3);
+
+-- Insertar comentarios con los instructores correctos
+INSERT comentario_avance (idAprendiz, idInstructor, nota, contenido, fecha) VALUES
+(1, 2, 18.5, 'Excelente avance en el módulo de programación web, sigue así.', '2025-05-08'),
+(1, 3, 16.0, 'Buen desempeño, pero debe mejorar la puntualidad en entregas.', '2025-05-01'),
+(1, 2, 14.75, 'Avance regular, se recomienda repasar los temas de base de datos.', '2025-04-24');
