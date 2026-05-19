@@ -25,7 +25,7 @@ export const usePerfil = () => {
     const [success, setSuccess] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState(false);
 
-    // ESTADOS SIMULADOS (LOCALSTORAGE)
+    
     const [fotoPerfil, setFotoPerfil] = useState<string>("https://github.com/shadcn.png");
     const [palabrasClave, setPalabrasClave] = useState<string[]>([]);
     const [nuevaPalabra, setNuevaPalabra] = useState("");

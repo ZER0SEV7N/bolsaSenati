@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MapPinned, MapPin } from "lucide-react";
 
 const distritosLima = [
   "Miraflores",
@@ -30,7 +31,8 @@ export function DistritosAdicionales() {
     <Card className="p-6 space-y-6">
 
       <div>
-        <h2 className="text-x1 font-bold">
+        <h2 className="text-lg font-semibold flex items-center gap-2">
+          <MapPinned className="w-5 h-5 text-muted-foreground" />
           Distritos Adicionales
         </h2>
 

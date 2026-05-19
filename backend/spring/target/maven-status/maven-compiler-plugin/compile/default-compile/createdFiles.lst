@@ -1,0 +1,10 @@
+com\bolsasenati\spring\models\payload\DashboardComentariosDTO$ComentarioDTO.class
+com\bolsasenati\spring\models\payload\DashboardCalificacionDTO.class
+com\bolsasenati\spring\repository\dashboard\visitaSeguimientoRepository.class
+com\bolsasenati\spring\repository\dashboard\comentarioAvanceRepository.class
+com\bolsasenati\spring\models\InstructorSeguimiento.class
+com\bolsasenati\spring\models\payload\DashboardComentariosDTO.class
+com\bolsasenati\spring\models\ComentarioAvance.class
+com\bolsasenati\spring\models\VisitaSeguimiento.class
+com\bolsasenati\spring\models\payload\DashboardCalificacionDTO$VisitaDTO.class
+com\bolsasenati\spring\models\VisitaSeguimiento$EstadoVisita.class
