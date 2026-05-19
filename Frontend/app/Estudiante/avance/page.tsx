@@ -6,9 +6,11 @@ import { Progress } from "@/components/ui/progress";
 import { SimpleProgressCard } from "@/components/SimpleProgressCard";
 
 import { useCurso } from "@/hooks/useCurso";
+import { useDashboard } from "@/hooks/useDashboard";
 
 function AvancePage() {
   const { cursos, operacionEstado } = useCurso();
+  const { avancePea } = useDashboard();
 
   return (
     <div>
@@ -23,10 +25,11 @@ function AvancePage() {
                 Progreso General del PEA
               </h1>
               <p className="text-sm mb-2">
-                Has completado el 4% de tu plan de aprendizaje
+                Has completado el {avancePea?.porcentajeCumplimiento ?? 0}% de
+                tu plan de aprendizaje
               </p>
               <Progress
-                value={4}
+                value={avancePea?.porcentajeCumplimiento ?? 0}
                 className="w-full h-2"
                 indicatorClassName="bg-black dark:bg-white"
               />
