@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bolsasenati.spring.models.Usuario;
 import com.bolsasenati.spring.models.dtos.responseAprendizDto;
 import com.bolsasenati.spring.models.dtos.updateAprendizDto;
+import com.bolsasenati.spring.models.dtos.updateContactoDto;
+import com.bolsasenati.spring.models.dtos.cambiarPasswordDto;
 import com.bolsasenati.spring.models.payload.response;
 import com.bolsasenati.spring.services.usuario.aprendizService;
 import com.bolsasenati.spring.services.usuario.authServices;
@@ -40,5 +42,35 @@ public class aprendizController {
 
         return ResponseEntity.ok(new response<>(true, "Intereses y palabras clave actualizados con éxito", perfilActualizado));
     
+    }
+
+    @PatchMapping("/contacto")
+    public ResponseEntity<response<responseAprendizDto>> actualizarContacto(@RequestBody updateContactoDto dto) {
+        String correoAutenticado = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = authServices.obtenerPerfil(correoAutenticado);
+
+        if (usuario == null) {
+            return ResponseEntity.status(404).body(new response<>(false, "Usuario no encontrado", null));
+        }
+
+        responseAprendizDto perfilActualizado = authServices.actualizarContacto(usuario.getId(), dto);
+        return ResponseEntity.ok(new response<>(true, "Contacto actualizado con éxito", perfilActualizado));
+    }
+
+    @PatchMapping("/cambiar-password")
+    public ResponseEntity<response<String>> cambiarPassword(@RequestBody cambiarPasswordDto dto) {
+        String correoAutenticado = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = authServices.obtenerPerfil(correoAutenticado);
+
+        if (usuario == null) {
+            return ResponseEntity.status(404).body(new response<>(false, "Usuario no encontrado", null));
+        }
+
+        boolean actualizado = authServices.cambiarPassword(usuario.getId(), dto);
+        if (!actualizado) {
+            return ResponseEntity.status(400).body(new response<>(false, "La contraseña actual es incorrecta", null));
+        }
+
+        return ResponseEntity.ok(new response<>(true, "Contraseña actualizada con éxito", null));
     }
 }

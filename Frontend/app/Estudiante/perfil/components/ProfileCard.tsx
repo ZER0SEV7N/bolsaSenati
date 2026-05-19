@@ -21,6 +21,7 @@ type ProfileCardProps = {
   isEditing: boolean;
   fotoPerfil: string;
   cambiarFotoPerfil: (file: File) => void;
+  cambiarPassword?: (actual: string, nueva: string) => Promise<boolean>;
 };
 
 export function ProfileCard({
@@ -33,8 +34,8 @@ export function ProfileCard({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isEditing,
   fotoPerfil,
-  cambiarFotoPerfil
-  
+  cambiarFotoPerfil,
+  cambiarPassword
 }: ProfileCardProps) {
   
   const [openModal, setOpenModal] = useState(false);
@@ -46,15 +47,24 @@ export function ProfileCard({
     }
   };
 
-  const handleGuardarContrasena = (e: React.FormEvent) => {
+  const handleGuardarContrasena = async (e: React.FormEvent) => {
     e.preventDefault();
     if (passwords.nueva !== passwords.confirmar) {
       alert("La nueva contraseña y la confirmación no coinciden.");
       return;
     }
-    alert("¡Contraseña actualizada con éxito (Simulado)!");
-    setOpenModal(false);
-    setPasswords({ actual: "", nueva: "", confirmar: "" });
+    
+    if (cambiarPassword) {
+      const exito = await cambiarPassword(passwords.actual, passwords.nueva);
+      if (exito) {
+        setOpenModal(false);
+        setPasswords({ actual: "", nueva: "", confirmar: "" });
+      }
+    } else {
+      alert("¡Contraseña actualizada con éxito (Simulado)!");
+      setOpenModal(false);
+      setPasswords({ actual: "", nueva: "", confirmar: "" });
+    }
   };
 
   return (
@@ -96,8 +106,8 @@ export function ProfileCard({
 
      
       {openModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <Card className="w-full max-w-[425px] p-6 bg-background space-y-4 shadow-xl border">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
+          <Card className="w-full max-w-[425px] p-6 bg-background space-y-4 shadow-xl border animate-in zoom-in-95 duration-300">
             <h3 className="text-lg font-semibold">Cambiar Contraseña</h3>
             <form onSubmit={handleGuardarContrasena} className="space-y-4">
               <div className="space-y-2">

@@ -13,6 +13,7 @@ D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\sprin
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\ComentarioAvance.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Curso.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Distrito.java
+D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\cambiarPasswordDto.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\createAprendizDto.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\cursoDTO.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\loginDto.java
@@ -21,6 +22,7 @@ D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\sprin
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\responseAprendizDto.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\tareaDTO.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\updateAprendizDto.java
+D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\dtos\updateContactoDto.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\Empresa.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\InstructorSeguimiento.java
 D:\Edson\Autoestudio\Quiton ciclo\SEMINARIO 2\Tarea 13\bolsaSenati\backend\spring\src\main\java\com\bolsasenati\spring\models\MallaCurricular.java

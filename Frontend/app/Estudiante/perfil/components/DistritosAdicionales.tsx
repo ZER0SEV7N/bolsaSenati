@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Save, X } from "lucide-react";
+import { Save, X, MapPin } from "lucide-react";
 
 type DistritosAdicionalesProps = {
   distritos: string[];
@@ -31,7 +31,9 @@ export function DistritosAdicionales({
     <Card className="p-6 space-y-6">
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-xl font-bold">Zonas de Interés</h2>
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-muted-foreground" /> Zonas de Interés
+          </h2>
           <p className="text-sm text-muted-foreground">
             Selecciona los distritos donde estás dispuesto a trabajar o hacer prácticas.
           </p>

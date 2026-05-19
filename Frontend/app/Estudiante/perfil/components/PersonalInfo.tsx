@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AprendizPerfil } from "../hook/usePerfil";
-import { Edit2, Save, X, UsersRound, User} from "lucide-react";
+import { Edit2, Save, X, Phone, Mail, IdCard, User, UsersRound } from "lucide-react";
 
 
 type PersonalInfoProps = {
@@ -10,13 +10,20 @@ type PersonalInfoProps = {
     isEditing: boolean;
     setIsEditing: (val: boolean) => void;
     handleChange: (field: keyof AprendizPerfil, value: string) => void;
+    guardarContacto?: (telefono: string, correoPersonal: string) => Promise<boolean>;
 };
 
-export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange }: PersonalInfoProps) {
+export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange, guardarContacto }: PersonalInfoProps) {
     
-    const handleGuardarDatos = () => {
-        setIsEditing(false);
-        alert("¡Datos actualizados (simuladamente)!");
+    const handleGuardarDatos = async () => {
+        if (guardarContacto && perfil) {
+            const exito = await guardarContacto(perfil.telefono, perfil.correoPersonal);
+            if (exito) {
+                setIsEditing(false);
+            }
+        } else {
+            setIsEditing(false);
+        }
     };
 
     return (
@@ -27,7 +34,9 @@ export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange }: 
 
 
                 <div>
-                    <h2 className="font-bold text-lg">Información Personal</h2>
+                    <h2 className="font-bold text-lg flex items-center gap-2">
+                        <UsersRound className="w-5 h-5 text-muted-foreground" /> Información Personal
+                    </h2>
                     <p className="text-sm text-muted-foreground">Datos de contacto y Ubicación</p>
                 </div>
                 
@@ -51,7 +60,9 @@ export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange }: 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 <div>
-                    <p className="text-sm text-muted-foreground mb-1">Nombre y apellidos</p>
+                    <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
+                        <User className="w-4 h-4" /> Nombre y apellidos
+                    </p>
                     <Input 
                         className="font-medium bg-muted/50"
                         value={perfil ? `${perfil.nombres} ${perfil.apellidos}` : ""}
@@ -61,7 +72,9 @@ export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange }: 
 
                 
                 <div>
-                    <p className="text-sm text-muted-foreground mb-1">Teléfono Móvil</p>
+                    <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
+                        <Phone className="w-4 h-4" /> Teléfono Móvil
+                    </p>
 
 
                     <Input
@@ -74,7 +87,9 @@ export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange }: 
 
                 {/* CORREO PERSONAL (Editable si isEditing es true) */}
                 <div>
-                    <p className="text-sm text-muted-foreground mb-1">Correo Personal</p>
+                    <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
+                        <Mail className="w-4 h-4" /> Correo Personal
+                    </p>
 
 
                     <Input
@@ -87,7 +102,9 @@ export function PersonalInfo({ perfil, isEditing, setIsEditing, handleChange }: 
 
                 {/* DOCUMENTO (Siempre bloqueado) */}
                 <div>
-                    <p className="text-sm text-muted-foreground mb-1">Documento de Identidad</p>
+                    <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
+                        <IdCard className="w-4 h-4" /> Documento de Identidad
+                    </p>
 
 
                     <Input

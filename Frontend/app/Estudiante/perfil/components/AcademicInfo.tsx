@@ -61,11 +61,15 @@ export function AcademicInfo({ perfil }: AcademicInfoProps) {
                 </div>
 
 
-                <div>
-                    <p className="text-sm text-muted-foreground">Sede</p>
-                    <h3 className="font-medium text-sm">
-                        { "Lima Centro"} 
-                    </h3>
+                <div className="space-y-2">
+                    <Label htmlFor="sede" className="flex items-center gap-2">
+                        <Building2 className="w-4 h-4 text-muted-foreground" /> Sede
+                    </Label>
+                    <Input
+                        id="sede"
+                        value="Lima Centro"
+                        readOnly
+                    />
                 </div>
             </div>
         </Card>

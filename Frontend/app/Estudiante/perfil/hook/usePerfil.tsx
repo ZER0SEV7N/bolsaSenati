@@ -107,6 +107,16 @@ export const usePerfil = () => {
         setHayCambiosSinGuardar(distritosCambiaron || palabrasCambiaron);
     }, [distritosSeleccionados, palabrasClave, distritosOriginales, palabrasOriginales]);
 
+    useEffect(() => {
+        if (success || error) {
+            const timer = setTimeout(() => {
+                setSuccess(null);
+                setError(null);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [success, error]);
+
     //Metodo para actualizar los distritos seleccionados
     const actualizarDistrito = (index: number, valor: string) => {
         const nuevosDistritos = [...distritosSeleccionados];
@@ -129,7 +139,7 @@ export const usePerfil = () => {
                 .filter(id => id !== undefined); 
 
             await api.patch("/aprendiz/intereses", {
-                idsDistritos,
+                idDistritosInteres: idsDistritos,
                 palabrasClave
             });
 
@@ -144,6 +154,50 @@ export const usePerfil = () => {
         }
     };
 
+    //Metodo para guardar contacto
+    const guardarContacto = async (telefono: string, correoPersonal: string) => {
+        try {
+            setError(null);
+            setSuccess(null);
+
+            await api.patch("/aprendiz/contacto", {
+                telefono,
+                correoPersonal
+            });
+
+            setSuccess("¡Contacto actualizado correctamente!");
+            return true;
+        } catch (err) {
+            console.error(err);
+            setError("Hubo un error al actualizar tu contacto.");
+            return false;
+        }
+    };
+
+    //Metodo para cambiar contraseña
+    const cambiarPassword = async (actualPassword: string, nuevaPassword: string) => {
+        try {
+            setError(null);
+            setSuccess(null);
+
+            await api.patch("/aprendiz/cambiar-password", {
+                actualPassword,
+                nuevaPassword
+            });
+
+            setSuccess("¡Contraseña actualizada correctamente!");
+            return true;
+        } catch (err: any) {
+            console.error(err);
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError("Hubo un error al cambiar la contraseña.");
+            }
+            return false;
+        }
+    };
+
     //Metodo para cambiar la foto de perfil (simulado con base64 y localStorage)
     const cambiarFotoPerfil = (file: File) => {
         const reader = new FileReader();
@@ -151,6 +205,7 @@ export const usePerfil = () => {
             const base64String = reader.result as string;
             setFotoPerfil(base64String);
             localStorage.setItem("simulado_foto_perfil", base64String);
+            window.dispatchEvent(new Event("fotoPerfilCambiada"));
         };
         reader.readAsDataURL(file);
     };
@@ -212,6 +267,8 @@ export const usePerfil = () => {
         agregarDistrito,
         eliminarDistrito, 
         guardarIntereses,
-        hayCambiosSinGuardar
+        hayCambiosSinGuardar,
+        guardarContacto,
+        cambiarPassword
     };
 };

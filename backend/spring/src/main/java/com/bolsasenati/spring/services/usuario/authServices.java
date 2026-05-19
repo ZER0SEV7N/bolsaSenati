@@ -14,6 +14,8 @@ import com.bolsasenati.spring.repository.carrera.carreraRepository;
 import com.bolsasenati.spring.repository.usuarios.rolRepository;
 import com.bolsasenati.spring.models.dtos.createAprendizDto;
 import com.bolsasenati.spring.models.dtos.responseAprendizDto;
+import com.bolsasenati.spring.models.dtos.updateContactoDto;
+import com.bolsasenati.spring.models.dtos.cambiarPasswordDto;
 
 //Servicio para manejar la autenticación y registro de usuarios
 @Service
@@ -141,5 +143,31 @@ public class authServices {
             response.setRol(usuario.getRol().getRol());
 
         return response;
+    }
+
+    @Transactional
+    public responseAprendizDto actualizarContacto(Integer idUsuario, updateContactoDto dto) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) return null;
+        
+        if (dto.getTelefono() != null) usuario.setTelefono(dto.getTelefono());
+        if (dto.getCorreoPersonal() != null) usuario.setCorreoPersonal(dto.getCorreoPersonal());
+        
+        usuarioRepository.save(usuario);
+        return mapearAprendizADto(usuario);
+    }
+
+    @Transactional
+    public boolean cambiarPassword(Integer idUsuario, cambiarPasswordDto dto) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) return false;
+        
+        if (!passwordEncoder.matches(dto.getActualPassword(), usuario.getPassword())) {
+            return false; // Contraseña actual no coincide
+        }
+        
+        usuario.setPassword(passwordEncoder.encode(dto.getNuevaPassword()));
+        usuarioRepository.save(usuario);
+        return true;
     }
 }

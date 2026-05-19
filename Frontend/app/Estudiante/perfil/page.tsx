@@ -29,7 +29,9 @@ export default function PerfilPage() {
     agregarDistrito,
     eliminarDistrito,
     guardarIntereses,
-    hayCambiosSinGuardar
+    hayCambiosSinGuardar,
+    guardarContacto,
+    cambiarPassword
   } = usePerfil();
 
   if (loading) {
@@ -46,10 +48,20 @@ export default function PerfilPage() {
   }
 
   return (
-    <div className="container mx-auto p-6 max-w-6xl space-y-6">
+    <div className="w-full mx-auto max-w-7xl space-y-6 relative pb-6">
       
-      {success && <div className="bg-green-100 text-green-800 p-4 rounded-md">{success}</div>}
-      {error && <div className="bg-red-100 text-red-800 p-4 rounded-md">{error}</div>}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none">
+        {success && (
+          <div className="bg-green-600 text-white px-4 py-3 rounded-md shadow-lg animate-in slide-in-from-bottom-5 fade-in duration-300 font-medium pointer-events-auto">
+            {success}
+          </div>
+        )}
+        {error && (
+          <div className="bg-red-600 text-white px-4 py-3 rounded-md shadow-lg animate-in slide-in-from-bottom-5 fade-in duration-300 font-medium pointer-events-auto">
+            {error}
+          </div>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
@@ -64,6 +76,7 @@ export default function PerfilPage() {
             isEditing={isEditing}
             fotoPerfil={fotoPerfil}
             cambiarFotoPerfil={cambiarFotoPerfil}
+            cambiarPassword={cambiarPassword}
           />
         </div>
 
@@ -73,6 +86,7 @@ export default function PerfilPage() {
             isEditing={isEditing} 
             setIsEditing={setIsEditing} 
             handleChange={handleChange} 
+            guardarContacto={guardarContacto}
           />
           
           <AcademicInfo perfil={perfil} />

@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 export function NavBar() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
+  const [fotoPerfil, setFotoPerfil] = useState<string>("/avatar-placeholder.png");
   const { user, logout } = useAuth();
   const router = useRouter();
 
@@ -28,6 +29,23 @@ export function NavBar() {
     setMounted(true);
     const currentTheme = (localStorage.getItem("theme") as "light" | "dark") || "light";
     setTheme(currentTheme);
+
+    // Cargar foto de perfil inicial
+    const fotoGuardada = localStorage.getItem("simulado_foto_perfil");
+    if (fotoGuardada) {
+        setFotoPerfil(fotoGuardada);
+    }
+
+    // Escuchar cambios de la foto
+    const handleFotoChange = () => {
+        const nuevaFoto = localStorage.getItem("simulado_foto_perfil");
+        if (nuevaFoto) {
+            setFotoPerfil(nuevaFoto);
+        }
+    };
+
+    window.addEventListener("fotoPerfilCambiada", handleFotoChange);
+    return () => window.removeEventListener("fotoPerfilCambiada", handleFotoChange);
   }, []);
 
   //Función para aplicar el tema al documento
@@ -78,7 +96,7 @@ export function NavBar() {
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-3 outline-none p-1 pr-2 rounded-full hover:bg-gray-200 dark:hover:bg-[#3a3f47] transition-colors">
           <Avatar className="h-9 w-9 border-2 border-transparent">
-            <AvatarImage src="/avatar-placeholder.png" alt="Avatar" />
+            <AvatarImage src={fotoPerfil} alt="Avatar" className="object-cover" />
             <AvatarFallback className="bg-blue-600 text-white font-semibold">
               {user?.nombres?.charAt(0) || ""}
               {user?.apellidos?.charAt(0) || ""}
