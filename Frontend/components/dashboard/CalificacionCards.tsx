@@ -13,11 +13,11 @@ type CalificacionCardsProps = {
     fecha: string;
     hora: string;
     monitor: string;
-  };
+  } | null;                   // <-- acepta null cuando no hay visitas aún
   historialVisitas: HistorialVisita[];
 };
 
-// Helper: Badge de estado 
+// Helper: Badge de estado
 function EstadoBadge({ estado }: { estado: string }) {
   const esAprobado = estado === "Aprobado";
   return (
@@ -48,7 +48,7 @@ export function CalificacionCards({
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-      {/* Tarjeta Promedio */}
+      {/* Card Promedio */}
       <Card className="relative overflow-hidden border border-emerald-500/60 bg-card shadow-[0_0_15px_rgba(52,211,153,0.15)]">
         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-emerald-500/40" />
         <div className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-emerald-500/30 blur-xl" />
@@ -75,7 +75,7 @@ export function CalificacionCards({
         </CardContent>
       </Card>
 
-      {/* Tarjeta Última Visita */}
+      {/* Card Ultima Visita */}
       <Card className="relative overflow-hidden border border-orange-500/60 bg-card shadow-[0_0_15px_rgba(249,115,22,0.15)]">
         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-orange-500/40" />
         <div className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-orange-500/30 blur-xl" />
@@ -83,15 +83,21 @@ export function CalificacionCards({
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs text-slate-400 font-medium">Última Visita</p>
-              <p className="mt-2 text-lg font-bold text-orange-300 leading-tight">
-                {ultimaVisita.fecha}
-              </p>
-              <p className="text-sm text-orange-400/80 font-medium">
-                {ultimaVisita.hora}
-              </p>
-              <p className="mt-1.5 text-[11px] text-slate-500">
-                Monitor: {ultimaVisita.monitor}
-              </p>
+              {ultimaVisita ? (
+                <>
+                  <p className="mt-2 text-lg font-bold text-orange-300 leading-tight">
+                    {ultimaVisita.fecha}
+                  </p>
+                  <p className="text-sm text-orange-400/80 font-medium">
+                    {ultimaVisita.hora}
+                  </p>
+                  <p className="mt-1.5 text-[11px] text-slate-500">
+                    Monitor: {ultimaVisita.monitor}
+                  </p>
+                </>
+              ) : (
+                <p className="mt-2 text-sm text-slate-500">Sin visitas aún</p>
+              )}
             </div>
             <div className="rounded-xl bg-orange-500/15 p-2.5">
               <Clock className="h-5 w-5 text-orange-400" />
@@ -114,15 +120,19 @@ export function CalificacionCards({
             </div>
           </div>
           <div className="space-y-2">
-            {historialVisitas.map((visita, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between py-1 border-b border-white/[0.04] last:border-0"
-              >
-                <span className="text-[11px] text-slate-400">{visita.fecha}</span>
-                <EstadoBadge estado={visita.estado} />
-              </div>
-            ))}
+            {historialVisitas.length === 0 ? (
+              <p className="text-sm text-slate-500 text-center py-2">Sin historial aún</p>
+            ) : (
+              historialVisitas.map((visita, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between py-1 border-b border-white/[0.04] last:border-0"
+                >
+                  <span className="text-[11px] text-slate-400">{visita.fecha}</span>
+                  <EstadoBadge estado={visita.estado} />
+                </div>
+              ))
+            )}
           </div>
         </CardContent>
       </Card>
