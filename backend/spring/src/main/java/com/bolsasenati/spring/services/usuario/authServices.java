@@ -131,8 +131,6 @@ public class authServices {
         response.setPalabrasClave(aprendiz.getPalabrasClave());
 
         if (aprendiz.getCarrera() != null) {
-            response.setCarrera(aprendiz.getCarrera().getCarrera());
-
             responseAprendizDto.CarreraDto cDto = new responseAprendizDto.CarreraDto();
             cDto.setId(aprendiz.getCarrera().getId());
             cDto.setCarrera(aprendiz.getCarrera().getCarrera());
@@ -143,20 +141,5 @@ public class authServices {
             response.setRol(usuario.getRol().getRol());
 
         return response;
-    }
-
-    @Transactional
-    public responseAprendizDto actualizarPalabrasClave(Integer idUsuario, String palabrasClaveJson) {
-        // Buscamos al aprendiz por su ID principal (que comparte con usuario)
-        Aprendiz aprendiz = aprendizRepository.findById(idUsuario).orElse(null);
-        if (aprendiz == null) return null;
-
-        // Guardamos directamente el string JSON ("["Java","React"]") en la columna palabras_clave
-        aprendiz.setPalabrasClave(palabrasClaveJson);
-        aprendizRepository.save(aprendiz);
-
-        // Devolvemos el usuario mapeado actualizado para sincronizar el Front
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-        return mapearAprendizADto(usuario);
     }
 }

@@ -1,4 +1,4 @@
-package com.bolsasenati.spring.controller;
+package com.bolsasenati.spring.controller.carrera;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

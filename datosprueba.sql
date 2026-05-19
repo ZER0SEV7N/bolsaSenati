@@ -3,7 +3,7 @@ use bolsaSenati;
 
 
 -- Datos para la tabla tarea
-insert into tarea (id, tarea, descripcion, idCurso) values
+insert tarea (id, tarea, descripcion, idCurso) values
 -- Tareas para el Curso 1: Programación Web
 (1, 'Configuración del Entorno Frontend', 'Configurar el espacio de trabajo local para el desarrollo de la aplicación web.', 1),
 (2, 'Maquetación de la Interfaz de Usuario', 'Crear la estructura y estilos del diseño web responsive.', 1),
@@ -15,7 +15,7 @@ insert into tarea (id, tarea, descripcion, idCurso) values
 
 
 -- 2. Datos para la tabla operacion
-insert into operacion (id, operacion, descripcion, idTarea) values
+insert operacion (id, operacion, descripcion, idTarea) values
 -- Operaciones para Tarea 1 (Configuración del Entorno Frontend)
 (null, 'Instalar Node.js y dependencias iniciales', 'Instalar la versión LTS de Node y herramientas de empaquetado como Vite.', 1),
 (null, 'Configurar Tailwind CSS en el proyecto', 'Inicializar el archivo de configuración y añadir las directivas en el CSS global.', 1),
@@ -38,13 +38,13 @@ insert into operacion (id, operacion, descripcion, idTarea) values
 (null, 'Configurar Triggers de auditoría', 'Programar disparadores para registrar cambios en las tablas críticas de historial.', 5);
 
 -- Creando PEA
-insert into pea (id, year, estado, idcarrera) values (1, '2026', true, 1);
+insert pea (id, year, estado, idcarrera) values (1, '2026', true, 1);
 
 -- Datos para la tabla malla_curricular
 -- vinculamos los cursos al pea id 1 en sus respectivos ciclos
-insert into malla_curricular (id, idpea, idcurso, ciclo) values 
+insert malla_curricular (id, idpea, idcurso, ciclo) values 
 (null, 1, 1, 'V'), -- curso de programación web
 (null, 1, 2, 'IV'), -- curso de base de datos
 (null, 1, 5, 'IV'), -- ingeniería de software
 (null, 1, 6, 'III'), -- diseño de interfaces
-(null, 1, 20, 'III'); -- desarrollo de software i
+(null, 1, 20, 'III'); -- desarrollo de software I

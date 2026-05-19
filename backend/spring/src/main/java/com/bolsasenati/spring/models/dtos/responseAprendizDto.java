@@ -1,5 +1,8 @@
 package com.bolsasenati.spring.models.dtos;
 
+import java.util.List;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
@@ -15,7 +18,10 @@ import lombok.Data;
     "codigoAprendiz",
     "correoInstitucional",
     "carreraDto",
-    "ciclo"
+    "ciclo",
+    "palabrasClave",
+    "rol",
+    "avatar"
 })
 public class responseAprendizDto {
 
@@ -30,7 +36,6 @@ public class responseAprendizDto {
     //Datos específicos del aprendiz
     private String codigoAprendiz;
     private String correoInstitucional;
-    private String carrera;
 
     @JsonPropertyOrder({
         "id",
@@ -38,8 +43,10 @@ public class responseAprendizDto {
     })
     private CarreraDto carreraDto;
     private String ciclo;
-    private String palabrasClave;
-
+    private List<String> palabrasClave; 
+    private Set<String> distritosInteres;
+    private String avatar;
+    
     @Data
     public static class CarreraDto {
         private Integer id;

@@ -37,6 +37,7 @@ public class SecurityConfig {
             .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Indicamos que no se deben crear sesiones, ya que la autenticación se manejará con JWT
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll() //Permitir acceso a las rutas de autenticación sin necesidad de estar autenticado
+                .requestMatchers("/error").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated() //Requerir autenticación para cualquier otra ruta
             )

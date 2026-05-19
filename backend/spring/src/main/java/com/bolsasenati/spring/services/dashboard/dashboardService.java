@@ -3,15 +3,17 @@ package com.bolsasenati.spring.services.dashboard;
 import com.bolsasenati.spring.models.Aprendiz;
 import com.bolsasenati.spring.models.ProgresoOperacion;
 import com.bolsasenati.spring.models.Tarea;
+import com.bolsasenati.spring.models.payload.DashboardAvancePeaDTO;
 import com.bolsasenati.spring.models.payload.DashboardCalificacionDTO;
 import com.bolsasenati.spring.models.payload.DashboardCalificacionDTO.VisitaDTO;
 import com.bolsasenati.spring.models.payload.DashboardComentariosDTO;
 import com.bolsasenati.spring.models.payload.DashboardComentariosDTO.ComentarioDTO;
 import com.bolsasenati.spring.models.payload.DashboardResumenDTO;
 import com.bolsasenati.spring.models.payload.DashboardResumenDTO.TareaDetalleDTO;
+import com.bolsasenati.spring.models.payload.DashboardTareasDTO;
+import com.bolsasenati.spring.repository.dashboard.comentarioAvanceRepository;
 import com.bolsasenati.spring.repository.dashboard.progresoOperacionRepository;
 import com.bolsasenati.spring.repository.dashboard.visitaSeguimientoRepository;
-import com.bolsasenati.spring.repository.dashboard.comentarioAvanceRepository;
 import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// Calcula el resumen de progreso del aprendiz autenticado
+// Se calcula el resumen de progreso del aprendiz autenticado
 @Service
 public class dashboardService {
 
@@ -43,24 +45,33 @@ public class dashboardService {
                 return aprendiz;
         }
 
-        // GET /dashboard/resumen
-        public DashboardResumenDTO getResumen(String correo) {
+        // Helper interno: calcula el progreso a partir de los registros
+        // Reutilizado por getResumen, getAvancePea y getTareas
+        private record ProgresoCalculado(
+                        int totalOperaciones,
+                        int operacionesRealizadas,
+                        int operacionesPendientes,
+                        int totalTareas,
+                        int tareasCompletadas,
+                        int tareasPendientes,
+                        double porcentajeCumplimiento,
+                        List<DashboardTareasDTO.TareaDetalleDTO> tareas) {
+        }
 
-                Aprendiz aprendiz = buscarAprendiz(correo);
-                Integer idAprendiz = aprendiz.getIdAprendiz();
-
+        private ProgresoCalculado calcularProgreso(Integer idAprendiz) {
                 List<ProgresoOperacion> progresos = progresoRepo.findByAprendizIdWithDetails(idAprendiz);
 
-                long totalOperaciones = progresos.size();
-                long operacionesRealizadas = progresos.stream()
+                int totalOperaciones = progresos.size();
+                int operacionesRealizadas = (int) progresos.stream()
                                 .filter(p -> p.getEstado() == ProgresoOperacion.EstadoOperacion.realizado)
                                 .count();
-                long operacionesPendientes = totalOperaciones - operacionesRealizadas;
+                int operacionesPendientes = totalOperaciones - operacionesRealizadas;
 
+                // Agrupar por tarea
                 Map<Tarea, List<ProgresoOperacion>> porTarea = progresos.stream()
                                 .collect(Collectors.groupingBy(p -> p.getOperacion().getTarea()));
 
-                List<TareaDetalleDTO> tareasDetalle = new ArrayList<>();
+                List<DashboardTareasDTO.TareaDetalleDTO> tareas = new ArrayList<>();
                 int tareasCompletadas = 0;
 
                 for (Map.Entry<Tarea, List<ProgresoOperacion>> entry : porTarea.entrySet()) {
@@ -76,53 +87,103 @@ public class dashboardService {
                         if (completada)
                                 tareasCompletadas++;
 
-                        TareaDetalleDTO dto = new TareaDetalleDTO();
+                        DashboardTareasDTO.TareaDetalleDTO dto = new DashboardTareasDTO.TareaDetalleDTO();
                         dto.setId(tarea.getId());
                         dto.setNombre(tarea.getNombre());
                         dto.setCurso(tarea.getCurso().getNombre());
                         dto.setTotalOperaciones(totalOps);
                         dto.setOperacionesRealizadas(realizadas);
                         dto.setEstado(completada ? "completada" : "en progreso");
-                        tareasDetalle.add(dto);
+                        tareas.add(dto);
                 }
 
-                int totalTareas = tareasDetalle.size();
+                int totalTareas = tareas.size();
                 int tareasPendientes = totalTareas - tareasCompletadas;
 
                 double porcentaje = totalOperaciones > 0
                                 ? Math.round((operacionesRealizadas * 100.0 / totalOperaciones) * 10.0) / 10.0
                                 : 0.0;
 
-                double promedio = porcentaje >= 90 ? 19.0
-                                : porcentaje >= 70 ? 17.0
-                                                : porcentaje >= 50 ? 14.0
+                return new ProgresoCalculado(
+                                totalOperaciones, operacionesRealizadas, operacionesPendientes,
+                                totalTareas, tareasCompletadas, tareasPendientes,
+                                porcentaje, tareas);
+        }
+
+        // GET /dashboard/resumen
+        public DashboardResumenDTO getResumen(String correo) {
+                Aprendiz aprendiz = buscarAprendiz(correo);
+                ProgresoCalculado p = calcularProgreso(aprendiz.getIdAprendiz());
+
+                double promedio = p.porcentajeCumplimiento() >= 90 ? 19.0
+                                : p.porcentajeCumplimiento() >= 70 ? 17.0
+                                                : p.porcentajeCumplimiento() >= 50 ? 14.0
                                                                 : 11.0;
+
+                // Convertir TareaDetalleDTO de DashboardTareasDTO a DashboardResumenDTO
+                List<TareaDetalleDTO> tareasResumen = p.tareas().stream().map(t -> {
+                        TareaDetalleDTO dto = new TareaDetalleDTO();
+                        dto.setId(t.getId());
+                        dto.setNombre(t.getNombre());
+                        dto.setCurso(t.getCurso());
+                        dto.setTotalOperaciones(t.getTotalOperaciones());
+                        dto.setOperacionesRealizadas(t.getOperacionesRealizadas());
+                        dto.setEstado(t.getEstado());
+                        return dto;
+                }).collect(Collectors.toList());
 
                 DashboardResumenDTO resumen = new DashboardResumenDTO();
                 resumen.setNombres(aprendiz.getUsuario().getNombres());
                 resumen.setApellidos(aprendiz.getUsuario().getApellidos());
                 resumen.setPromedio(promedio);
-                resumen.setTotalTareas(totalTareas);
-                resumen.setTareasCompletadas(tareasCompletadas);
-                resumen.setTareasPendientes(tareasPendientes);
-                resumen.setTotalOperaciones((int) totalOperaciones);
-                resumen.setOperacionesRealizadas((int) operacionesRealizadas);
-                resumen.setOperacionesPendientes((int) operacionesPendientes);
-                resumen.setPorcentajeCumplimiento(porcentaje);
-                resumen.setTareas(tareasDetalle);
-
+                resumen.setTotalTareas(p.totalTareas());
+                resumen.setTareasCompletadas(p.tareasCompletadas());
+                resumen.setTareasPendientes(p.tareasPendientes());
+                resumen.setTotalOperaciones(p.totalOperaciones());
+                resumen.setOperacionesRealizadas(p.operacionesRealizadas());
+                resumen.setOperacionesPendientes(p.operacionesPendientes());
+                resumen.setPorcentajeCumplimiento(p.porcentajeCumplimiento());
+                resumen.setTareas(tareasResumen);
                 return resumen;
+        }
+
+        // GET /dashboard/avance-pea
+        // Solo devuelve los numeros: % cumplimiento, tareas y operaciones
+        public DashboardAvancePeaDTO getAvancePea(String correo) {
+                Aprendiz aprendiz = buscarAprendiz(correo);
+                ProgresoCalculado p = calcularProgreso(aprendiz.getIdAprendiz());
+
+                DashboardAvancePeaDTO dto = new DashboardAvancePeaDTO();
+                dto.setPorcentajeCumplimiento(p.porcentajeCumplimiento());
+                dto.setTotalTareas(p.totalTareas());
+                dto.setTareasCompletadas(p.tareasCompletadas());
+                dto.setTareasPendientes(p.tareasPendientes());
+                dto.setTotalOperaciones(p.totalOperaciones());
+                dto.setOperacionesRealizadas(p.operacionesRealizadas());
+                dto.setOperacionesPendientes(p.operacionesPendientes());
+                return dto;
+        }
+
+        // GET /dashboard/tareas
+        public DashboardTareasDTO getTareas(String correo) {
+                Aprendiz aprendiz = buscarAprendiz(correo);
+                ProgresoCalculado p = calcularProgreso(aprendiz.getIdAprendiz());
+
+                DashboardTareasDTO dto = new DashboardTareasDTO();
+                dto.setTotalTareas(p.totalTareas());
+                dto.setTareasCompletadas(p.tareasCompletadas());
+                dto.setTareasPendientes(p.tareasPendientes());
+                dto.setTareas(p.tareas());
+                return dto;
         }
 
         // GET /dashboard/calificacion
         public DashboardCalificacionDTO getCalificacion(String correo) {
-
                 Aprendiz aprendiz = buscarAprendiz(correo);
                 Integer idAprendiz = aprendiz.getIdAprendiz();
 
                 List<Object[]> visitas = visitaRepo.findVisitasByAprendiz(idAprendiz);
 
-                // Mapear cada fila a VisitaDTO
                 List<VisitaDTO> historial = visitas.stream().map(row -> {
                         VisitaDTO v = new VisitaDTO();
                         v.setFecha(row[0] != null ? row[0].toString() : null);
@@ -132,30 +193,24 @@ public class dashboardService {
                         return v;
                 }).collect(Collectors.toList());
 
-                // La primera de la lista es la más reciente (última visita)
                 VisitaDTO ultimaVisita = historial.isEmpty() ? null : historial.get(0);
 
-                // Calcular promedio de notas
                 double promedio = historial.stream()
                                 .filter(v -> v.getNota() != null)
                                 .mapToInt(VisitaDTO::getNota)
                                 .average()
                                 .orElse(0.0);
-
-                // Redondear a 2 decimales
                 promedio = Math.round(promedio * 100.0) / 100.0;
 
                 DashboardCalificacionDTO dto = new DashboardCalificacionDTO();
                 dto.setPromedio(promedio);
                 dto.setUltimaVisita(ultimaVisita);
                 dto.setHistorialVisitas(historial);
-
                 return dto;
         }
 
         // GET /dashboard/comentarios
         public DashboardComentariosDTO getComentarios(String correo) {
-
                 Aprendiz aprendiz = buscarAprendiz(correo);
                 Integer idAprendiz = aprendiz.getIdAprendiz();
 
@@ -172,7 +227,6 @@ public class dashboardService {
 
                 DashboardComentariosDTO dto = new DashboardComentariosDTO();
                 dto.setComentarios(comentarios);
-
                 return dto;
         }
 }

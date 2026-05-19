@@ -16,7 +16,8 @@ public class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false, name = "tarea")
+
+    @Column(name = "tarea", nullable = false)
     private String nombre;
     @Column(nullable = false, name = "descripcion")
     private String descripcion;
