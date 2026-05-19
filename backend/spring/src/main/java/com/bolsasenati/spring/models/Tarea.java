@@ -13,13 +13,19 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "tarea", nullable = false)
     private String nombre;
+
+    @Column(name = "descripcion")
+    private String descripcion;
 
     @ManyToOne
     @JoinColumn(name = "idCurso")
     private Curso curso;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at", updatable = false)
     private LocalDateTime createAt;
+
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
 }

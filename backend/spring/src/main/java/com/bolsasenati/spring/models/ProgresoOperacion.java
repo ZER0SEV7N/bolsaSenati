@@ -22,10 +22,14 @@ public class ProgresoOperacion {
     private Operacion operacion;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
     private EstadoOperacion estado = EstadoOperacion.pendiente;
 
-    @Column(name = "fecha_registro")
-    private LocalDateTime fechaRegistro;
+    @Column(name = "create_at", updatable = false)
+    private LocalDateTime createAt;
+
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
 
     public enum EstadoOperacion {
         pendiente, realizado

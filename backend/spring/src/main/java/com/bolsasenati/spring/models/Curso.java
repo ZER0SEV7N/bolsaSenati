@@ -13,13 +13,15 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "curso", nullable = false)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "idPea")
-    private Pea pea;
+    @Column(name = "credito")
+    private Integer credito;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at", updatable = false)
     private LocalDateTime createAt;
+
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
 }
