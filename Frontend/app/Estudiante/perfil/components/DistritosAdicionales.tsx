@@ -52,7 +52,6 @@ export function DistritosAdicionales({
       </div>
 
       <div className="space-y-4">
-        {/* Un solo Select Dinámico */}
         <div className="max-w-md">
           <Select 
             key={resetKey} 

@@ -39,8 +39,7 @@ export const usePerfil = () => {
     const [distritosSeleccionados, setDistritosSeleccionados] = useState<string[]>([]);
     
     const [palabrasOriginales, setPalabrasOriginales] = useState<string[]>([]);
-    const [distritosOriginales, setDistritosOriginales] = useState<string[]>(["", "", ""]);
-
+    const [distritosOriginales, setDistritosOriginales] = useState<string[]>([]);
     const [hayCambiosSinGuardar, setHayCambiosSinGuardar] = useState(false);
 
     
@@ -61,14 +60,9 @@ export const usePerfil = () => {
                 if (data.palabrasClave) setPalabrasClave(data.palabrasClave);
                 
                 // Carga dinámica de distritos
-                if (data.distritosInteres) 
-                    setDistritosSeleccionados(data.distritosInteres); 
-                
                 if (data.distritosInteres) {
-                    const d = [...data.distritosInteres];
-                    const slots = [d[0] || "", d[1] || "", d[2] || ""];
-                    setDistritosSeleccionados(slots);
-                    setDistritosOriginales(slots); // Backup
+                    setDistritosSeleccionados(data.distritosInteres); 
+                    setDistritosOriginales(data.distritosInteres); // Backup
                 }
             }
 
