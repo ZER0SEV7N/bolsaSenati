@@ -1,20 +1,21 @@
 package com.bolsasenati.spring.services.dashboard;
 
-import com.bolsasenati.spring.models.Aprendiz;
-import com.bolsasenati.spring.models.ProgresoOperacion;
-import com.bolsasenati.spring.models.Tarea;
-import com.bolsasenati.spring.models.payload.DashboardAvancePeaDTO;
-import com.bolsasenati.spring.models.payload.DashboardCalificacionDTO;
-import com.bolsasenati.spring.models.payload.DashboardCalificacionDTO.VisitaDTO;
-import com.bolsasenati.spring.models.payload.DashboardComentariosDTO;
-import com.bolsasenati.spring.models.payload.DashboardComentariosDTO.ComentarioDTO;
-import com.bolsasenati.spring.models.payload.DashboardResumenDTO;
-import com.bolsasenati.spring.models.payload.DashboardResumenDTO.TareaDetalleDTO;
-import com.bolsasenati.spring.models.payload.DashboardTareasDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardAvancePeaDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardCalificacionDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardComentariosDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardResumenDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardTareasDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardCalificacionDTO.VisitaDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardComentariosDTO.ComentarioDTO;
+import com.bolsasenati.spring.models.Dashboard.DashboardResumenDTO.TareaDetalleDTO;
+import com.bolsasenati.spring.models.senati.ProgresoOperacion;
+import com.bolsasenati.spring.models.senati.Tarea;
+import com.bolsasenati.spring.models.usuario.aprendiz.Aprendiz;
 import com.bolsasenati.spring.repository.dashboard.comentarioAvanceRepository;
 import com.bolsasenati.spring.repository.dashboard.progresoOperacionRepository;
 import com.bolsasenati.spring.repository.dashboard.visitaSeguimientoRepository;
-import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
+import com.bolsasenati.spring.repository.usuarios.aprendiz.aprendizRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

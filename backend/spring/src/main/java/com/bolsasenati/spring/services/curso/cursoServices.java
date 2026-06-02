@@ -4,16 +4,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bolsasenati.spring.models.Curso;
-import com.bolsasenati.spring.models.Operacion;
-import com.bolsasenati.spring.models.Tarea;
-import com.bolsasenati.spring.models.dtos.cursoDTO;
-import com.bolsasenati.spring.models.dtos.operacionDTO;
-import com.bolsasenati.spring.models.dtos.tareaDTO;
-import com.bolsasenati.spring.repository.curso.cursoRepository;
+import com.bolsasenati.spring.models.senati.Curso;
+import com.bolsasenati.spring.models.senati.Operacion;
+import com.bolsasenati.spring.models.senati.Tarea;
+import com.bolsasenati.spring.models.senati.dto.cursoDTO;
+import com.bolsasenati.spring.models.senati.dto.operacionDTO;
+import com.bolsasenati.spring.models.senati.dto.tareaDTO;
 import com.bolsasenati.spring.repository.dashboard.progresoOperacionRepository;
-import com.bolsasenati.spring.repository.tarea.tareaRepository;
-import com.bolsasenati.spring.repository.operacion.operacionRepository;
+import com.bolsasenati.spring.repository.senati.curso.cursoRepository;
+import com.bolsasenati.spring.repository.senati.operacion.operacionRepository;
+import com.bolsasenati.spring.repository.senati.tarea.tareaRepository;
 
 @Service
 public class cursoServices {

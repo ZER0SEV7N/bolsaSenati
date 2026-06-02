@@ -8,18 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.bolsasenati.spring.models.Aprendiz;
-import com.bolsasenati.spring.models.Carrera;
-import com.bolsasenati.spring.models.Distrito;
-import com.bolsasenati.spring.models.Rol;
-import com.bolsasenati.spring.models.Usuario;
-import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
+
+import com.bolsasenati.spring.repository.senati.operacion.carrera.carreraRepository;
 import com.bolsasenati.spring.repository.usuarios.usuarioRepository;
-import com.bolsasenati.spring.repository.carrera.carreraRepository;
+import com.bolsasenati.spring.repository.usuarios.aprendiz.aprendizRepository;
 import com.bolsasenati.spring.repository.usuarios.rolRepository;
-import com.bolsasenati.spring.models.dtos.createAprendizDto;
-import com.bolsasenati.spring.models.dtos.responseAprendizDto;
 import com.bolsasenati.spring.models.dtos.updateContactoDto;
+import com.bolsasenati.spring.models.senati.Carrera;
+import com.bolsasenati.spring.models.ubicacion.Distrito;
+import com.bolsasenati.spring.models.usuario.Rol;
+import com.bolsasenati.spring.models.usuario.Usuario;
+import com.bolsasenati.spring.models.usuario.aprendiz.Aprendiz;
+import com.bolsasenati.spring.models.usuario.dto.createAprendizDto;
+import com.bolsasenati.spring.models.usuario.dto.responseAprendizDto;
 import com.bolsasenati.spring.models.dtos.cambiarPasswordDto;
 
 //Servicio para manejar la autenticación y registro de usuarios

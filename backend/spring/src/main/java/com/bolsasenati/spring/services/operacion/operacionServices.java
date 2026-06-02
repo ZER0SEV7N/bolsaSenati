@@ -3,8 +3,8 @@ package com.bolsasenati.spring.services.operacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bolsasenati.spring.repository.operacion.operacionRepository;
-import com.bolsasenati.spring.repository.usuarios.aprendizRepository;
+import com.bolsasenati.spring.repository.senati.operacion.operacionRepository;
+import com.bolsasenati.spring.repository.usuarios.aprendiz.aprendizRepository;
 
 @Service
 public class operacionServices {
